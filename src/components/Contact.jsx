@@ -119,8 +119,8 @@ const Contact = ({ darkMode }) => {
                   <div
                     className={`p-3 rounded-md ${
                       darkMode
-                        ? "bg-[#0d0d1a] text-orange-400"
-                        : "bg-zinc-100 text-orange-600"
+                        ? "bg-[#0d0d1a] text-zinc-200"
+                        : "bg-zinc-100 text-zinc-800"
                     }`}>
                     {info.icon}
                   </div>

@@ -2,6 +2,10 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { FiAward, FiUsers, FiFolder } from "react-icons/fi";
+import { ReactTyped } from "react-typed";
+import IconButtonLink from "../ui/IconButtonLink";
+import { RiCodeSSlashLine } from "react-icons/ri";
+import { HiChevronDoubleRight } from "react-icons/hi";
 
 const About = ({ darkMode }) => {
   const stats = [
@@ -44,15 +48,29 @@ const About = ({ darkMode }) => {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}>
-            <h3
-              className={`text-2xl font-semibold mb-6 ${
+            <div
+              className={`text-2xl font-semibold mb-6 grid grid-cols-1 md:flex md:items-center gap-2 ${
                 darkMode ? "text-white" : "text-zinc-900"
               }`}>
-              I'm Alex, a Passionate MERN Stack Developer
-            </h3>
+              <h3> I'm Akkal, a</h3>{" "}
+              <h3 className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-orange-700">
+                <ReactTyped
+                  strings={[
+                    "MERN Stack Developer",
+                    "React.js Enthusiast",
+                    "Web Developer",
+                    "FullStack Developer",
+                    "Tech Enthusiast",
+                  ]}
+                  typeSpeed={50}
+                  backSpeed={30}
+                  loop
+                />
+              </h3>
+            </div>
 
             <div
-              className={`space-y-4 text-lg ${
+              className={`space-y-4 mb-3 text-lg ${
                 darkMode ? "text-zinc-300" : "text-zinc-600"
               }`}>
               <p>
@@ -74,17 +92,13 @@ const About = ({ darkMode }) => {
               </p>
             </div>
 
-            <motion.a
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+            <IconButtonLink
+              icon={HiChevronDoubleRight}
+              text="Let's Talk"
               href="#contact"
-              className={`mt-8 inline-block px-8 py-3 rounded-lg font-medium ${
-                darkMode
-                  ? "bg-indigo-600 text-white hover:bg-indigo-700"
-                  : "bg-indigo-600 text-white hover:bg-indigo-700"
-              }`}>
-              Let's Talk
-            </motion.a>
+              bgColor="bg-orange-600 hover:bg-orange-700"
+              textColor="text-white"
+            />
           </motion.div>
 
           <motion.div

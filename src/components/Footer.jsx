@@ -70,7 +70,7 @@ const Footer = ({ darkMode }) => {
             className={`text-2xl font-bold mb-4 ${
               darkMode ? "text-white" : "text-zinc-900"
             }`}>
-            Alex Morgan
+            Akkal Dhami
           </h3>
           <p
             className={`text-center max-w-md mb-6 ${
@@ -109,7 +109,7 @@ const Footer = ({ darkMode }) => {
               className={`text-center text-sm ${
                 darkMode ? "text-zinc-500" : "text-zinc-600"
               }`}>
-              © {new Date().getFullYear()} Alex Morgan. All rights reserved.
+              © {new Date().getFullYear()} Akkal Dhami. All rights reserved.
             </p>
           </div>
         </div>

@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { FiGithub, FiLinkedin, FiTwitter, FiDownload } from "react-icons/fi";
 
 import VSCodeProfileCard from "./CodeCard";
-import { ReactTyped, Typed } from "react-typed";
+import { ReactTyped } from "react-typed";
 import { FaArrowRight } from "react-icons/fa";
 const Hero = ({ darkMode }) => {
   return (

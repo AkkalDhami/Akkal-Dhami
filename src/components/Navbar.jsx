@@ -43,19 +43,19 @@ const Navbar = ({ darkMode, activeSection, toggleSidebar }) => {
       className={`fixed w-full z-40 transition-all duration-300 ${
         scrolled
           ? darkMode
-            ? "bg-zinc-800 shadow-lg"
+            ? "bg-[#060010] shadow-lg"
             : "bg-white shadow-md"
           : "bg-transparent"
       }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <motion.div
-            whileHover={{ scale: 1.05 }}
+            whileHover={{ scale: 1 }}
             className="flex-shrink-0 flex items-center">
-            <span
-              className={`text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-orange-700`}>
+            <div
+              className={`text-lg sm:text-2xl flex items-center font-bold text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-orange-700`}>
               Akkal Dhami
-            </span>
+            </div>
           </motion.div>
 
           <div className="hidden md:block">
