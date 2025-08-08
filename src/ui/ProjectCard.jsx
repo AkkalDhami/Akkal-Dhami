@@ -3,10 +3,19 @@ import { FiLink } from "react-icons/fi";
 import { RiCodeSSlashLine } from "react-icons/ri";
 import { motion } from "framer-motion";
 import IconButtonLink from "./IconButtonLink";
+import ProjectModal from "../components/ProjectModal";
 
 const ProjectCard = ({ project, i }) => {
-  const { title, shortDescription, github, live, techStack, features, image } =
-    project;
+  const {
+    title,
+    shortDescription,
+    thumbnail,
+    github,
+    live,
+    techStack,
+    features,
+    images,
+  } = project;
 
   const fadeInUp = {
     hidden: { opacity: 0, y: 20 },
@@ -23,11 +32,20 @@ const ProjectCard = ({ project, i }) => {
         className={`w-full relative flex flex-col ${
           i % 2 !== 0 ? "md:flex-row-reverse" : "lg:flex-row"
         } justify-between gap-12 mt-32`}>
-        <div className="project-card-wrapper relative group mx-auto">
-          <div className="drop-shadow-[0_0px_39px_#31477c70]">
-            <img src={image} alt={title} loading="lazy" />
-          </div>
-
+        <div className="project-card-wrapper group mx-auto">
+          <ProjectModal
+            images={images}
+            triggerElement={<img src={thumbnail} alt={title} />}
+            imageAnimation={{
+              hover: { scale: 1.05, rotate: 0.5 },
+              tap: { scale: 0.95 },
+            }}
+            modalAnimation={{
+              initial: { opacity: 0, scale: 0.9 },
+              animate: { opacity: 1, scale: 1 },
+              exit: { opacity: 0, scale: 0.95 },
+            }}
+          />
           <div className="flex items-center gap-2 md:gap-4 my-8">
             <IconButtonLink
               icon={FiLink}

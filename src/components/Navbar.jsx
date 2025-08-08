@@ -43,7 +43,7 @@ const Navbar = ({ activeSection, toggleSidebar }) => {
       animate={{ y: 0 }}
       transition={{ duration: 0.5 }}
       className={`fixed w-full z-40 transition-all duration-300 ${
-        scrolled ? "dark:bg-[#09021d] shadow-md bg-white" : "bg-transparent"
+        scrolled ? "dark:bg-bg-800 shadow-md bg-white" : "bg-transparent"
       }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">

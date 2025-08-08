@@ -47,7 +47,7 @@ function App() {
 
   return (
     <div
-      className={`min-h-screen transition-colors duration-300 dark:bg-[#060010] dark:text-zinc-100 bg-zinc-50 text-zinc-800`}>
+      className={`min-h-screen transition-colors duration-300 dark:bg-bg-900 dark:text-zinc-100 bg-zinc-50 text-zinc-800`}>
       <Navbar activeSection={activeSection} toggleSidebar={toggleSidebar} />
 
       <AnimatePresence>

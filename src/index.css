@@ -21,4 +21,13 @@ body {
   --color-primary-700: oklch(55.3% 0.195 38.402);
   --color-primary-800: oklch(47% 0.157 37.304);
 
+  --color-bg-900: #060010;
+  --color-bg-800: #09021d;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+button{
+  cursor: pointer;
 }
