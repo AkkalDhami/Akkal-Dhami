@@ -1,9 +1,8 @@
-// src/components/Sidebar.jsx
 import React from "react";
 import { motion } from "framer-motion";
 import { FiX } from "react-icons/fi";
 
-const Sidebar = ({ activeSection, toggleSidebar, darkMode }) => {
+const Sidebar = ({ activeSection, toggleSidebar }) => {
   const navLinks = [
     { id: "home", label: "Home" },
     { id: "about", label: "About" },
@@ -35,18 +34,13 @@ const Sidebar = ({ activeSection, toggleSidebar, darkMode }) => {
         animate={{ x: 0 }}
         exit={{ x: "100%" }}
         transition={{ type: "spring", damping: 15 }}
-        className={`fixed top-0 right-0 h-full w-64 z-50 shadow-xl ${
-          darkMode ? "bg-zinc-900" : "bg-white"
-        }`}>
+        className="fixed top-0 right-0 h-full w-64 z-50 shadow-xl bg-white dark:bg-zinc-900">
         <div className="flex justify-end p-4">
           <motion.button
             whileTap={{ scale: 0.9 }}
             onClick={toggleSidebar}
-            className={`p-2 rounded-full ${
-              darkMode
-                ? "text-zinc-300 hover:bg-zinc-900"
-                : "text-zinc-700 hover:bg-zinc-100"
-            }`}>
+            className="p-2 rounded-full text-zinc-700 hover:bg-zinc-100 dark:text-zinc-300 dark:hover:bg-zinc-900"
+            aria-label="Close sidebar">
             <FiX size={24} />
           </motion.button>
         </div>
@@ -59,15 +53,13 @@ const Sidebar = ({ activeSection, toggleSidebar, darkMode }) => {
                 whileHover={{ x: 10 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => scrollToSection(link.id)}
-                className={`px-4 py-3 rounded-lg text-left font-medium transition-colors duration-300 ${
-                  activeSection === link.id
-                    ? darkMode
-                      ? "text-orange-600 bg-zinc-800"
-                      : "text-orange-600 bg-indigo-50"
-                    : darkMode
-                    ? "text-zinc-300 hover:bg-zinc-700"
-                    : "text-zinc-700 hover:bg-zinc-100"
-                }`}>
+                className={`px-4 py-3 rounded-lg text-left font-medium transition-colors duration-300
+                  ${
+                    activeSection === link.id
+                      ? "text-orange-600 bg-indigo-50 dark:bg-zinc-800"
+                      : "text-zinc-700 hover:bg-zinc-100 dark:text-zinc-300 dark:hover:bg-zinc-700"
+                  }
+                `}>
                 {link.label}
               </motion.button>
             ))}

@@ -12,19 +12,10 @@ import { motion, AnimatePresence } from "motion/react";
 import { FiMoon, FiSun } from "react-icons/fi";
 
 function App() {
-  const [darkMode, setDarkMode] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
 
   useEffect(() => {
-    // Check user preference for dark mode
-    if (
-      window.matchMedia &&
-      window.matchMedia("(prefers-color-scheme: dark)").matches
-    ) {
-      setDarkMode(true);
-    }
-
     // Handle scroll to update active section
     const handleScroll = () => {
       const sections = ["home", "about", "skills", "projects", "contact"];
@@ -50,56 +41,32 @@ function App() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  useEffect(() => {
-    // Apply dark mode class to body
-    if (darkMode) {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-  }, [darkMode]);
-
-  const toggleDarkMode = () => {
-    setDarkMode(!darkMode);
-  };
-
   const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
   };
 
   return (
     <div
-      className={`min-h-screen transition-colors duration-300 ${
-        darkMode
-          ? "dark bg-[#060010] text-zinc-100"
-          : "bg-zinc-50 text-zinc-800"
-      }`}>
-      <Navbar
-        darkMode={darkMode}
-        activeSection={activeSection}
-        toggleSidebar={toggleSidebar}
-        toggleDarkMode={toggleDarkMode}
-      />
+      className={`min-h-screen transition-colors duration-300 dark:bg-[#060010] dark:text-zinc-100 bg-zinc-50 text-zinc-800`}>
+      <Navbar activeSection={activeSection} toggleSidebar={toggleSidebar} />
 
       <AnimatePresence>
         {sidebarOpen && (
           <Sidebar
             activeSection={activeSection}
             toggleSidebar={toggleSidebar}
-            darkMode={darkMode}
           />
         )}
       </AnimatePresence>
 
       <main>
-        <Hero darkMode={darkMode} />
-        <About darkMode={darkMode} />
-        <Skills darkMode={darkMode} />
-        <Projects darkMode={darkMode} />
-        <Contact darkMode={darkMode} />
+        <Hero />
+        <About />
+        <Skills />
+        <Projects />
+        <Contact />
       </main>
-
-      <Footer darkMode={darkMode} />
+      <Footer />
     </div>
   );
 }

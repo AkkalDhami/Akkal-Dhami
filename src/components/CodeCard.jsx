@@ -14,7 +14,7 @@ const VSCodeProfileCard = ({ darkMode }) => {
       initial={{ opacity: 0, scale: 0.95 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.4 }}
-      className={`animatedBorder  max-w-2xl rounded-2xl mx-auto`}>
+      className={`animatedBorder border border-slate-800/40  max-w-2xl rounded-2xl mx-auto`}>
       <div
         className={`flex items-center justify-between px-4 py-2 rounded-lg ${
           darkMode ? "text-zinc-300" : "text-zinc-600"

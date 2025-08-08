@@ -1,16 +1,15 @@
-// src/components/Hero.jsx
 import React from "react";
 import { motion } from "framer-motion";
 import { FiGithub, FiLinkedin, FiTwitter, FiDownload } from "react-icons/fi";
-
-import VSCodeProfileCard from "./CodeCard";
 import { ReactTyped } from "react-typed";
 import { FaArrowRight } from "react-icons/fa";
-const Hero = ({ darkMode }) => {
+import VSCodeProfileCard from "./CodeCard";
+
+const Hero = () => {
   return (
     <section
       id="home"
-      className={`min-h-screen flex items-center relative overflow-hidden `}>
+      className="min-h-screen flex items-center relative overflow-hidden">
       {/* Background decoration */}
       <div className="absolute inset-0 z-0">
         <div className="absolute top-20 right-10 w-72 h-72 bg-indigo-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 dark:opacity-10 animate-blob"></div>
@@ -20,6 +19,7 @@ const Hero = ({ darkMode }) => {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+          {/* Left Column */}
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
@@ -30,6 +30,7 @@ const Hero = ({ darkMode }) => {
                 Akkal Dhami
               </span>
             </h1>
+
             <motion.h2
               className="text-xl md:text-2xl font-semibold mt-4 mb-6"
               initial={{ opacity: 0 }}
@@ -51,9 +52,7 @@ const Hero = ({ darkMode }) => {
             </motion.h2>
 
             <motion.p
-              className={`mt-6 text-lg max-w-lg font-medium ${
-                darkMode ? "text-zinc-300" : "text-zinc-600"
-              }`}
+              className="mt-6 text-lg max-w-lg font-medium text-zinc-600 dark:text-zinc-300"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.6, duration: 0.8 }}>
@@ -77,7 +76,7 @@ const Hero = ({ darkMode }) => {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 href="#contact"
-                className={`px-6 py-3 rounded-lg flex items-center gap-2 font-medium bg-orange-600 text-white hover:bg-orange-700`}>
+                className="px-6 py-3 rounded-lg flex items-center gap-2 font-medium bg-orange-600 text-white hover:bg-orange-700">
                 <span>Let's Connect</span> <FaArrowRight />
               </motion.a>
 
@@ -85,11 +84,7 @@ const Hero = ({ darkMode }) => {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 href="#"
-                className={`px-6 py-3 rounded-lg font-medium flex items-center gap-2 ${
-                  darkMode
-                    ? "bg-transparent border border-zinc-100 text-zinc-50 hover:bg-zinc-50 hover:text-zinc-900"
-                    : "bg-transparent border border-zinc-900 text-zinc-900 hover:bg-zinc-900 hover:text-zinc-50"
-                }`}>
+                className="px-6 py-3 rounded-lg font-medium flex items-center gap-2 border border-zinc-900 text-zinc-900 hover:bg-zinc-900 hover:text-zinc-50 dark:border-zinc-100 dark:text-zinc-50 dark:hover:bg-zinc-50 dark:hover:text-zinc-900">
                 <FiDownload size={18} />
                 Download CV
               </motion.a>
@@ -100,60 +95,35 @@ const Hero = ({ darkMode }) => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 1.2, duration: 0.5 }}>
-              <a
-                href="https://github.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="GitHub">
-                <motion.div
-                  whileHover={{ y: -5, scale: 1.1 }}
-                  className={`p-3 rounded-full ${
-                    darkMode
-                      ? "bg-zinc-800 hover:bg-zinc-700"
-                      : "bg-white hover:bg-zinc-100"
-                  } shadow-md`}>
-                  <FiGithub size={24} />
-                </motion.div>
-              </a>
-              <a
-                href="https://linkedin.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="LinkedIn">
-                <motion.div
-                  whileHover={{ y: -5, scale: 1.1 }}
-                  className={`p-3 rounded-full ${
-                    darkMode
-                      ? "bg-zinc-800 hover:bg-zinc-700"
-                      : "bg-white hover:bg-zinc-100"
-                  } shadow-md`}>
-                  <FiLinkedin size={24} />
-                </motion.div>
-              </a>
-              <a
-                href="https://twitter.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Twitter">
-                <motion.div
-                  whileHover={{ y: -5, scale: 1.1 }}
-                  className={`p-3 rounded-full ${
-                    darkMode
-                      ? "bg-zinc-800 hover:bg-zinc-700"
-                      : "bg-white hover:bg-zinc-100"
-                  } shadow-md`}>
-                  <FiTwitter size={24} />
-                </motion.div>
-              </a>
+              {/* Social Links */}
+              {[
+                ["https://github.com", <FiGithub />],
+                ["https://linkedin.com", <FiLinkedin />],
+                ["https://twitter.com", <FiTwitter />],
+              ].map(([url, icon], idx) => (
+                <a
+                  key={idx}
+                  href={url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Social Link">
+                  <motion.div
+                    whileHover={{ y: -5, scale: 1.1 }}
+                    className="p-3 rounded-full bg-white hover:bg-zinc-100 dark:bg-zinc-800 dark:hover:bg-zinc-700 shadow-md">
+                    {icon}
+                  </motion.div>
+                </a>
+              ))}
             </motion.div>
           </motion.div>
 
+          {/* Right Column */}
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8 }}
             className="relative flex justify-center">
-            <VSCodeProfileCard darkMode={darkMode} />
+            <VSCodeProfileCard />
           </motion.div>
         </div>
       </div>

@@ -1,4 +1,3 @@
-// src/components/Contact.jsx
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { FiMail, FiMapPin, FiPhone, FiSend } from "react-icons/fi";
@@ -6,7 +5,7 @@ import { RiUserLine } from "react-icons/ri";
 import { toast, ToastContainer, Bounce } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const Contact = ({ darkMode }) => {
+const Contact = () => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -67,7 +66,7 @@ const Contact = ({ darkMode }) => {
         pauseOnFocusLoss
         draggable
         pauseOnHover
-        theme={darkMode ? "dark" : "light"}
+        theme="dark" // Toast uses dark theme always for consistency, can change to "light" if you want.
         transition={Bounce}
       />
 
@@ -79,20 +78,11 @@ const Contact = ({ darkMode }) => {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
           className="text-center mb-16">
-          <h2
-            className={`text-3xl font-bold ${
-              darkMode ? "text-white" : "text-zinc-900"
-            }`}>
+          <h2 className="text-3xl font-bold text-zinc-900 dark:text-white">
             Get In Touch
           </h2>
-          <div
-            className={`w-20 h-1 mx-auto mt-4 ${
-              darkMode ? "bg-orange-500" : "bg-orange-600"
-            }`}></div>
-          <p
-            className={`mt-6 max-w-2xl mx-auto text-lg ${
-              darkMode ? "text-zinc-300" : "text-zinc-600"
-            }`}>
+          <div className="w-20 h-1 mx-auto mt-4 bg-orange-600 dark:bg-orange-500"></div>
+          <p className="mt-6 max-w-2xl mx-auto text-lg text-zinc-600 dark:text-zinc-300">
             Have a project in mind or want to discuss potential opportunities?
             I'd love to hear from you!
           </p>
@@ -106,35 +96,21 @@ const Contact = ({ darkMode }) => {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}>
-            <h3
-              className={`text-2xl font-semibold mb-8 ${
-                darkMode ? "text-white" : "text-zinc-900"
-              }`}>
+            <h3 className="text-2xl font-semibold mb-8 text-zinc-900 dark:text-white">
               Contact Information
             </h3>
 
             <div className="space-y-6">
               {contactInfo.map((info, index) => (
                 <div key={index} className="flex items-start gap-3">
-                  <div
-                    className={`p-3 rounded-md ${
-                      darkMode
-                        ? "bg-[#0d0d1a] text-zinc-200"
-                        : "bg-zinc-100 text-zinc-800"
-                    }`}>
+                  <div className="p-3 rounded-md bg-zinc-100 text-zinc-800 dark:bg-[#0d0d1a] dark:text-zinc-200">
                     {info.icon}
                   </div>
                   <div>
-                    <h4
-                      className={`text-lg font-medium ${
-                        darkMode ? "text-white" : "text-zinc-900"
-                      }`}>
+                    <h4 className="text-lg font-medium text-zinc-900 dark:text-white">
                       {info.title}
                     </h4>
-                    <p
-                      className={`${
-                        darkMode ? "text-zinc-300" : "text-zinc-600"
-                      }`}>
+                    <p className="text-zinc-600 dark:text-zinc-300">
                       {info.details}
                     </p>
                   </div>
@@ -149,10 +125,7 @@ const Contact = ({ darkMode }) => {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}>
-            <h3
-              className={`text-2xl font-semibold mb-8 ${
-                darkMode ? "text-white" : "text-zinc-900"
-              }`}>
+            <h3 className="text-2xl font-semibold mb-8 text-zinc-900 dark:text-white">
               Send Me a Message
             </h3>
 
@@ -162,9 +135,7 @@ const Contact = ({ darkMode }) => {
                 <div>
                   <label
                     htmlFor="name"
-                    className={`block text-sm font-medium mb-2 ${
-                      darkMode ? "text-zinc-300" : "text-zinc-700"
-                    }`}>
+                    className="block text-sm font-medium mb-2 text-zinc-700 dark:text-zinc-300">
                     Your Name
                   </label>
                   <input
@@ -174,12 +145,8 @@ const Contact = ({ darkMode }) => {
                     value={formData.name}
                     onChange={handleChange}
                     required
-                    className={`w-full px-4 py-3 rounded-lg border ${
-                      darkMode
-                        ? "border-zinc-700 text-white focus:border-orange-500"
-                        : "border-zinc-300 text-zinc-900 focus:border-orange-600"
-                    } focus:ring-2 focus:ring-orange-500/50 outline-none transition`}
                     placeholder="Akkal Dhami"
+                    className="w-full px-4 py-3 rounded-lg border border-zinc-300 text-zinc-900 focus:border-orange-600 focus:ring-2 focus:ring-orange-500/50 outline-none transition dark:border-zinc-700 dark:text-white dark:focus:border-orange-500"
                   />
                 </div>
 
@@ -187,9 +154,7 @@ const Contact = ({ darkMode }) => {
                 <div>
                   <label
                     htmlFor="email"
-                    className={`block text-sm font-medium mb-2 ${
-                      darkMode ? "text-zinc-300" : "text-zinc-700"
-                    }`}>
+                    className="block text-sm font-medium mb-2 text-zinc-700 dark:text-zinc-300">
                     Your Email
                   </label>
                   <input
@@ -199,12 +164,8 @@ const Contact = ({ darkMode }) => {
                     value={formData.email}
                     onChange={handleChange}
                     required
-                    className={`w-full px-4 py-3 rounded-lg border ${
-                      darkMode
-                        ? "border-zinc-700 text-white focus:border-orange-500"
-                        : " border-zinc-300 text-zinc-900 focus:border-orange-600"
-                    } focus:ring-2 focus:ring-orange-500/50 outline-none transition`}
                     placeholder="dhamiakkal21@gmail.com"
+                    className="w-full px-4 py-3 rounded-lg border border-zinc-300 text-zinc-900 focus:border-orange-600 focus:ring-2 focus:ring-orange-500/50 outline-none transition dark:border-zinc-700 dark:text-white dark:focus:border-orange-500"
                   />
                 </div>
               </div>
@@ -213,9 +174,7 @@ const Contact = ({ darkMode }) => {
               <div>
                 <label
                   htmlFor="message"
-                  className={`block text-sm font-medium mb-2 ${
-                    darkMode ? "text-zinc-300" : "text-zinc-700"
-                  }`}>
+                  className="block text-sm font-medium mb-2 text-zinc-700 dark:text-zinc-300">
                   Your Message
                 </label>
                 <textarea
@@ -225,12 +184,8 @@ const Contact = ({ darkMode }) => {
                   onChange={handleChange}
                   required
                   rows={5}
-                  className={`w-full px-4 resize-none py-3 rounded-lg border ${
-                    darkMode
-                      ? " border-zinc-700 text-white focus:border-orange-500"
-                      : "border-zinc-300 text-zinc-900 focus:border-orange-600"
-                  } focus:ring-2 focus:ring-orange-500/50 outline-none transition`}
-                  placeholder="Hello, I'd like to discuss a project..."></textarea>
+                  placeholder="Hello, I'd like to discuss a project..."
+                  className="w-full px-4 resize-none py-3 rounded-lg border border-zinc-300 text-zinc-900 focus:border-orange-600 focus:ring-2 focus:ring-orange-500/50 outline-none transition dark:border-zinc-700 dark:text-white dark:focus:border-orange-500"></textarea>
               </div>
 
               {/* Submit Button */}
@@ -239,11 +194,7 @@ const Contact = ({ darkMode }) => {
                 disabled={isSubmitting}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className={`w-full py-3 cursor-pointer px-6 rounded-lg font-medium flex items-center justify-center gap-2 ${
-                  darkMode
-                    ? "bg-orange-600 text-white hover:bg-orange-700"
-                    : "bg-orange-600 text-white hover:bg-orange-700"
-                } disabled:opacity-70 transition-colors`}>
+                className="w-full py-3 cursor-pointer px-6 rounded-lg font-medium flex items-center justify-center gap-2 bg-orange-600 text-white hover:bg-orange-700 disabled:opacity-70 transition-colors">
                 {isSubmitting ? (
                   <>
                     <svg

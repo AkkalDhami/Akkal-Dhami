@@ -4,7 +4,7 @@ import { RiCodeSSlashLine } from "react-icons/ri";
 import { motion } from "framer-motion";
 import IconButtonLink from "./IconButtonLink";
 
-const ProjectCard = ({ project, darkMode, i }) => {
+const ProjectCard = ({ project, i }) => {
   const { title, shortDescription, github, live, techStack, features, image } =
     project;
 
@@ -23,6 +23,7 @@ const ProjectCard = ({ project, darkMode, i }) => {
         className={`w-full relative flex flex-col ${
           i % 2 !== 0 ? "md:flex-row-reverse" : "lg:flex-row"
         } justify-between gap-12 mt-32`}>
+        {/* Image and buttons */}
         <div className="project-card-wrapper relative group mx-auto">
           <div className="drop-shadow-[0_0px_39px_#31477c70]">
             <img src={image} alt={title} />
@@ -33,12 +34,8 @@ const ProjectCard = ({ project, darkMode, i }) => {
               icon={FiLink}
               text="Live Preview"
               href={live}
-              bgColor={`${
-                darkMode
-                  ? "dark:bg-white dark:hover:bg-zinc-100"
-                  : "bg-[#060010] hover:bg-zinc-900"
-              }`}
-              textColor={darkMode ? "text-zinc-800" : "text-white"}
+              bgColor="bg-[#060010] hover:bg-zinc-900 dark:bg-white dark:hover:bg-zinc-100"
+              textColor="text-white dark:text-zinc-800"
               isWide={true}
             />
 
@@ -53,13 +50,11 @@ const ProjectCard = ({ project, darkMode, i }) => {
           </div>
         </div>
 
+        {/* Description */}
         <div className="project-desc z-10 mx-auto sm:mr-auto">
           <div className="project-desc-inner max-w-[1200px] flex flex-col space-y-2 mb-6">
             <h2 className="text-3xl font-bold text-orange-600">{title}</h2>
-            <p
-              className={`${
-                darkMode ? "text-zinc-100" : "text-zinc-900"
-              } font-semibold text-[24px]`}>
+            <p className="text-zinc-900 dark:text-zinc-100 font-semibold text-[24px]">
               {shortDescription}
             </p>
 
@@ -73,15 +68,14 @@ const ProjectCard = ({ project, darkMode, i }) => {
                   key={feature}
                   variants={fadeInUp}
                   custom={index}
-                  className={`text-sm px-3 py-1 ${
-                    darkMode ? "bg-[#0d0d1a]" : "bg-zinc-100"
-                  } rounded-full`}>
+                  className="text-sm px-3 py-1 bg-zinc-100 dark:bg-[#0d0d1a] rounded-full">
                   #{feature}
                 </motion.strong>
               ))}
             </motion.div>
           </div>
 
+          {/* Tech stack */}
           <motion.div
             className="stack grid grid-cols-2 md:grid-cols-4 gap-4 my-4"
             initial="hidden"
@@ -92,9 +86,7 @@ const ProjectCard = ({ project, darkMode, i }) => {
                 key={index}
                 variants={fadeInUp}
                 custom={index}
-                className={`${
-                  darkMode ? "text-zinc-300" : "text-zinc-700"
-                } flex items-center gap-2 flex-col text-sm`}>
+                className="flex items-center gap-2 flex-col text-sm text-zinc-700 dark:text-zinc-300">
                 {tech.icon}
                 <span className="font-semibold">{tech.name}</span>
               </motion.span>

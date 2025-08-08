@@ -1,11 +1,13 @@
-// src/components/Navbar.jsx
 import React, { useState, useEffect } from "react";
 import { FiMenu, FiMoon, FiSun } from "react-icons/fi";
 
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
+import { useTheme } from "../context/ThemeContext";
 
-const Navbar = ({ darkMode, activeSection, toggleSidebar, toggleDarkMode }) => {
+const Navbar = ({ activeSection, toggleSidebar }) => {
   const [scrolled, setScrolled] = useState(false);
+
+  const { darkMode, toggleTheme } = useTheme();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -41,11 +43,7 @@ const Navbar = ({ darkMode, activeSection, toggleSidebar, toggleDarkMode }) => {
       animate={{ y: 0 }}
       transition={{ duration: 0.5 }}
       className={`fixed w-full z-40 transition-all duration-300 ${
-        scrolled
-          ? darkMode
-            ? "bg-[#060010] shadow-lg"
-            : "bg-white shadow-md"
-          : "bg-transparent"
+        scrolled ? "dark:bg-[#060010] shadow-md bg-white" : "bg-transparent"
       }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
@@ -69,9 +67,7 @@ const Navbar = ({ darkMode, activeSection, toggleSidebar, toggleDarkMode }) => {
                     className={`px-3 py-1.5 font-medium cursor-pointer rounded-full text-[16px] transition-colors duration-300 ${
                       activeSection === link.id
                         ? "text-orange-700 bg-orange-500/10"
-                        : darkMode
-                        ? "text-zinc-300 hover:text-orange-600"
-                        : "text-zinc-700 hover:text-orange-600"
+                        : "dark:text-zinc-300 dark:hover:text-orange-600 text-zinc-700 hover:text-orange-600"
                     }`}>
                     {link.label}
                   </motion.button>
@@ -79,9 +75,9 @@ const Navbar = ({ darkMode, activeSection, toggleSidebar, toggleDarkMode }) => {
               </div>
             </div>
             <motion.button
-              whileHover={{ scale: 1.1 }}
+              whileHover={{ rotate: 90 }}
               whileTap={{ scale: 0.9 }}
-              onClick={toggleDarkMode}
+              onClick={toggleTheme}
               className="cursor-pointer"
               aria-label="Toggle dark mode">
               {darkMode ? <FiSun size={20} /> : <FiMoon size={20} />}
@@ -92,11 +88,7 @@ const Navbar = ({ darkMode, activeSection, toggleSidebar, toggleDarkMode }) => {
             <motion.button
               whileTap={{ scale: 0.9 }}
               onClick={toggleSidebar}
-              className={`inline-flex items-center justify-center p-2 rounded-md ${
-                darkMode
-                  ? "text-zinc-300 hover:bg-zinc-700"
-                  : "text-zinc-700 hover:bg-zinc-100"
-              }`}
+              className={`inline-flex items-center justify-center p-2 rounded-md dark:text-zinc-300 dark:hover:bg-zinc-700 text-zinc-700 hover:bg-zinc-100`}
               aria-label="Open menu">
               <FiMenu size={24} />
             </motion.button>

@@ -1,13 +1,11 @@
-// src/components/About.jsx
 import React from "react";
 import { motion } from "framer-motion";
 import { FiAward, FiUsers, FiFolder } from "react-icons/fi";
 import { ReactTyped } from "react-typed";
 import IconButtonLink from "../ui/IconButtonLink";
-import { RiCodeSSlashLine } from "react-icons/ri";
 import { HiChevronDoubleRight } from "react-icons/hi";
 
-const About = ({ darkMode }) => {
+const About = () => {
   const stats = [
     { icon: <FiAward size={24} />, value: "5+", label: "Years Experience" },
     { icon: <FiUsers size={24} />, value: "20+", label: "Clients" },
@@ -15,7 +13,7 @@ const About = ({ darkMode }) => {
   ];
 
   return (
-    <section id="about" className={`py-20`}>
+    <section id="about" className="py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 50 }}
@@ -23,20 +21,11 @@ const About = ({ darkMode }) => {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
           className="text-center mb-16">
-          <h2
-            className={`text-3xl font-bold ${
-              darkMode ? "text-white" : "text-zinc-900"
-            }`}>
+          <h2 className="text-3xl font-bold text-zinc-900 dark:text-white">
             About Me
           </h2>
-          <div
-            className={`w-20 h-1 mx-auto mt-4 ${
-              darkMode ? "bg-indigo-500" : "bg-indigo-600"
-            }`}></div>
-          <p
-            className={`mt-6 max-w-2xl mx-auto text-lg ${
-              darkMode ? "text-zinc-300" : "text-zinc-600"
-            }`}>
+          <div className="w-20 h-1 mx-auto mt-4 bg-indigo-600 dark:bg-indigo-500" />
+          <p className="mt-6 max-w-2xl mx-auto text-lg text-zinc-600 dark:text-zinc-300">
             Get to know more about me, my background, and what drives me as a
             developer.
           </p>
@@ -48,11 +37,8 @@ const About = ({ darkMode }) => {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}>
-            <div
-              className={`text-2xl font-semibold mb-6 grid grid-cols-1 md:flex md:items-center gap-2 ${
-                darkMode ? "text-white" : "text-zinc-900"
-              }`}>
-              <h3> I'm Akkal, a</h3>{" "}
+            <div className="text-2xl font-semibold mb-6 grid grid-cols-1 md:flex md:items-center gap-2 text-zinc-900 dark:text-white">
+              <h3>I'm Akkal, a</h3>
               <h3 className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-orange-700">
                 <ReactTyped
                   strings={[
@@ -69,10 +55,7 @@ const About = ({ darkMode }) => {
               </h3>
             </div>
 
-            <div
-              className={`space-y-4 mb-3 text-lg ${
-                darkMode ? "text-zinc-300" : "text-zinc-600"
-              }`}>
+            <div className="space-y-4 mb-3 text-lg text-zinc-600 dark:text-zinc-300">
               <p>
                 With over 5 years of experience in web development, I specialize
                 in building full-stack applications using the MERN stack
@@ -111,27 +94,14 @@ const About = ({ darkMode }) => {
                 <motion.div
                   key={index}
                   whileHover={{ y: -10 }}
-                  className={`p-6 rounded-xl flex flex-col items-center text-center ${
-                    darkMode ? "bg-[#110a25]" : "bg-zinc-50"
-                  }`}>
-                  <div
-                    className={`p-3 rounded-full mb-4 ${
-                      darkMode
-                        ? "bg-indigo-500/20 text-indigo-400"
-                        : "bg-indigo-100 text-indigo-600"
-                    }`}>
+                  className="p-6 rounded-xl flex flex-col items-center text-center bg-zinc-50 dark:bg-[#110a25]">
+                  <div className="p-3 rounded-full mb-4 bg-indigo-100 text-indigo-600 dark:bg-indigo-500/20 dark:text-indigo-400">
                     {stat.icon}
                   </div>
-                  <h4
-                    className={`text-2xl font-bold ${
-                      darkMode ? "text-white" : "text-zinc-900"
-                    }`}>
+                  <h4 className="text-2xl font-bold text-zinc-900 dark:text-white">
                     {stat.value}
                   </h4>
-                  <p
-                    className={`mt-1 ${
-                      darkMode ? "text-zinc-300" : "text-zinc-600"
-                    }`}>
+                  <p className="mt-1 text-zinc-600 dark:text-zinc-300">
                     {stat.label}
                   </p>
                 </motion.div>

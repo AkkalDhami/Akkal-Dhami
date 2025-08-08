@@ -1,4 +1,3 @@
-// src/components/Skills.jsx
 import React from "react";
 import { motion } from "framer-motion";
 import {
@@ -22,8 +21,11 @@ import {
   SiPostman,
 } from "react-icons/si";
 import { VscVscode } from "react-icons/vsc";
+import { useTheme } from "../context/ThemeContext"; // <-- use theme context
 
-const Skills = ({ darkMode }) => {
+const Skills = () => {
+  const { darkMode } = useTheme(); // <-- use theme value
+
   const skillCategories = [
     {
       title: "Frontend Technologies",
@@ -33,7 +35,6 @@ const Skills = ({ darkMode }) => {
           icon: <SiHtml5 fill="#e34f26" size={28} />,
           name: "HTML",
           description: "Structure",
-          bgcolor: "#e34f26",
         },
         {
           icon: <SiCss3 fill="#1572b6" size={28} />,
@@ -72,7 +73,7 @@ const Skills = ({ darkMode }) => {
           description: "Runtime Environment",
         },
         {
-          icon: <SiExpress fill={`${darkMode ? "#fff" : "#000"}`} size={28} />,
+          icon: <SiExpress fill={darkMode ? "#fff" : "#000"} size={28} />,
           name: "Express.js",
           description: "Backend Framework",
         },
@@ -118,7 +119,6 @@ const Skills = ({ darkMode }) => {
           name: "VS Code",
           description: "Code Editor",
         },
-
         {
           icon: <FaFigma fill="#cd7ce8" size={28} />,
           name: "Figma",
@@ -149,7 +149,7 @@ const Skills = ({ darkMode }) => {
   };
 
   return (
-    <section id="skills" className={`py-20 `}>
+    <section id="skills" className="py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 50 }}
@@ -175,7 +175,7 @@ const Skills = ({ darkMode }) => {
           </p>
         </motion.div>
 
-        <div className="">
+        <div>
           {skillCategories.map((category, index) => (
             <motion.div
               key={index}
@@ -183,9 +183,9 @@ const Skills = ({ darkMode }) => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
-              className={`rounded-xl p-3 sm:p-6`}>
+              className="rounded-xl p-3 sm:p-6">
               <div className="flex items-center gap-3 mb-3">
-                <div className={`p-3 rounded-full `}>{category.icon}</div>
+                <div className="p-3 rounded-full">{category.icon}</div>
                 <h3
                   className={`text-xl font-semibold ${
                     darkMode ? "text-white" : "text-zinc-900"
@@ -204,11 +204,8 @@ const Skills = ({ darkMode }) => {
                   <motion.div
                     key={skillIndex}
                     variants={item}
-                    className={`p-4 rounded-lg flex items-center gap-3 transition-colors`}>
-                    <div
-                      className={`p-2 rounded-md bg-[${skill.bgcolorcolor}] text-[${skill.textColor}]`}>
-                      {skill.icon}
-                    </div>
+                    className="p-4 rounded-lg flex items-center gap-3 transition-colors">
+                    <div className="p-2 rounded-md">{skill.icon}</div>
                     <div>
                       <h4
                         className={`font-medium ${
