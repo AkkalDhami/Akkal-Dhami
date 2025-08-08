@@ -74,7 +74,7 @@ const Contact = () => {
         pauseOnFocusLoss
         draggable
         pauseOnHover
-        theme="dark" // Toast uses dark theme always for consistency, can change to "light" if you want.
+        theme="dark"
         transition={Bounce}
       />
 
@@ -167,7 +167,7 @@ const Contact = () => {
                       onChange={handleChange}
                       required
                       placeholder="Akkal Dhami"
-                      className="w-full px-4 py-3 rounded-lg border border-zinc-300 text-zinc-900 focus:border-primary-600 focus:ring-2 focus:ring-primary-500/50 outline-none transition dark:border-zinc-700 dark:text-white dark:focus:border-primary-500"
+                      className="w-full px-4 py-3 rounded-lg border border-transparent text-zinc-900 focus:border-primary-600 placeholder:text-zinc-500 dark:placeholder:text-zinc-400 outline-none transition  dark:text-white"
                     />
                     <div className="absolute bottom-[-1px] group-hover:via-indigo-600 left-1/2 -translate-x-1/2 h-px w-[calc(100%-24px)] bg-gradient-to-r from-transparent  via-primary-600 to-transparent"></div>
                     <div className="absolute top-[1px] group-hover:via-indigo-600 left-1/2 -translate-x-1/2 h-px w-[calc(100%-24px)] bg-gradient-to-r from-transparent  via-primary-600 to-transparent"></div>
@@ -192,7 +192,7 @@ const Contact = () => {
                       onChange={handleChange}
                       required
                       placeholder="dhamiakkal21@gmail.com"
-                      className="w-full px-4 py-3 rounded-lg border border-zinc-300 text-zinc-900 focus:border-primary-600 focus:ring-2 focus:ring-primary-500/50 outline-none transition dark:border-zinc-700 dark:text-white dark:focus:border-primary-500"
+                      className="w-full px-4 py-3 rounded-lg border border-transparent text-zinc-900 focus:border-primary-600 placeholder:text-zinc-500 dark:placeholder:text-zinc-400 outline-none transition  dark:text-white"
                     />
                     <div className="absolute bottom-[-1px] group-hover:via-indigo-600 left-1/2 -translate-x-1/2 h-px w-[calc(100%-24px)] bg-gradient-to-r from-transparent  via-primary-700 to-transparent"></div>
                     <div className="absolute top-[1px] group-hover:via-indigo-600 left-1/2 -translate-x-1/2 h-px w-[calc(100%-24px)] bg-gradient-to-r from-transparent  via-primary-700 to-transparent"></div>
@@ -218,7 +218,7 @@ const Contact = () => {
                     required
                     rows={5}
                     placeholder="Hello, I'd like to discuss a project..."
-                    className="w-full px-4 resize-none py-3 rounded-lg border border-zinc-300 text-zinc-900 placeholder:text-zinc-400 focus:border-primary-600 focus:ring-2 focus:ring-primary-500/50 outline-none transition dark:border-zinc-700 dark:text-white dark:focus:border-primary-500"></textarea>
+                    className="w-full px-4 resize-none py-3 rounded-lg border border-transparent text-zinc-900 placeholder:text-zinc-500 dark:placeholder:text-zinc-400 focus:border-primary-600 outline-none transition  dark:text-white"></textarea>
                   <div className="absolute bottom-1.5 group-hover:via-indigo-600 left-1/2 -translate-x-1/2 h-px w-[calc(100%-24px)] bg-gradient-to-r from-transparent  via-primary-700 to-transparent"></div>
                   <div className="absolute top-[1px] group-hover:via-indigo-600 left-1/2 -translate-x-1/2 h-px w-[calc(100%-24px)] bg-gradient-to-r from-transparent  via-primary-700 to-transparent"></div>
                   <div className="absolute top-[1px] group-hover:via-indigo-600 h-[calc(100%-2px)] w-px bg-gradient-to-t from-transparent  via-primary-700 to-transparent"></div>

@@ -1,5 +1,5 @@
 import React from "react";
-import { motion } from "framer-motion";
+import { color, motion } from "framer-motion";
 import {
   FaReact,
   FaNodeJs,
@@ -22,6 +22,7 @@ import {
 } from "react-icons/si";
 import { VscVscode } from "react-icons/vsc";
 import { useTheme } from "../context/ThemeContext"; // <-- use theme context
+import SkillsCard from "../ui/SkillsCard";
 
 const Skills = () => {
   const { darkMode } = useTheme(); // <-- use theme value
@@ -34,31 +35,37 @@ const Skills = () => {
           icon: <SiHtml5 fill="#e34f26" size={28} />,
           name: "HTML",
           description: "Structure",
+          color: "#e34f26",
         },
         {
           icon: <SiCss3 fill="#1572b6" size={28} />,
           name: "CSS",
           description: "Styling",
+          color: "#1572b6",
         },
         {
           icon: <SiJavascript fill="#f7df1e" size={28} />,
           name: "JavaScript",
           description: "Functionality",
+          color: "#f7df1e",
         },
         {
           icon: <FaReact fill="#61DAFB" size={28} />,
           name: "React",
           description: "UI Library",
+          color: "#61DAFB",
         },
         {
           icon: <SiTailwindcss fill="#38B2AC" size={28} />,
           name: "Tailwind",
           description: "CSS Framework",
+          color: "#38B2AC",
         },
         {
           icon: <SiRedux fill="#764abc" size={28} />,
           name: "Redux",
           description: "State Management",
+          color: "#764abc",
         },
       ],
     },
@@ -69,11 +76,13 @@ const Skills = () => {
           icon: <FaNodeJs fill="#3C873A" size={28} />,
           name: "Node.js",
           description: "Runtime Environment",
+          color: "#3C873A",
         },
         {
           icon: <SiExpress fill={darkMode ? "#fff" : "#000"} size={28} />,
           name: "Express.js",
           description: "Backend Framework",
+          color: darkMode ? "#fff" : "#000",
         },
       ],
     },
@@ -84,16 +93,19 @@ const Skills = () => {
           icon: <SiMongodb fill="#47a248" size={28} />,
           name: "MongoDB",
           description: "NoSQL Database",
+          color: "#47a248",
         },
         {
           icon: <SiMysql fill="#4479A1" size={28} />,
           name: "MySQL",
           description: "SQL Database",
+          color: "#4479A1",
         },
         {
           icon: <SiDrizzle fill="#c5f74f" size={28} />,
           name: "Drizzle",
           description: "ORM for MySQL",
+          color: "#c5f74f",
         },
       ],
     },
@@ -104,45 +116,35 @@ const Skills = () => {
           icon: <FaGitAlt fill="#f1502f" size={28} />,
           name: "Git",
           description: "Version Control",
+          color: "#f1502f",
         },
         {
           icon: <SiGithub fill={darkMode ? "#fff" : "#000"} size={28} />,
           name: "GitHub",
           description: "Code Repository",
+          color: darkMode ? "#fff" : "#000",
         },
         {
           icon: <VscVscode fill="#007ACC" size={28} />,
           name: "VS Code",
           description: "Code Editor",
+          color: "#007ACC",
         },
         {
           icon: <FaFigma fill="#cd7ce8" size={28} />,
           name: "Figma",
           description: "UI/UX Design",
+          color: "#cd7ce8",
         },
         {
           icon: <SiPostman fill="#FF6C37" size={28} />,
           name: "Postman",
           description: "API Testing",
+          color: "#FF6C37",
         },
       ],
     },
   ];
-
-  const container = {
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-      },
-    },
-  };
-
-  const item = {
-    hidden: { opacity: 0, y: 20 },
-    show: { opacity: 1, y: 0 },
-  };
 
   return (
     <section id="skills" className="py-20">
@@ -167,47 +169,7 @@ const Skills = () => {
 
         <div>
           {skillCategories.map((category, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-              className="rounded-xl p-3 sm:p-6">
-              <div className="flex items-center gap-3 mb-3">
-                <h3
-                  className={`text-xl font-semibold dark:text-white text-zinc-900
-                  `}>
-                  {category.title}
-                </h3>
-              </div>
-
-              <motion.div
-                variants={container}
-                initial="hidden"
-                whileInView="show"
-                viewport={{ once: true }}
-                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                {category.skills.map((skill, skillIndex) => (
-                  <motion.div
-                    key={skillIndex}
-                    whileHover={{ scale: 1.1 }}
-                    variants={item}
-                    className="p-4 rounded-lg flex items-center gap-3 transition-colors">
-                    <div className="p-2 rounded-md">{skill.icon}</div>
-                    <div>
-                      <h4
-                        className={`font-medium dark:text-white text-zinc-900`}>
-                        {skill.name}
-                      </h4>
-                      <p className={`text-sm dark:text-zinc-400 text-zinc-600`}>
-                        {skill.description}
-                      </p>
-                    </div>
-                  </motion.div>
-                ))}
-              </motion.div>
-            </motion.div>
+            <SkillsCard key={index} category={category} index={index} />
           ))}
         </div>
       </div>
