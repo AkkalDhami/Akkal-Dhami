@@ -4,6 +4,7 @@ import { RiCodeSSlashLine } from "react-icons/ri";
 import { motion } from "framer-motion";
 import IconButtonLink from "./IconButtonLink";
 import ProjectModal from "../components/ProjectModal";
+import { FaCode } from "react-icons/fa6";
 
 const ProjectCard = ({ project, i }) => {
   const {
@@ -46,7 +47,7 @@ const ProjectCard = ({ project, i }) => {
               exit: { opacity: 0, scale: 0.95 },
             }}
           />
-          <div className="flex items-center gap-2 md:gap-4 my-8">
+          <div className="flex items-center gap-1 md:gap-4 my-8">
             <IconButtonLink
               icon={FiLink}
               text="Live Preview"
@@ -57,7 +58,7 @@ const ProjectCard = ({ project, i }) => {
             />
 
             <IconButtonLink
-              icon={RiCodeSSlashLine}
+              icon={FaCode}
               text="Source Code"
               href={github}
               bgColor="bg-primary-600 hover:bg-primary-700"
