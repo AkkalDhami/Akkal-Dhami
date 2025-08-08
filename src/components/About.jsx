@@ -5,6 +5,7 @@ import { ReactTyped } from "react-typed";
 import IconButtonLink from "../ui/IconButtonLink";
 import { HiChevronDoubleRight } from "react-icons/hi";
 import SocialLink from "../ui/AnimateButton";
+import { GoDownload } from "react-icons/go";
 
 const About = () => {
   const stats = [
@@ -83,7 +84,7 @@ const About = () => {
                 isBlank={false}
               />
               <SocialLink
-                icon={<HiChevronDoubleRight />}
+                icon={<GoDownload />}
                 text="Download CV"
                 href="#"
                 isBlank={false}
