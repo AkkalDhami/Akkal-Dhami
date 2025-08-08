@@ -159,14 +159,8 @@ const Skills = () => {
             }`}>
             My Skills
           </h2>
-          <div
-            className={`w-20 h-1 mx-auto mt-4 ${
-              darkMode ? "bg-indigo-500" : "bg-indigo-600"
-            }`}></div>
           <p
-            className={`mt-6 max-w-2xl mx-auto text-lg ${
-              darkMode ? "text-zinc-300" : "text-zinc-600"
-            }`}>
+            className={`mt-6 max-w-2xl mx-auto text-lg dark:text-zinc-300 text-zinc-600`}>
             Technologies and tools I work with
           </p>
         </motion.div>
@@ -182,9 +176,8 @@ const Skills = () => {
               className="rounded-xl p-3 sm:p-6">
               <div className="flex items-center gap-3 mb-3">
                 <h3
-                  className={`text-xl font-semibold ${
-                    darkMode ? "text-white" : "text-zinc-900"
-                  }`}>
+                  className={`text-xl font-semibold dark:text-white text-zinc-900
+                  `}>
                   {category.title}
                 </h3>
               </div>
@@ -204,15 +197,10 @@ const Skills = () => {
                     <div className="p-2 rounded-md">{skill.icon}</div>
                     <div>
                       <h4
-                        className={`font-medium ${
-                          darkMode ? "text-white" : "text-zinc-900"
-                        }`}>
+                        className={`font-medium dark:text-white text-zinc-900`}>
                         {skill.name}
                       </h4>
-                      <p
-                        className={`text-sm ${
-                          darkMode ? "text-zinc-400" : "text-zinc-600"
-                        }`}>
+                      <p className={`text-sm dark:text-zinc-400 text-zinc-600`}>
                         {skill.description}
                       </p>
                     </div>

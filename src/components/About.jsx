@@ -39,7 +39,7 @@ const About = () => {
             transition={{ duration: 0.6 }}>
             <div className="text-2xl font-semibold mb-6 grid grid-cols-1 md:flex md:items-center gap-2 text-zinc-900 dark:text-white">
               <h3>I'm Akkal, a</h3>
-              <h3 className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-orange-700">
+              <h3 className="text-transparent bg-clip-text bg-gradient-to-r from-primary-500 to-primary-700">
                 <ReactTyped
                   strings={[
                     "MERN Stack Developer",
@@ -79,7 +79,7 @@ const About = () => {
               icon={HiChevronDoubleRight}
               text="Let's Talk"
               href="#contact"
-              bgColor="bg-orange-600 hover:bg-orange-700"
+              bgColor="bg-primary-600 hover:bg-primary-700"
               textColor="text-white"
             />
           </motion.div>

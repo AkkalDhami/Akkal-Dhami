@@ -51,7 +51,7 @@ const Navbar = ({ activeSection, toggleSidebar }) => {
             whileHover={{ scale: 1 }}
             className="flex-shrink-0 flex items-center">
             <div
-              className={`text-lg sm:text-2xl flex items-center font-bold text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-orange-700`}>
+              className={`text-lg sm:text-2xl flex items-center font-bold text-transparent bg-clip-text bg-gradient-to-r from-primary-500 to-primary-700`}>
               Akkal Dhami
             </div>
           </motion.div>
@@ -66,8 +66,8 @@ const Navbar = ({ activeSection, toggleSidebar }) => {
                     whileHover={{ y: -2 }}
                     className={`px-3 py-1.5 font-medium cursor-pointer rounded-full text-[16px] transition-colors duration-300 ${
                       activeSection === link.id
-                        ? "text-orange-700 bg-orange-500/10"
-                        : "dark:text-zinc-300 dark:hover:text-orange-600 text-zinc-700 hover:text-orange-600"
+                        ? "text-primary-700 bg-primary-500/10"
+                        : "dark:text-zinc-300 dark:hover:text-primary-600 text-zinc-700 hover:text-primary-600"
                     }`}>
                     {link.label}
                   </motion.button>

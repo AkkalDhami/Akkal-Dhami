@@ -12,7 +12,7 @@ const SocialLink = ({ icon, text, href }) => {
       className="inline-flex relative items-center justify-center px-3 py-2 rounded-lg gap-2 text-zinc-600 dark:text-zinc-300 border border-zinc-500/30">
       {icon}
       {text}
-      <div className="absolute -bottom-px left-1/2 -translate-x-1/2 h-px w-[calc(100%-24px)] bg-gradient-to-r from-transparent via-orange-600 to-transparent"></div>
+      <div className="absolute -bottom-px left-1/2 -translate-x-1/2 h-px w-[calc(100%-24px)] bg-gradient-to-r from-transparent via-primary-600 to-transparent"></div>
     </motion.a>
   );
 };

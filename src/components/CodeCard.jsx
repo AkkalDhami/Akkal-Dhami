@@ -10,7 +10,7 @@ const VSCodeProfileCard = () => {
       className="animatedBorder border border-zinc-500/30 max-w-2xl rounded-2xl mx-auto">
       <div className="flex items-center border-b border-zinc-500/30 justify-between px-4 py-2 text-zinc-600 dark:text-zinc-300">
         <div className="flex space-x-2 mr-3">
-          <div className="w-3 h-3 rounded-full bg-orange-500"></div>
+          <div className="w-3 h-3 rounded-full bg-primary-500"></div>
           <div className="w-3 h-3 rounded-full bg-amber-500"></div>
           <div className="w-3 h-3 rounded-full bg-green-500"></div>
         </div>

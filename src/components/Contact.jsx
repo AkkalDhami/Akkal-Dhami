@@ -82,7 +82,7 @@ const Contact = () => {
           <h2 className="text-3xl font-bold text-zinc-900 dark:text-white">
             Get In Touch
           </h2>
-          <div className="w-20 h-1 mx-auto mt-4 bg-orange-600 dark:bg-orange-500"></div>
+          
           <p className="mt-6 max-w-2xl mx-auto text-lg text-zinc-600 dark:text-zinc-300">
             Have a project in mind or want to discuss potential opportunities?
             I'd love to hear from you!
@@ -159,7 +159,7 @@ const Contact = () => {
                     onChange={handleChange}
                     required
                     placeholder="Akkal Dhami"
-                    className="w-full px-4 py-3 rounded-lg border border-zinc-300 text-zinc-900 focus:border-orange-600 focus:ring-2 focus:ring-orange-500/50 outline-none transition dark:border-zinc-700 dark:text-white dark:focus:border-orange-500"
+                    className="w-full px-4 py-3 rounded-lg border border-zinc-300 text-zinc-900 focus:border-primary-600 focus:ring-2 focus:ring-primary-500/50 outline-none transition dark:border-zinc-700 dark:text-white dark:focus:border-primary-500"
                   />
                 </div>
 
@@ -178,7 +178,7 @@ const Contact = () => {
                     onChange={handleChange}
                     required
                     placeholder="dhamiakkal21@gmail.com"
-                    className="w-full px-4 py-3 rounded-lg border border-zinc-300 text-zinc-900 focus:border-orange-600 focus:ring-2 focus:ring-orange-500/50 outline-none transition dark:border-zinc-700 dark:text-white dark:focus:border-orange-500"
+                    className="w-full px-4 py-3 rounded-lg border border-zinc-300 text-zinc-900 focus:border-primary-600 focus:ring-2 focus:ring-primary-500/50 outline-none transition dark:border-zinc-700 dark:text-white dark:focus:border-primary-500"
                   />
                 </div>
               </div>
@@ -198,7 +198,7 @@ const Contact = () => {
                   required
                   rows={5}
                   placeholder="Hello, I'd like to discuss a project..."
-                  className="w-full px-4 resize-none py-3 rounded-lg border border-zinc-300 text-zinc-900 focus:border-orange-600 focus:ring-2 focus:ring-orange-500/50 outline-none transition dark:border-zinc-700 dark:text-white dark:focus:border-orange-500"></textarea>
+                  className="w-full px-4 resize-none py-3 rounded-lg border border-zinc-300 text-zinc-900 focus:border-primary-600 focus:ring-2 focus:ring-primary-500/50 outline-none transition dark:border-zinc-700 dark:text-white dark:focus:border-primary-500"></textarea>
               </div>
 
               {/* Submit Button */}
@@ -207,7 +207,7 @@ const Contact = () => {
                 disabled={isSubmitting}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className="w-full py-3 cursor-pointer px-6 rounded-lg font-medium flex items-center justify-center gap-2 bg-orange-600 text-white hover:bg-orange-700 disabled:opacity-70 transition-colors">
+                className="w-full py-3 cursor-pointer px-6 rounded-lg font-medium flex items-center justify-center gap-2 bg-primary-600 text-white hover:bg-primary-700 disabled:opacity-70 transition-colors">
                 {isSubmitting ? (
                   <>
                     <svg

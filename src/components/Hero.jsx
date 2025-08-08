@@ -26,7 +26,7 @@ const Hero = () => {
             transition={{ duration: 0.8 }}>
             <h1 className="text-4xl flex flex-col md:text-5xl lg:text-6xl font-bold leading-tight">
               <span>👋 Hi I'm</span>
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 to-orange-800">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-500 to-primary-800">
                 Akkal Dhami
               </span>
             </h1>
@@ -57,12 +57,12 @@ const Hero = () => {
               animate={{ opacity: 1 }}
               transition={{ delay: 0.6, duration: 0.8 }}>
               I build modern, responsive web applications using{" "}
-              <strong className="font-semibold text-orange-600">MongoDB</strong>
+              <strong className="font-semibold text-primary-600">MongoDB</strong>
               ,{" "}
-              <strong className="font-semibold text-orange-600">Express</strong>
-              , <strong className="font-semibold text-orange-600">React</strong>
+              <strong className="font-semibold text-primary-600">Express</strong>
+              , <strong className="font-semibold text-primary-600">React</strong>
               , and{" "}
-              <strong className="font-semibold text-orange-600">Node.js</strong>
+              <strong className="font-semibold text-primary-600">Node.js</strong>
               . Passionate about creating seamless user experiences with clean,
               efficient code.
             </motion.p>
@@ -76,7 +76,7 @@ const Hero = () => {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 href="#contact"
-                className="px-6 py-3 rounded-lg flex items-center gap-2 font-medium bg-orange-600 text-white hover:bg-orange-700">
+                className="px-6 py-3 rounded-lg flex items-center gap-2 font-medium bg-primary-600 text-white hover:bg-primary-700">
                 <span>Let's Connect</span> <FaArrowRight />
               </motion.a>
 
@@ -101,7 +101,6 @@ const Hero = () => {
                 text="LinkedIn"
                 href="https://www.linkedin.com/in/akkal-dhami-854273378/"
               />
-          
             </div>
           </motion.div>
 

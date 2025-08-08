@@ -8,7 +8,7 @@ import {
   SiMysql,
   SiTailwindcss,
 } from "react-icons/si";
-import { FaNodeJs } from "react-icons/fa";
+import { FaCss3Alt, FaNodeJs } from "react-icons/fa";
 import ProjectCard from "../ui/ProjectCard";
 import SocialLink from "../ui/SocialLink";
 
@@ -23,20 +23,48 @@ const Projects = () => {
       image: "neptask.webp",
       isPrivate: false,
       techStack: [
-        { name: "HTML5", icon: <SiHtml5 fill="#e34f26" size={24} /> },
+        {
+          name: "HTML5",
+          icon: <SiHtml5 fill="#e34f26" size={24} />,
+        },
+        {
+          name: "CSS",
+          icon: <FaCss3Alt fill="#1572b6" size={24} />,
+        },
         {
           name: "Tailwind CSS",
           icon: <SiTailwindcss fill="#38B2AC" size={24} />,
         },
-        { name: "JavaScript", icon: <SiJavascript fill="#f7df1e" size={24} /> },
-        { name: "Node.js", icon: <FaNodeJs fill="#3C873A" size={24} /> },
-        { name: "Express.js", icon: <SiExpress fill="#3C873A" size={24} /> },
-        { name: "MySQL", icon: <SiMysql fill="#4479A1" size={24} /> },
-        { name: "Drizzle ORM", icon: <SiDrizzle fill="#c5f74f" size={24} /> },
+        {
+          name: "JavaScript",
+          icon: <SiJavascript fill="#f7df1e" size={24} />,
+        },
+        {
+          name: "Node.js",
+          icon: <FaNodeJs fill="#3C873A" size={24} />,
+        },
+        {
+          name: "Express.js",
+          icon: <SiExpress fill="#3C873A" size={24} />,
+        },
+        {
+          name: "MySQL",
+          icon: <SiMysql fill="#4479A1" size={24} />,
+        },
+        {
+          name: "Drizzle ORM",
+          icon: <SiDrizzle fill="#c5f74f" size={24} />,
+        },
       ],
       github: "https://github.com/AkkalDhami/TMS-DRIZZLE",
       live: "https://neptask2.vercel.app",
       features: [
+        "Authentication",
+        "Login With Google",
+        "Login With Github",
+        "Forgot Password",
+        "Reset Password",
+        "Filter Tasks",
         "Smart Scheduling",
         "Advanced Analytics",
         "Progress Tracking",
@@ -110,7 +138,7 @@ const Projects = () => {
           <h2 className="text-3xl font-bold text-zinc-900 dark:text-white">
             My Projects
           </h2>
-          <div className="w-20 h-1 mx-auto mt-4 bg-orange-600 dark:bg-orange-500" />
+
           <p className="mt-6 max-w-2xl mx-auto text-lg text-zinc-600 dark:text-zinc-300">
             Check out some of my recent work. Each project represents a unique
             challenge and solution.

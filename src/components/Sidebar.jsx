@@ -81,7 +81,7 @@ const Sidebar = ({ activeSection, toggleSidebar }) => {
                 className={`px-4 py-3 flex items-center gap-3 rounded-lg text-left font-medium transition-colors duration-300 cursor-pointer
                   ${
                     activeSection === link.id
-                      ? "text-orange-600 bg-zinc-50 dark:bg-[#0d0d1a]"
+                      ? "text-primary-600 bg-zinc-50 dark:bg-[#0d0d1a]"
                       : "text-zinc-700 hover:bg-zinc-100 dark:text-zinc-300 dark:hover:bg-[#0d0d1a]"
                   }
                 `}>

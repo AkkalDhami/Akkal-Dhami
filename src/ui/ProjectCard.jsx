@@ -23,10 +23,9 @@ const ProjectCard = ({ project, i }) => {
         className={`w-full relative flex flex-col ${
           i % 2 !== 0 ? "md:flex-row-reverse" : "lg:flex-row"
         } justify-between gap-12 mt-32`}>
-        {/* Image and buttons */}
         <div className="project-card-wrapper relative group mx-auto">
           <div className="drop-shadow-[0_0px_39px_#31477c70]">
-            <img src={image} alt={title} />
+            <img src={image} alt={title} loading="lazy" />
           </div>
 
           <div className="flex items-center gap-2 md:gap-4 my-8">
@@ -43,7 +42,7 @@ const ProjectCard = ({ project, i }) => {
               icon={RiCodeSSlashLine}
               text="Source Code"
               href={github}
-              bgColor="bg-orange-600 hover:bg-orange-700"
+              bgColor="bg-primary-600 hover:bg-primary-700"
               textColor="text-white"
               isWide={true}
             />
@@ -53,7 +52,7 @@ const ProjectCard = ({ project, i }) => {
         {/* Description */}
         <div className="project-desc z-10 mx-auto sm:mr-auto">
           <div className="project-desc-inner max-w-[1200px] flex flex-col space-y-2 mb-6">
-            <h2 className="text-3xl font-bold text-orange-600">{title}</h2>
+            <h2 className="text-3xl font-bold text-primary-600">{title}</h2>
             <p className="text-zinc-900 dark:text-zinc-100 font-semibold text-[24px]">
               {shortDescription}
             </p>
@@ -68,7 +67,7 @@ const ProjectCard = ({ project, i }) => {
                   key={feature}
                   variants={fadeInUp}
                   custom={index}
-                  className="text-sm px-3 py-1 bg-zinc-100 dark:bg-[#0d0d1a] rounded-full">
+                  className="text-sm text-zinc-700 dark:text-zinc-300">
                   #{feature}
                 </motion.strong>
               ))}
