@@ -1,6 +1,13 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { FiGithub, FiLinkedin, FiMail, FiMapPin, FiPhone, FiSend } from "react-icons/fi";
+import {
+  FiGithub,
+  FiLinkedin,
+  FiMail,
+  FiMapPin,
+  FiPhone,
+  FiSend,
+} from "react-icons/fi";
 import { RiUserLine } from "react-icons/ri";
 import { toast, ToastContainer, Bounce } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -82,7 +89,7 @@ const Contact = () => {
           <h2 className="text-3xl font-bold text-zinc-900 dark:text-white">
             Get In Touch
           </h2>
-          
+
           <p className="mt-6 max-w-2xl mx-auto text-lg text-zinc-600 dark:text-zinc-300">
             Have a project in mind or want to discuss potential opportunities?
             I'd love to hear from you!
@@ -151,16 +158,22 @@ const Contact = () => {
                     className="block text-sm font-medium mb-2 text-zinc-700 dark:text-zinc-300">
                     Your Name
                   </label>
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    required
-                    placeholder="Akkal Dhami"
-                    className="w-full px-4 py-3 rounded-lg border border-zinc-300 text-zinc-900 focus:border-primary-600 focus:ring-2 focus:ring-primary-500/50 outline-none transition dark:border-zinc-700 dark:text-white dark:focus:border-primary-500"
-                  />
+                  <div className="relative group">
+                    <input
+                      type="text"
+                      id="name"
+                      name="name"
+                      value={formData.name}
+                      onChange={handleChange}
+                      required
+                      placeholder="Akkal Dhami"
+                      className="w-full px-4 py-3 rounded-lg border border-zinc-300 text-zinc-900 focus:border-primary-600 focus:ring-2 focus:ring-primary-500/50 outline-none transition dark:border-zinc-700 dark:text-white dark:focus:border-primary-500"
+                    />
+                    <div className="absolute bottom-[-1px] group-hover:via-indigo-600 left-1/2 -translate-x-1/2 h-px w-[calc(100%-24px)] bg-gradient-to-r from-transparent  via-primary-600 to-transparent"></div>
+                    <div className="absolute top-[1px] group-hover:via-indigo-600 left-1/2 -translate-x-1/2 h-px w-[calc(100%-24px)] bg-gradient-to-r from-transparent  via-primary-600 to-transparent"></div>
+                    <div className="absolute top-[1px] group-hover:via-indigo-600 h-[calc(100%-2px)] w-px bg-gradient-to-t from-transparent  via-primary-600 to-transparent"></div>
+                    <div className="absolute top-[1px] right-[-1px] group-hover:via-indigo-600 h-[calc(100%-2px)] w-px bg-gradient-to-t from-transparent  via-primary-600 to-transparent"></div>
+                  </div>
                 </div>
 
                 {/* Email */}
@@ -170,16 +183,22 @@ const Contact = () => {
                     className="block text-sm font-medium mb-2 text-zinc-700 dark:text-zinc-300">
                     Your Email
                   </label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    required
-                    placeholder="dhamiakkal21@gmail.com"
-                    className="w-full px-4 py-3 rounded-lg border border-zinc-300 text-zinc-900 focus:border-primary-600 focus:ring-2 focus:ring-primary-500/50 outline-none transition dark:border-zinc-700 dark:text-white dark:focus:border-primary-500"
-                  />
+                  <div className="group relative">
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      required
+                      placeholder="dhamiakkal21@gmail.com"
+                      className="w-full px-4 py-3 rounded-lg border border-zinc-300 text-zinc-900 focus:border-primary-600 focus:ring-2 focus:ring-primary-500/50 outline-none transition dark:border-zinc-700 dark:text-white dark:focus:border-primary-500"
+                    />
+                    <div className="absolute bottom-[-1px] group-hover:via-indigo-600 left-1/2 -translate-x-1/2 h-px w-[calc(100%-24px)] bg-gradient-to-r from-transparent  via-primary-700 to-transparent"></div>
+                    <div className="absolute top-[1px] group-hover:via-indigo-600 left-1/2 -translate-x-1/2 h-px w-[calc(100%-24px)] bg-gradient-to-r from-transparent  via-primary-700 to-transparent"></div>
+                    <div className="absolute top-[1px] group-hover:via-indigo-600 h-[calc(100%-2px)] w-px bg-gradient-to-t from-transparent  via-primary-700 to-transparent"></div>
+                    <div className="absolute top-[1px] right-[-1px] group-hover:via-indigo-600 h-[calc(100%-2px)] w-px bg-gradient-to-t from-transparent  via-primary-700 to-transparent"></div>
+                  </div>
                 </div>
               </div>
 
@@ -190,15 +209,21 @@ const Contact = () => {
                   className="block text-sm font-medium mb-2 text-zinc-700 dark:text-zinc-300">
                   Your Message
                 </label>
-                <textarea
-                  id="message"
-                  name="message"
-                  value={formData.message}
-                  onChange={handleChange}
-                  required
-                  rows={5}
-                  placeholder="Hello, I'd like to discuss a project..."
-                  className="w-full px-4 resize-none py-3 rounded-lg border border-zinc-300 text-zinc-900 focus:border-primary-600 focus:ring-2 focus:ring-primary-500/50 outline-none transition dark:border-zinc-700 dark:text-white dark:focus:border-primary-500"></textarea>
+                <div className="relative group">
+                  <textarea
+                    id="message"
+                    name="message"
+                    value={formData.message}
+                    onChange={handleChange}
+                    required
+                    rows={5}
+                    placeholder="Hello, I'd like to discuss a project..."
+                    className="w-full px-4 resize-none py-3 rounded-lg border border-zinc-300 text-zinc-900 placeholder:text-zinc-400 focus:border-primary-600 focus:ring-2 focus:ring-primary-500/50 outline-none transition dark:border-zinc-700 dark:text-white dark:focus:border-primary-500"></textarea>
+                  <div className="absolute bottom-1.5 group-hover:via-indigo-600 left-1/2 -translate-x-1/2 h-px w-[calc(100%-24px)] bg-gradient-to-r from-transparent  via-primary-700 to-transparent"></div>
+                  <div className="absolute top-[1px] group-hover:via-indigo-600 left-1/2 -translate-x-1/2 h-px w-[calc(100%-24px)] bg-gradient-to-r from-transparent  via-primary-700 to-transparent"></div>
+                  <div className="absolute top-[1px] group-hover:via-indigo-600 h-[calc(100%-2px)] w-px bg-gradient-to-t from-transparent  via-primary-700 to-transparent"></div>
+                  <div className="absolute top-[1px] right-[-1px] group-hover:via-indigo-600 h-[calc(100%-2px)] w-px bg-gradient-to-t from-transparent  via-primary-700 to-transparent"></div>
+                </div>
               </div>
 
               {/* Submit Button */}
