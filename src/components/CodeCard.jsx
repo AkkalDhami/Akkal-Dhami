@@ -61,6 +61,7 @@ const VSCodeProfileCard = () => {
               <span className="text-[#09D076]">'CSS'</span>,{" "}
               <span className="text-[#09D076]">'JavaScript'</span>,{" "}
               <span className="text-[#09D076]">'Tailwind CSS'</span>],
+              <span className="text-[#09D076]">'React.js'</span>],
             </div>
             <div className="ml-12">
               <span className="text-[#ea580c]">backend</span>: [

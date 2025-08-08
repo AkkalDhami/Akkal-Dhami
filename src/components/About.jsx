@@ -75,12 +75,20 @@ const About = () => {
                 to open-source projects or exploring new tech innovations.
               </p>
             </div>
-            <SocialLink
-              icon={<HiChevronDoubleRight />}
-              text="Let's Talk"
-              href="#contact"
-              isBlank={false}
-            />
+            <div className="flex items-center gap-2 sm:gap-4">
+              <SocialLink
+                icon={<HiChevronDoubleRight />}
+                text="Let's Talk"
+                href="#contact"
+                isBlank={false}
+              />
+              <SocialLink
+                icon={<HiChevronDoubleRight />}
+                text="Download CV"
+                href="#"
+                isBlank={false}
+              />
+            </div>
           </motion.div>
 
           <motion.div
