@@ -1,10 +1,10 @@
 // src/components/Navbar.jsx
 import React, { useState, useEffect } from "react";
-import { FiMenu } from "react-icons/fi";
+import { FiMenu, FiMoon, FiSun } from "react-icons/fi";
 
 import { motion } from "framer-motion";
 
-const Navbar = ({ darkMode, activeSection, toggleSidebar }) => {
+const Navbar = ({ darkMode, activeSection, toggleSidebar, toggleDarkMode }) => {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
@@ -58,24 +58,34 @@ const Navbar = ({ darkMode, activeSection, toggleSidebar }) => {
             </div>
           </motion.div>
 
-          <div className="hidden md:block">
-            <div className="ml-10 flex items-center space-x-8">
-              {navLinks.map((link) => (
-                <motion.button
-                  key={link.id}
-                  onClick={() => scrollToSection(link.id)}
-                  whileHover={{ y: -2 }}
-                  className={`px-3 py-1.5 font-medium cursor-pointer rounded-full text-[16px] transition-colors duration-300 ${
-                    activeSection === link.id
-                      ? "text-orange-700 bg-orange-500/10"
-                      : darkMode
-                      ? "text-zinc-300 hover:text-orange-600"
-                      : "text-zinc-700 hover:text-orange-600"
-                  }`}>
-                  {link.label}
-                </motion.button>
-              ))}
+          <div className="flex items-center gap-6">
+            <div className="hidden md:block">
+              <div className="ml-10 flex items-center space-x-8">
+                {navLinks.map((link) => (
+                  <motion.button
+                    key={link.id}
+                    onClick={() => scrollToSection(link.id)}
+                    whileHover={{ y: -2 }}
+                    className={`px-3 py-1.5 font-medium cursor-pointer rounded-full text-[16px] transition-colors duration-300 ${
+                      activeSection === link.id
+                        ? "text-orange-700 bg-orange-500/10"
+                        : darkMode
+                        ? "text-zinc-300 hover:text-orange-600"
+                        : "text-zinc-700 hover:text-orange-600"
+                    }`}>
+                    {link.label}
+                  </motion.button>
+                ))}
+              </div>
             </div>
+            <motion.button
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+              onClick={toggleDarkMode}
+              className="cursor-pointer"
+              aria-label="Toggle dark mode">
+              {darkMode ? <FiSun size={20} /> : <FiMoon size={20} />}
+            </motion.button>
           </div>
 
           <div className="md:hidden">

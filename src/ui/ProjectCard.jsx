@@ -5,7 +5,6 @@ import { motion } from "framer-motion";
 import IconButtonLink from "./IconButtonLink";
 
 const ProjectCard = ({ project, darkMode, i }) => {
-  console.log(i);
   const { title, shortDescription, github, live, techStack, features, image } =
     project;
 
@@ -71,7 +70,7 @@ const ProjectCard = ({ project, darkMode, i }) => {
               viewport={{ once: true }}>
               {features.map((feature, index) => (
                 <motion.strong
-                  key={index}
+                  key={feature}
                   variants={fadeInUp}
                   custom={index}
                   className={`text-sm px-3 py-1 ${

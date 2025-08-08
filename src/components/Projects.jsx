@@ -15,7 +15,7 @@ import ProjectCard from "../ui/ProjectCard";
 const Projects = ({ darkMode }) => {
   const projects = [
     {
-      id: 1,
+      id: 111,
       title: "NepTask",
       shortDescription: "Task Management System",
       longDescription:
@@ -79,31 +79,38 @@ const Projects = ({ darkMode }) => {
       isPrivate: false,
       techStack: [
         {
+          id: 1,
           name: "HTML5",
           icon: <SiHtml5 fill="#e34f26" size={24} />,
         },
         {
+          id: 2,
           name: "Tailwind CSS",
           icon: <SiTailwindcss fill="#38B2AC" size={24} />,
         },
         {
+          id: 3,
           name: "JavaScript",
           icon: <SiJavascript fill="#f7df1e" size={24} />,
         },
         {
+          id: 4,
           name: "Node.js",
           icon: <FaNodeJs fill="#3C873A" size={24} />,
         },
 
         {
+          id: 5,
           icon: <SiExpress fill="#3C873A" size={24} />,
           name: "Express.js",
         },
         {
+          id: 6,
           name: "MySQL",
           icon: <SiMysql fill="#4479A1" size={24} />,
         },
         {
+          id: 7,
           name: "Drizzle ORM",
           icon: <SiDrizzle fill="#c5f74f" size={24} />,
         },

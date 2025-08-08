@@ -183,7 +183,7 @@ const Skills = ({ darkMode }) => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: index * 0.1 }}
-              className={`rounded-xl p-6`}>
+              className={`rounded-xl p-3 sm:p-6`}>
               <div className="flex items-center gap-3 mb-3">
                 <div className={`p-3 rounded-full `}>{category.icon}</div>
                 <h3

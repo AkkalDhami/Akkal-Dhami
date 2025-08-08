@@ -74,20 +74,11 @@ function App() {
           ? "dark bg-[#060010] text-zinc-100"
           : "bg-zinc-50 text-zinc-800"
       }`}>
-      <div className="fixed top-5 right-4 z-50 ">
-        <motion.button
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.9 }}
-          onClick={toggleDarkMode}
-          className="cursor-pointer"
-          aria-label="Toggle dark mode">
-          {darkMode ? <FiSun size={20} /> : <FiMoon size={20} />}
-        </motion.button>
-      </div>
       <Navbar
         darkMode={darkMode}
         activeSection={activeSection}
         toggleSidebar={toggleSidebar}
+        toggleDarkMode={toggleDarkMode}
       />
 
       <AnimatePresence>

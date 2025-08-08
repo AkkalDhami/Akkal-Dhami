@@ -34,9 +34,9 @@ const Sidebar = ({ activeSection, toggleSidebar, darkMode }) => {
         initial={{ x: "100%" }}
         animate={{ x: 0 }}
         exit={{ x: "100%" }}
-        transition={{ type: "spring", damping: 25 }}
+        transition={{ type: "spring", damping: 15 }}
         className={`fixed top-0 right-0 h-full w-64 z-50 shadow-xl ${
-          darkMode ? "bg-zinc-800" : "bg-white"
+          darkMode ? "bg-zinc-900" : "bg-white"
         }`}>
         <div className="flex justify-end p-4">
           <motion.button
@@ -44,7 +44,7 @@ const Sidebar = ({ activeSection, toggleSidebar, darkMode }) => {
             onClick={toggleSidebar}
             className={`p-2 rounded-full ${
               darkMode
-                ? "text-zinc-300 hover:bg-zinc-700"
+                ? "text-zinc-300 hover:bg-zinc-900"
                 : "text-zinc-700 hover:bg-zinc-100"
             }`}>
             <FiX size={24} />
@@ -62,8 +62,8 @@ const Sidebar = ({ activeSection, toggleSidebar, darkMode }) => {
                 className={`px-4 py-3 rounded-lg text-left font-medium transition-colors duration-300 ${
                   activeSection === link.id
                     ? darkMode
-                      ? "text-indigo-400 bg-zinc-700"
-                      : "text-indigo-600 bg-indigo-50"
+                      ? "text-orange-600 bg-zinc-800"
+                      : "text-orange-600 bg-indigo-50"
                     : darkMode
                     ? "text-zinc-300 hover:bg-zinc-700"
                     : "text-zinc-700 hover:bg-zinc-100"
