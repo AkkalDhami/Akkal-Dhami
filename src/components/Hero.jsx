@@ -4,7 +4,7 @@ import { FiGithub, FiLinkedin, FiTwitter, FiDownload } from "react-icons/fi";
 import { ReactTyped } from "react-typed";
 import { FaArrowRight } from "react-icons/fa";
 import VSCodeProfileCard from "./CodeCard";
-import SocialLink from "../ui/SocialLink";
+import SocialLink from "../ui/AnimateButton";
 
 const Hero = () => {
   return (

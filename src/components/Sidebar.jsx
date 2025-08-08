@@ -5,7 +5,7 @@ import { HiOutlineHome } from "react-icons/hi";
 import { VscTools } from "react-icons/vsc";
 import { RiCodeSSlashFill } from "react-icons/ri";
 import { LuPhone, LuUser } from "react-icons/lu";
-import SocialLink from "../ui/SocialLink";
+import SocialLink from "../ui/AnimateButton";
 
 const Sidebar = ({ activeSection, toggleSidebar }) => {
   const navLinks = [

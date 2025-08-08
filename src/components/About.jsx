@@ -4,6 +4,7 @@ import { FiAward, FiUsers, FiFolder } from "react-icons/fi";
 import { ReactTyped } from "react-typed";
 import IconButtonLink from "../ui/IconButtonLink";
 import { HiChevronDoubleRight } from "react-icons/hi";
+import SocialLink from "../ui/AnimateButton";
 
 const About = () => {
   const stats = [
@@ -55,7 +56,7 @@ const About = () => {
               </h3>
             </div>
 
-            <div className="space-y-4 mb-3 text-lg text-zinc-600 dark:text-zinc-300">
+            <div className="space-y-4 mb-4 text-lg text-zinc-600 dark:text-zinc-300">
               <p>
                 With over 5 years of experience in web development, I specialize
                 in building full-stack applications using the MERN stack
@@ -74,13 +75,11 @@ const About = () => {
                 to open-source projects or exploring new tech innovations.
               </p>
             </div>
-
-            <IconButtonLink
-              icon={HiChevronDoubleRight}
+            <SocialLink
+              icon={<HiChevronDoubleRight />}
               text="Let's Talk"
               href="#contact"
-              bgColor="bg-primary-600 hover:bg-primary-700"
-              textColor="text-white"
+              isBlank={false}
             />
           </motion.div>
 

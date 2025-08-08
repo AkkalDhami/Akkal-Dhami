@@ -11,7 +11,7 @@ import {
 import { RiUserLine } from "react-icons/ri";
 import { toast, ToastContainer, Bounce } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import SocialLink from "../ui/SocialLink";
+import SocialLink from "../ui/AnimateButton";
 
 const Contact = () => {
   const [formData, setFormData] = useState({

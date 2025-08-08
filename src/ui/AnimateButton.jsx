@@ -1,11 +1,11 @@
 import { motion } from "motion/react";
 import React from "react";
 
-const SocialLink = ({ icon, text, href }) => {
+const SocialLink = ({ icon, text, href, isBlank = true }) => {
   return (
     <motion.a
       href={href}
-      target="_blank"
+      target={isBlank ? "_blank" : "_self"}
       initial={{ opacity: 0, y: 50 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8 }}

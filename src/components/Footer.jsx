@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { FiGithub, FiLinkedin, FiArrowUp } from "react-icons/fi";
-import SocialLink from "../ui/SocialLink";
+import SocialLink from "../ui/AnimateButton";
 
 const Footer = () => {
   const [showScrollToTop, setShowScrollToTop] = useState(false);

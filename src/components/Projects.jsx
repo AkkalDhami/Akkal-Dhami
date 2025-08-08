@@ -10,7 +10,7 @@ import {
 } from "react-icons/si";
 import { FaCss3Alt, FaNodeJs } from "react-icons/fa";
 import ProjectCard from "../ui/ProjectCard";
-import SocialLink from "../ui/SocialLink";
+import SocialLink from "../ui/AnimateButton";
 
 const Projects = () => {
   const projects = [
