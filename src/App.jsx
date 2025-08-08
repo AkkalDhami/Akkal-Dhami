@@ -16,7 +16,7 @@ function App() {
   const [activeSection, setActiveSection] = useState("home");
 
   useEffect(() => {
-    // Handle scroll to update active section
+
     const handleScroll = () => {
       const sections = ["home", "about", "skills", "projects", "contact"];
       const scrollPosition = window.scrollY + 100;

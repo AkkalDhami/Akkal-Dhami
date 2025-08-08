@@ -1,14 +1,39 @@
 import React from "react";
 import { motion } from "framer-motion";
-import { FiX } from "react-icons/fi";
+import { FiGithub, FiX } from "react-icons/fi";
+import { HiOutlineHome } from "react-icons/hi";
+import { VscTools } from "react-icons/vsc";
+import { RiCodeSSlashFill } from "react-icons/ri";
+import { LuPhone, LuUser } from "react-icons/lu";
+import SocialLink from "../ui/SocialLink";
 
 const Sidebar = ({ activeSection, toggleSidebar }) => {
   const navLinks = [
-    { id: "home", label: "Home" },
-    { id: "about", label: "About" },
-    { id: "skills", label: "Skills" },
-    { id: "projects", label: "Projects" },
-    { id: "contact", label: "Contact" },
+    {
+      id: "home",
+      icon: <HiOutlineHome />,
+      label: "Home",
+    },
+    {
+      id: "about",
+      icon: <LuUser />,
+      label: "About",
+    },
+    {
+      id: "skills",
+      icon: <VscTools />,
+      label: "Skills",
+    },
+    {
+      id: "projects",
+      icon: <RiCodeSSlashFill />,
+      label: "Projects",
+    },
+    {
+      id: "contact",
+      icon: <LuPhone />,
+      label: "Contact",
+    },
   ];
 
   const scrollToSection = (id) => {
@@ -25,7 +50,7 @@ const Sidebar = ({ activeSection, toggleSidebar }) => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="fixed inset-0 bg-black bg-opacity-50 z-40"
+        className="fixed inset-0 bg-black/30 backdrop-blur-[1px] z-40"
         onClick={toggleSidebar}
       />
 
@@ -34,12 +59,12 @@ const Sidebar = ({ activeSection, toggleSidebar }) => {
         animate={{ x: 0 }}
         exit={{ x: "100%" }}
         transition={{ type: "spring", damping: 15 }}
-        className="fixed top-0 right-0 h-full w-64 z-50 shadow-xl bg-white dark:bg-zinc-900">
+        className="fixed top-0 right-0 h-full w-64 z-50 shadow-xl bg-white dark:bg-[#060010]">
         <div className="flex justify-end p-4">
           <motion.button
             whileTap={{ scale: 0.9 }}
             onClick={toggleSidebar}
-            className="p-2 rounded-full text-zinc-700 hover:bg-zinc-100 dark:text-zinc-300 dark:hover:bg-zinc-900"
+            className="p-2 rounded-full cursor-pointer text-zinc-700 hover:bg-zinc-100 dark:text-zinc-300 dark:hover:bg-zinc-900"
             aria-label="Close sidebar">
             <FiX size={24} />
           </motion.button>
@@ -53,16 +78,21 @@ const Sidebar = ({ activeSection, toggleSidebar }) => {
                 whileHover={{ x: 10 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => scrollToSection(link.id)}
-                className={`px-4 py-3 rounded-lg text-left font-medium transition-colors duration-300
+                className={`px-4 py-3 flex items-center gap-3 rounded-lg text-left font-medium transition-colors duration-300 cursor-pointer
                   ${
                     activeSection === link.id
-                      ? "text-orange-600 bg-indigo-50 dark:bg-zinc-800"
-                      : "text-zinc-700 hover:bg-zinc-100 dark:text-zinc-300 dark:hover:bg-zinc-700"
+                      ? "text-orange-600 bg-zinc-50 dark:bg-[#0d0d1a]"
+                      : "text-zinc-700 hover:bg-zinc-100 dark:text-zinc-300 dark:hover:bg-[#0d0d1a]"
                   }
                 `}>
-                {link.label}
+                {link.icon} {link.label}
               </motion.button>
             ))}
+            <SocialLink
+              icon={<FiGithub />}
+              text="GitHub"
+              href="https://github.com/AkkalDhami"
+            />
           </div>
         </div>
       </motion.div>

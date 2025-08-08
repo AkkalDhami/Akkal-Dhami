@@ -43,7 +43,7 @@ const Navbar = ({ activeSection, toggleSidebar }) => {
       animate={{ y: 0 }}
       transition={{ duration: 0.5 }}
       className={`fixed w-full z-40 transition-all duration-300 ${
-        scrolled ? "dark:bg-[#060010] shadow-md bg-white" : "bg-transparent"
+        scrolled ? "dark:bg-[#09021d] shadow-md bg-white" : "bg-transparent"
       }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
@@ -75,10 +75,10 @@ const Navbar = ({ activeSection, toggleSidebar }) => {
               </div>
             </div>
             <motion.button
-              whileHover={{ rotate: 90 }}
+              whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
               onClick={toggleTheme}
-              className="cursor-pointer"
+              className="cursor-pointer p-2"
               aria-label="Toggle dark mode">
               {darkMode ? <FiSun size={20} /> : <FiMoon size={20} />}
             </motion.button>
@@ -88,12 +88,13 @@ const Navbar = ({ activeSection, toggleSidebar }) => {
             <motion.button
               whileTap={{ scale: 0.9 }}
               onClick={toggleSidebar}
-              className={`inline-flex items-center justify-center p-2 rounded-md dark:text-zinc-300 dark:hover:bg-zinc-700 text-zinc-700 hover:bg-zinc-100`}
+              className={`inline-flex cursor-pointer items-center justify-center p-2 rounded-md dark:text-zinc-300 dark:hover:bg-[#0d0d1a] text-zinc-700 hover:bg-zinc-100`}
               aria-label="Open menu">
               <FiMenu size={24} />
             </motion.button>
           </div>
         </div>
+       
       </div>
     </motion.nav>
   );

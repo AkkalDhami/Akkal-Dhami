@@ -24,7 +24,7 @@ const About = () => {
           <h2 className="text-3xl font-bold text-zinc-900 dark:text-white">
             About Me
           </h2>
-          <div className="w-20 h-1 mx-auto mt-4 bg-indigo-600 dark:bg-indigo-500" />
+
           <p className="mt-6 max-w-2xl mx-auto text-lg text-zinc-600 dark:text-zinc-300">
             Get to know more about me, my background, and what drives me as a
             developer.

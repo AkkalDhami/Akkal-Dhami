@@ -29,7 +29,6 @@ const Skills = () => {
   const skillCategories = [
     {
       title: "Frontend Technologies",
-      icon: <FaReact size={28} />,
       skills: [
         {
           icon: <SiHtml5 fill="#e34f26" size={28} />,
@@ -65,7 +64,6 @@ const Skills = () => {
     },
     {
       title: "Backend Technologies",
-      icon: <FaNodeJs size={28} />,
       skills: [
         {
           icon: <FaNodeJs fill="#3C873A" size={28} />,
@@ -81,7 +79,6 @@ const Skills = () => {
     },
     {
       title: "Database",
-      icon: <FaDatabase size={28} />,
       skills: [
         {
           icon: <SiMongodb fill="#47a248" size={28} />,
@@ -102,7 +99,6 @@ const Skills = () => {
     },
     {
       title: "Tools & Other",
-      icon: <FaGitAlt size={28} />,
       skills: [
         {
           icon: <FaGitAlt fill="#f1502f" size={28} />,
@@ -185,7 +181,6 @@ const Skills = () => {
               transition={{ duration: 0.6, delay: index * 0.1 }}
               className="rounded-xl p-3 sm:p-6">
               <div className="flex items-center gap-3 mb-3">
-                <div className="p-3 rounded-full">{category.icon}</div>
                 <h3
                   className={`text-xl font-semibold ${
                     darkMode ? "text-white" : "text-zinc-900"
@@ -203,6 +198,7 @@ const Skills = () => {
                 {category.skills.map((skill, skillIndex) => (
                   <motion.div
                     key={skillIndex}
+                    whileHover={{ scale: 1.1 }}
                     variants={item}
                     className="p-4 rounded-lg flex items-center gap-3 transition-colors">
                     <div className="p-2 rounded-md">{skill.icon}</div>

@@ -4,6 +4,7 @@ import { FiGithub, FiLinkedin, FiTwitter, FiDownload } from "react-icons/fi";
 import { ReactTyped } from "react-typed";
 import { FaArrowRight } from "react-icons/fa";
 import VSCodeProfileCard from "./CodeCard";
+import SocialLink from "../ui/SocialLink";
 
 const Hero = () => {
   return (
@@ -18,8 +19,7 @@ const Hero = () => {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-          {/* Left Column */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
@@ -40,7 +40,7 @@ const Hero = () => {
                 strings={[
                   "MERN Stack Developer",
                   "React.js Enthusiast",
-                  "Backend Engineer with Node & Express",
+                  "Backend Engineer with Node.JS",
                   "FullStack Developer",
                   "Builder of Modern Web Experiences",
                   "Tech Enthusiast",
@@ -68,7 +68,7 @@ const Hero = () => {
             </motion.p>
 
             <motion.div
-              className="flex flex-wrap gap-4 mt-10"
+              className="flex flex-wrap gap-4 mt-8"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.9, duration: 0.5 }}>
@@ -90,39 +90,26 @@ const Hero = () => {
               </motion.a>
             </motion.div>
 
-            <motion.div
-              className="flex gap-4 mt-10"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 1.2, duration: 0.5 }}>
-              {/* Social Links */}
-              {[
-                ["https://github.com", <FiGithub />],
-                ["https://linkedin.com", <FiLinkedin />],
-                ["https://twitter.com", <FiTwitter />],
-              ].map(([url, icon], idx) => (
-                <a
-                  key={idx}
-                  href={url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="Social Link">
-                  <motion.div
-                    whileHover={{ y: -5, scale: 1.1 }}
-                    className="p-3 rounded-full bg-white hover:bg-zinc-100 dark:bg-zinc-800 dark:hover:bg-zinc-700 shadow-md">
-                    {icon}
-                  </motion.div>
-                </a>
-              ))}
-            </motion.div>
+            <div className="flex flex-wrap mt-10 gap-4">
+              <SocialLink
+                icon={<FiGithub />}
+                text="GitHub"
+                href="https://github.com/AkkalDhami"
+              />
+              <SocialLink
+                icon={<FiLinkedin />}
+                text="LinkedIn"
+                href="https://www.linkedin.com/in/akkal-dhami-854273378/"
+              />
+          
+            </div>
           </motion.div>
 
-          {/* Right Column */}
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8 }}
-            className="relative flex justify-center">
+            className="relative hidden md:flex justify-center">
             <VSCodeProfileCard />
           </motion.div>
         </div>

@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { FiMail, FiMapPin, FiPhone, FiSend } from "react-icons/fi";
+import { FiGithub, FiLinkedin, FiMail, FiMapPin, FiPhone, FiSend } from "react-icons/fi";
 import { RiUserLine } from "react-icons/ri";
 import { toast, ToastContainer, Bounce } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import SocialLink from "../ui/SocialLink";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -116,6 +117,18 @@ const Contact = () => {
                   </div>
                 </div>
               ))}
+            </div>
+            <div className="flex flex-wrap mt-10 gap-4">
+              <SocialLink
+                icon={<FiGithub />}
+                text="GitHub"
+                href="https://github.com/AkkalDhami"
+              />
+              <SocialLink
+                icon={<FiLinkedin />}
+                text="LinkedIn"
+                href="https://www.linkedin.com/in/akkal-dhami-854273378/"
+              />
             </div>
           </motion.div>
 

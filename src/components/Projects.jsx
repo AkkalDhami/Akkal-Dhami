@@ -10,6 +10,7 @@ import {
 } from "react-icons/si";
 import { FaNodeJs } from "react-icons/fa";
 import ProjectCard from "../ui/ProjectCard";
+import SocialLink from "../ui/SocialLink";
 
 const Projects = () => {
   const projects = [
@@ -109,7 +110,7 @@ const Projects = () => {
           <h2 className="text-3xl font-bold text-zinc-900 dark:text-white">
             My Projects
           </h2>
-          <div className="w-20 h-1 mx-auto mt-4 bg-indigo-600 dark:bg-indigo-500" />
+          <div className="w-20 h-1 mx-auto mt-4 bg-orange-600 dark:bg-orange-500" />
           <p className="mt-6 max-w-2xl mx-auto text-lg text-zinc-600 dark:text-zinc-300">
             Check out some of my recent work. Each project represents a unique
             challenge and solution.
@@ -133,14 +134,11 @@ const Projects = () => {
           viewport={{ once: true }}
           transition={{ delay: 0.5 }}
           className="text-center mt-16">
-          <a
-            href="https://github.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-lg font-medium bg-transparent border text-indigo-600 border-indigo-600 hover:bg-indigo-50 dark:text-indigo-400 dark:border-indigo-400 dark:hover:bg-indigo-900/30">
-            View More on GitHub
-            <FiGithub size={20} />
-          </a>
+          <SocialLink
+            icon={<FiGithub />}
+            text="View More on GitHub"
+            href="https://github.com/AkkalDhami"
+          />
         </motion.div>
       </div>
     </section>
