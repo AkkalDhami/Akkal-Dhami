@@ -2,9 +2,9 @@ import React from "react";
 import { motion } from "framer-motion";
 import { FiGithub, FiLinkedin, FiTwitter, FiDownload } from "react-icons/fi";
 import { ReactTyped } from "react-typed";
-import { FaArrowRight } from "react-icons/fa";
 import VSCodeProfileCard from "./CodeCard";
 import SocialLink from "../ui/AnimateButton";
+import { HiChevronDoubleRight } from "react-icons/hi";
 
 const Hero = () => {
   return (
@@ -57,37 +57,42 @@ const Hero = () => {
               animate={{ opacity: 1 }}
               transition={{ delay: 0.6, duration: 0.8 }}>
               I build modern, responsive web applications using{" "}
-              <strong className="font-semibold text-primary-600">MongoDB</strong>
+              <strong className="font-semibold text-primary-600">
+                MongoDB
+              </strong>
               ,{" "}
-              <strong className="font-semibold text-primary-600">Express</strong>
-              , <strong className="font-semibold text-primary-600">React</strong>
-              , and{" "}
-              <strong className="font-semibold text-primary-600">Node.js</strong>
+              <strong className="font-semibold text-primary-600">
+                Express
+              </strong>
+              ,{" "}
+              <strong className="font-semibold text-primary-600">React</strong>,
+              and{" "}
+              <strong className="font-semibold text-primary-600">
+                Node.js
+              </strong>
               . Passionate about creating seamless user experiences with clean,
               efficient code.
             </motion.p>
 
             <motion.div
-              className="flex flex-wrap gap-4 mt-8"
+              className="flex flex-wrap gap-2 sm:gap-4 mt-8"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.9, duration: 0.5 }}>
-              <motion.a
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+              <SocialLink
+                icon={<HiChevronDoubleRight />}
+                text="Let's Talk"
                 href="#contact"
-                className="px-6 py-3 rounded-lg flex items-center gap-2 font-medium bg-primary-600 text-white hover:bg-primary-700">
-                <span>Let's Connect</span> <FaArrowRight />
-              </motion.a>
-
-              <motion.a
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+                isBlank={false}
+                isLarge={true}
+              />
+              <SocialLink
+                icon={<FiDownload />}
+                text="Download CV"
                 href="#"
-                className="px-6 py-3 rounded-lg font-medium flex items-center gap-2 border border-zinc-900 text-zinc-900 hover:bg-zinc-900 hover:text-zinc-50 dark:border-zinc-100 dark:text-zinc-50 dark:hover:bg-zinc-50 dark:hover:text-zinc-900">
-                <FiDownload size={18} />
-                Download CV
-              </motion.a>
+                isBlank={false}
+                isLarge={true}
+              />
             </motion.div>
 
             <div className="flex flex-wrap mt-10 gap-4">

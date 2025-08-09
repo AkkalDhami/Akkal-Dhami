@@ -82,12 +82,14 @@ const About = () => {
                 text="Let's Talk"
                 href="#contact"
                 isBlank={false}
+                isLarge={true}
               />
               <SocialLink
                 icon={<GoDownload />}
                 text="Download CV"
                 href="#"
                 isBlank={false}
+                isLarge={true}
               />
             </div>
           </motion.div>

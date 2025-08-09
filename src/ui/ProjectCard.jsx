@@ -33,7 +33,7 @@ const ProjectCard = ({ project, i }) => {
         className={`w-full relative flex flex-col ${
           i % 2 !== 0 ? "md:flex-row-reverse" : "lg:flex-row"
         } justify-between gap-12 mt-32`}>
-        <div className="project-card-wrapper group mx-auto">
+        <div className="project-card-wrapper mx-auto">
           <ProjectModal
             images={images}
             triggerElement={<img src={thumbnail} alt={title} />}
@@ -52,8 +52,6 @@ const ProjectCard = ({ project, i }) => {
               icon={FiLink}
               text="Live Preview"
               href={live}
-              bgColor="bg-[#060010] hover:bg-zinc-900 dark:bg-white dark:hover:bg-zinc-100"
-              textColor="text-white dark:text-zinc-800"
               isWide={true}
             />
 
@@ -61,8 +59,6 @@ const ProjectCard = ({ project, i }) => {
               icon={FaCode}
               text="Source Code"
               href={github}
-              bgColor="bg-primary-600 hover:bg-primary-700"
-              textColor="text-white"
               isWide={true}
             />
           </div>
