@@ -1,0 +1,72 @@
+<mjml>
+  <mj-head>
+    <mj-attributes>
+      <mj-all font-family="Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', 'Apple Color Emoji', 'Segoe UI Emoji'" />
+      <mj-text font-size="16px" color="#000000" />
+      <mj-section padding="0px" />
+      <mj-column padding="0px" />
+    </mj-attributes>
+  </mj-head>
+
+  <mj-body background-color="#ffffff">
+    <mj-section padding="32px 16px">
+      <mj-column>
+        <mj-wrapper padding="0" background-color="#ffffff" border-radius="0" css-class="card">
+          
+          <!-- Header -->
+          <mj-section padding="24px 24px 0 24px">
+            <mj-column>
+              <mj-text align="left" color="#666666" padding="8px 0 6px 0" font-size="12px">
+                {{APP_NAME}}
+              </mj-text>
+              <mj-text align="left" font-size="22px" font-weight="600" padding="8px 0 16px 0">
+                Admin Login OTP
+              </mj-text>
+            </mj-column>
+          </mj-section>
+
+          <!-- Divider -->
+          <mj-section>
+            <mj-column>
+              <mj-divider border-width="1px" border-color="#e5e7eb" />
+            </mj-column>
+          </mj-section>
+
+          <!-- OTP Code -->
+          <mj-section padding="4px 4px 6px 4px">
+            <mj-column>
+              <mj-text align="left" color="#333333" padding-bottom="12px">
+                Use the code below to log in. This code expires in 10 minutes.
+              </mj-text>
+              <mj-text
+                align="center"
+                font-size="24px"
+                font-weight="700"
+                letter-spacing="6px"
+                padding="12px"
+                background-color="#000"
+                color="#111111"
+                border="1px solid #000"
+                border-radius="4px"
+              >
+                {{CODE}}
+              </mj-text>
+            </mj-column>
+          </mj-section>
+
+          <!-- Footer -->
+          <mj-section padding="0 4px 4px 4px">
+            <mj-column>
+              <mj-text align="left" color="#666666" font-size="12px" padding-top="16px">
+                If you didn't request this, you can safely ignore this email.
+              </mj-text>
+              <mj-text align="left" color="#666666" font-size="11px" padding-top="8px">
+                Sent by {{APP_NAME}}
+              </mj-text>
+            </mj-column>
+          </mj-section>
+        </mj-wrapper>
+      </mj-column>
+    </mj-section>
+  </mj-body>
+</mjml>
