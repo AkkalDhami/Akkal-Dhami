@@ -18,7 +18,7 @@ import aboutRouter from './routes/aboutRoutes.js';
 const app = express();
 
 // Middleware
-const rawCorsOrigins = process.env.CORS_ORIGIN || 'http://localhost:5173,http://localhost:5174';
+const rawCorsOrigins = process.env.CORS_ORIGIN || 'http://localhost:5173,http://localhost:5174,http://localhost:5175';
 const allowedOrigins = rawCorsOrigins.split(',').map((s) => s.trim());
 app.use(cors({
     origin: (origin, callback) => {
