@@ -100,6 +100,7 @@ export const createProject = async (req, res) => {
 export const updateProject = async (req, res) => {
     try {
         const { id } = req.params;
+       
         if (!id) {
             return res.status(400).json({
                 success: false,
@@ -117,12 +118,10 @@ export const updateProject = async (req, res) => {
 
         // Handle thumbnail update
         if (req.files?.thumbnail) {
-            // Delete old thumbnail from Cloudinary
             if (project.thumbnail?.public_id) {
                 await cloudinary.uploader.destroy(project.thumbnail.public_id);
             }
 
-            // Upload new thumbnail
             const result = await cloudinary.uploader.upload(
                 req.files.thumbnail.tempFilePath,
                 { folder: "projects" }
@@ -136,12 +135,10 @@ export const updateProject = async (req, res) => {
 
         // Handle multiple images update
         if (req.files?.images) {
-            // Convert single upload into array
             const imagesArray = Array.isArray(req.files.images)
                 ? req.files.images
                 : [req.files.images];
 
-            // Delete old images only if new images are uploaded
             if (project.images?.length > 0) {
                 for (const img of project.images) {
                     if (img.public_id) {
@@ -163,6 +160,8 @@ export const updateProject = async (req, res) => {
             }
             req.body.images = newImages;
         }
+
+        console.log(req.body);
 
         const updatedProject = await Project.findByIdAndUpdate(id, req.body, {
             new: true,

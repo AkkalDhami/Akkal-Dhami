@@ -4,11 +4,9 @@ import { otpRequestLimiter } from '../utils/rateLimiter.js';
 
 const router = express.Router();
 
-router.post('/otp', requestOtp);           // Request OTP
+router.post('/otp', otpRequestLimiter, requestOtp);           // Request OTP
 router.post('/otp/verify', verifyOtp);     // Verify OTP
 router.post('/refresh', refreshToken);     // Refresh JWT
 router.post('/logout', logout);            // Logout
 
 export default router;
-
-

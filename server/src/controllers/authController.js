@@ -41,7 +41,7 @@ export async function verifyOtp(req, res) {
         if (!code || !/^[0-9]{6}$/.test(code)) {
             return res.status(400).json({
                 success: false,
-                message: 'Invalid code'
+                message: 'Invalid OTP code'
             });
         }
 

@@ -20,7 +20,8 @@ router.post("/create",
         { name: "images", maxCount: 10 },
     ]), createProject)
 
-router.put("/update/:id", updateProject)
+router.put("/update/:id", upload.any(),
+    updateProject)
 
 router.delete("/delete/:id", deleteProject)
 
