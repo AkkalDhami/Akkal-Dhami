@@ -1,7 +1,7 @@
 import rateLimit from 'express-rate-limit';
 
 export const otpRequestLimiter = rateLimit({
-    windowMs: 10 * 60 * 1000, // 10 minutes
+    windowMs: 10 * 60 * 1000, 
     max: 3,
     message: {
         success: false,

@@ -3,7 +3,6 @@ import fs from 'fs';
 import path from 'path';
 import mjml2html from 'mjml';
 import 'dotenv/config';
-import mjml from 'mjml';
 
 let transporter;
 
