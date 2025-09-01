@@ -11,7 +11,6 @@ import Sidebar from "./components/Sidebar";
 import { motion, AnimatePresence } from "motion/react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import AdminOtp from "./pages/AdminOtp.jsx";
-import AdminDashboard from "./pages/AdminDashboard.jsx";
 import { FiMoon, FiSun } from "react-icons/fi";
 
 function App() {
@@ -53,16 +52,7 @@ function App() {
     >
       <Routes>
         <Route path="/admin/login" element={<AdminOtp />} />
-        <Route
-          path="/admin"
-          element={
-            localStorage.getItem("admin_access_token") ? (
-              <AdminDashboard />
-            ) : (
-              <Navigate to="/admin/login" replace />
-            )
-          }
-        />
+       
         <Route
           path="/"
           element={
