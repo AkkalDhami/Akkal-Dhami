@@ -50,8 +50,8 @@ export default function OtpLogin() {
   };
 
   return (
-    <section className="min-h-screen m-2 bg-background flex items-center justify-center">
-      <div className="max-w-[380px] w-full mt-20 p-6 border rounded-lg shadow-lg">
+    <section className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 items-center justify-center flex">
+      <div className="max-w-[380px] bg-background w-full mt-20 p-6 border rounded-lg shadow-lg">
         {step === 1 && (
           <>
             <h2 className="text-xl font-bold mb-4">Admin Login</h2>
@@ -74,14 +74,14 @@ export default function OtpLogin() {
           <>
             <h2 className="text-xl font-bold mb-4">Enter OTP</h2>
             <Label htmlFor="otp" className="mb-2">
-              OTP CODE
+              OTP CODE:
             </Label>
             <Input
               id="otp"
               placeholder="6-digit code"
               value={code}
               onChange={(e) => setCode(e.target.value)}
-              className="mb-4 px-3.5 py-4 font-medium"
+              className="mb-4 tracking-widest px-3.5 py-5 text-xl font-medium"
             />
             <Button
               onClick={handleVerifyOtp}
