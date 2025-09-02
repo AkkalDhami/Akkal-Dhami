@@ -12,6 +12,7 @@ import { RiUserLine } from "react-icons/ri";
 import { toast, ToastContainer, Bounce } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import SocialLink from "../ui/AnimateButton";
+import { useSendMessageMutation } from "../features/contactApi";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -21,22 +22,30 @@ const Contact = () => {
     message: "",
   });
 
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [sendMessage, { isLoading: isSubmitting, }] =
+    useSendMessageMutation();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsSubmitting(true);
 
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setFormData({ name: "", email: "", subject: "", message: "" });
-      toast.success("Message sent successfully! 🎉");
-    }, 1500);
+    try {
+      const res = await sendMessage(formData).unwrap();
+      console.log(res);
+
+      if (res.success) {
+        toast.success(res.message || "Message sent successfully!");
+        setFormData({ name: "", email: "", subject: "", message: "" });
+      } else {
+        toast.error(res?.message || "Failed to send message.");
+      }
+    } catch (error) {
+      toast.error(error?.data?.message || "Something went wrong!");
+    }
   };
 
   const contactInfo = [
@@ -62,6 +71,7 @@ const Contact = () => {
     },
   ];
 
+
   return (
     <section id="contact" className="py-20">
       <ToastContainer
@@ -72,7 +82,6 @@ const Contact = () => {
         closeOnClick
         rtl={false}
         pauseOnFocusLoss
-        draggable
         pauseOnHover
         theme="dark"
         transition={Bounce}
@@ -237,7 +246,7 @@ const Contact = () => {
                   {isSubmitting ? (
                     <>
                       <svg
-                        className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                        className="animate-spin -ml-1 mr-3 h-5 w-5 text-black dark:text-white"
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
                         viewBox="0 0 24 24">
@@ -261,10 +270,10 @@ const Contact = () => {
                     </>
                   )}
                 </motion.button>
-                  <div className="absolute bottom-[-1px] group-hover:via-indigo-600 left-1/2 -translate-x-1/2 h-px w-[calc(100%-24px)] bg-gradient-to-r from-transparent  via-primary-700 to-transparent"></div>
-                  <div className="absolute top-[1px] group-hover:via-indigo-600 left-1/2 -translate-x-1/2 h-px w-[calc(100%-24px)] bg-gradient-to-r from-transparent  via-primary-700 to-transparent"></div>
-                  <div className="absolute top-[1px] group-hover:via-indigo-600 h-[calc(100%-2px)] w-px bg-gradient-to-t from-transparent  via-primary-700 to-transparent"></div>
-                  <div className="absolute top-[1px] right-[-1px] group-hover:via-indigo-600 h-[calc(100%-2px)] w-px bg-gradient-to-t from-transparent  via-primary-700 to-transparent"></div>
+                <div className="absolute bottom-[-1px] group-hover:via-indigo-600 left-1/2 -translate-x-1/2 h-px w-[calc(100%-24px)] bg-gradient-to-r from-transparent  via-primary-700 to-transparent"></div>
+                <div className="absolute top-[1px] group-hover:via-indigo-600 left-1/2 -translate-x-1/2 h-px w-[calc(100%-24px)] bg-gradient-to-r from-transparent  via-primary-700 to-transparent"></div>
+                <div className="absolute top-[1px] group-hover:via-indigo-600 h-[calc(100%-2px)] w-px bg-gradient-to-t from-transparent  via-primary-700 to-transparent"></div>
+                <div className="absolute top-[1px] right-[-1px] group-hover:via-indigo-600 h-[calc(100%-2px)] w-px bg-gradient-to-t from-transparent  via-primary-700 to-transparent"></div>
               </motion.div>
             </form>
           </motion.div>
