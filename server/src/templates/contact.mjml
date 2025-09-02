@@ -1,0 +1,75 @@
+<mjml>
+  <mj-head>
+    <mj-title>Contact Message Notification</mj-title>
+    <mj-attributes>
+      <mj-all font-family="Helvetica, Arial, sans-serif" />
+      <mj-text color="#333" line-height="1.6" />
+    </mj-attributes>
+    <mj-style>
+      .info-label { font-size: 14px; color: #6c757d; margin-bottom: 0px;
+      font-weight: 500; } .info-value { font-size: 16px; color: #212529; }
+    </mj-style>
+  </mj-head>
+  <mj-body background-color="#f8f9fa">
+    <mj-wrapper padding="2px">
+   
+        <!-- Header -->
+        <mj-section background-color="#ff7700" padding="1px 5px">
+          <mj-column>
+            <mj-text
+              align="center"
+              color="#ffffff"
+              font-size="18px"
+              font-weight="bold"
+              >New Contact Message</mj-text
+            >
+          </mj-column>
+        </mj-section>
+
+        <!-- Content -->
+        <mj-section padding="10px 0">
+          <mj-column>
+            <!-- Name -->
+            <mj-text css-class="info-label" font-weight="bold" font-size="15px">Name:</mj-text>
+            <mj-text css-class="info-value">{{NAME}}</mj-text>
+
+
+            <!-- Email -->
+            <mj-text css-class="info-label" font-weight="bold" font-size="15px">Email:</mj-text>
+            <mj-text css-class="info-value">{{EMAIL}}</mj-text>
+
+
+            <!-- Sent At -->
+            <mj-text css-class="info-label" font-weight="bold" font-size="15px">Sent At:</mj-text>
+            <mj-text css-class="info-value">{{SENT_AT}}</mj-text>
+
+            <!-- Message -->
+            <mj-text css-class="info-label" font-weight="bold" font-size="15px">Message:</mj-text>
+            <mj-text css-class="info-value"> {{MESSAGE}} </mj-text>
+
+            <!-- Button -->
+            <mj-button
+              align="center"
+              background-color="#ff7700"
+              color="#ffffff"
+              border-radius="4px"
+              padding="12px 4px"
+              font-weight="500"
+              href="{{ADMIN_PANEL_URL}}">
+              View in Admin Panel
+            </mj-button>
+          </mj-column>
+        </mj-section>
+
+        <!-- Footer -->
+        <mj-section>
+          <mj-column>
+            <mj-text align="center" color="#6c757d" font-size="14px">
+              © {{CURRENT_DATE}} Akkal Dhami. All rights reserved.
+            </mj-text>
+          </mj-column>
+        </mj-section>
+   
+    </mj-wrapper>
+  </mj-body>
+</mjml>
