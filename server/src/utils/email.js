@@ -36,7 +36,8 @@ export async function sendOtpEmail({ to, code }) {
     const templatePath = path.resolve(process.cwd(), 'src', 'templates', 'otp.mjml');
     const mjml = fs.readFileSync(templatePath, 'utf8')
         .replaceAll('{{CODE}}', String(code))
-        .replaceAll('{{APP_NAME}}', appName);
+        .replaceAll('{{APP_NAME}}', appName)
+        .replaceAll('{{CURRENT_DATE}}', String(new Date().getFullYear().toString()));
     const { html, errors } = mjml2html(mjml, { validationLevel: 'soft' });
     if (!html) {
         throw new Error('Failed to render OTP email');
@@ -46,3 +47,7 @@ export async function sendOtpEmail({ to, code }) {
 }
 
 
+export async function sendMessage({ to, from, html, subject }) {
+    const t = getTransporter();
+    await t.sendMail({ from, to, html, subject });
+}
