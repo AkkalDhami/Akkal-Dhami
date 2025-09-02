@@ -14,6 +14,9 @@ import authRouter from './routes/authRoutes.js';
 import projectRouter from './routes/projectRoutes.js';
 import skillRouter from './routes/skillRoutes.js';
 import aboutRouter from './routes/aboutRoutes.js';
+import educationRouter from './routes/educationRoutes.js';
+import experienceRouter from './routes/experienceRoutes.js';
+import messageRouter from './routes/messageRoutes.js';
 
 const app = express();
 
@@ -28,7 +31,7 @@ app.use(cors({
     },
     credentials: true
 }));
-app.use(express.json());
+app.use(express.json({ extended: true, limit: '10mb' }));
 app.use(cookieParser());
 app.use(morgan(process.env.NODE_ENV === 'production' ? 'combined' : 'dev'));
 
@@ -37,6 +40,9 @@ app.use('/api/auth', authRouter);
 app.use('/api/project', projectRouter);
 app.use('/api/skill', skillRouter);
 app.use('/api/about', aboutRouter);
+app.use('/api/education', educationRouter);
+app.use('/api/experience', experienceRouter);
+app.use('/api/message', messageRouter);
 
 app.get('/', (req, res) => {
     res.json({ status: 'ok', service: 'portfolio-server' });
