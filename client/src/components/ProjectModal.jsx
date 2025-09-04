@@ -108,7 +108,7 @@ const ProjectModal = ({
                     onClick={() => openFullscreen(img)}
                     whileTap={imageAnimation.tap}>
                     <motion.img
-                      src={img}
+                      src={img.url}
                       alt={`Project view ${index + 1}`}
                       className={imageClassName}
                       loading="lazy"
@@ -146,7 +146,7 @@ const ProjectModal = ({
             </button>
 
             <motion.img
-              src={fullscreenImage}
+              src={fullscreenImage.url}
               alt="Fullscreen view"
               className="max-w-full max-h-full object-contain"
               initial={{ scale: 0.9 }}
