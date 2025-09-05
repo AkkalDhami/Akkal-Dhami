@@ -16,9 +16,9 @@ const SocialLink = ({ icon, text, href, isBlank = true, isLarge = false }) => {
       } rounded-lg gap-2 text-zinc-600 dark:text-zinc-300 border border-zinc-500/30`}>
       {icon}
       {text}
-      <div className="absolute -top-px group-hover:via-indigo-600 left-1/2 -translate-x-1/2 h-px w-[calc(100%-24px)] bg-gradient-to-r from-transparent  via-primary-700 to-transparent"></div>
+      <div className="absolute -top-px via-primary-600 left-1/2 -translate-x-1/2 h-px w-[calc(100%-24px)] bg-gradient-to-r from-transparent  group-hover:via-zinc-900 group-hover:dark:via-zinc-100 to-transparent"></div>
 
-      <div className="absolute -bottom-px group-hover:via-indigo-600 left-1/2 -translate-x-1/2 h-px w-[calc(100%-24px)] bg-gradient-to-r from-transparent via-primary-600 to-transparent"></div>
+      <div className="absolute -bottom-px via-primary-600 left-1/2 -translate-x-1/2 h-px w-[calc(100%-24px)] bg-gradient-to-r from-transparent group-hover:via-zinc-900 group-hover:dark:via-zinc-100 to-transparent"></div>
     </motion.a>
   );
 };
