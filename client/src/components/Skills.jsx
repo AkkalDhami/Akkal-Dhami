@@ -21,12 +21,22 @@ import {
   SiPostman,
 } from "react-icons/si";
 import { VscVscode } from "react-icons/vsc";
-import { useTheme } from "../context/ThemeContext"; // <-- use theme context
 import SkillsCard from "../ui/SkillsCard";
+import { useSelector } from "react-redux";
+import { useGetSkillsQuery } from "../features/skillApi";
+import { useMemo } from "react";
 
 const Skills = () => {
-  const { darkMode } = useTheme(); // <-- use theme value
+  const { darkMode } = useSelector((state) => state.theme);
 
+  const { data } = useGetSkillsQuery();
+
+  const skillsByCategory = useMemo(() => {
+    return data?.skills?.reduce((acc, skill) => {
+      acc[skill.category] = [...(acc[skill.category] || []), skill];
+      return acc;
+    }, {});
+  }, [data?.skills]);
   const skillCategories = [
     {
       title: "Frontend Technologies",
@@ -155,12 +165,7 @@ const Skills = () => {
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
           className="text-center mb-16">
-          <h2
-            className={`text-3xl font-bold ${
-              darkMode ? "text-white" : "text-zinc-900"
-            }`}>
-            My Skills
-          </h2>
+          <h2 className={`text-3xl font-bold`}>My Skills</h2>
           <p
             className={`mt-6 max-w-2xl mx-auto text-lg dark:text-zinc-300 text-zinc-600`}>
             Technologies and tools I work with
@@ -168,9 +173,17 @@ const Skills = () => {
         </motion.div>
 
         <div>
-          {skillCategories.map((category, index) => (
-            <SkillsCard key={index} category={category} index={index} />
-          ))}
+
+          {Object.entries(skillsByCategory || {}).map(
+            ([category, categorySkills], index) => (
+              <SkillsCard
+                key={category}
+                categorySkills={categorySkills}
+                category={category}
+                index={index}
+              />
+            )
+          )}
         </div>
       </div>
     </section>
