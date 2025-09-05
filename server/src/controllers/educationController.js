@@ -21,7 +21,7 @@ export const addEducation = async (req, res) => {
     try {
         console.log(req.body);
         const { institution, degree, startDate, endDate, description } = req.body;
-        const newEducation = await Education.create({
+        await Education.create({
             institution,
             degree,
             startDate,
@@ -31,7 +31,6 @@ export const addEducation = async (req, res) => {
         res.status(201).json({
             success: true,
             message: 'Education added successfully',
-            newEducation
         });
     } catch (error) {
         res.status(500).json({
@@ -88,7 +87,6 @@ export const updateEducation = async (req, res) => {
         res.status(200).json({
             success: true,
             message: "Education updated successfully",
-            updatedEducation
         });
     } catch (error) {
         res.status(500).json({

@@ -5,16 +5,23 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { Loader2 } from "lucide-react";
 
-export function EducationForm({ initialData, onSubmit, onCancel }) {
+import { dateFormater } from "../../utils/dateFormater";
+
+export function EducationForm({ initialData, onSubmit, onCancel, isLoading }) {
+  console.log(initialData);
   const [formData, setFormData] = useState({
+    _id:initialData?._id || "",
     institution: initialData?.institution || "",
     degree: initialData?.degree || "",
-    startDate: initialData?.startDate || "",
-    endDate: initialData?.endDate || "",
+    startDate: dateFormater(initialData?.startDate) || "",
+    endDate: dateFormater(initialData?.endDate) || "",
     description: initialData?.description || "",
   });
-
+  
+  console.log(formData);
+  
   const handleSubmit = (e) => {
     e.preventDefault();
     onSubmit(formData);
@@ -41,7 +48,7 @@ export function EducationForm({ initialData, onSubmit, onCancel }) {
           id="degree"
           value={formData.degree}
           onChange={(e) => setFormData({ ...formData, degree: e.target.value })}
-          placeholder="e.g., Bachelor of Science in Computer Science"
+          placeholder="Bachelor of Science in Computer Science"
           required
         />
       </div>
@@ -92,7 +99,16 @@ export function EducationForm({ initialData, onSubmit, onCancel }) {
           Cancel
         </Button>
         <Button type="submit">
-          {initialData ? "Update Education" : "Add Education"}
+          {isLoading ? (
+            <>
+              <Loader2 className="h-4 w-4 animate-spin" />
+              {initialData ? "Updating..." : "Adding..."}
+            </>
+          ) : initialData ? (
+            "Update"
+          ) : (
+            "Add"
+          )}
         </Button>
       </div>
     </form>

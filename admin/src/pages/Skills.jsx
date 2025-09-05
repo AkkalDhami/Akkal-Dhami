@@ -17,7 +17,14 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Plus, Code, Briefcase, GraduationCap, Search, Loader2 } from "lucide-react";
+import {
+  Plus,
+  Code,
+  Briefcase,
+  GraduationCap,
+  Search,
+  Loader2,
+} from "lucide-react";
 
 import { ExperienceForm } from "@/components/skill/experience-form";
 import { ExperienceCard } from "@/components/skill/experience-card";
@@ -35,7 +42,15 @@ import {
   useCreateSkillMutation,
   useDeleteSkillMutation,
   useGetSkillsQuery,
+  useUpdateSkillMutation,
 } from "../features/skill/skillApi";
+
+import {
+  useGetEducationsQuery,
+  useAddEducationMutation,
+  useDeleteEducationMutation,
+  useUpdateEducationMutation,
+} from "../features/education/eduApi";
 
 const ConfirmationDialog = ({
   open,
@@ -77,6 +92,7 @@ const ConfirmationDialog = ({
 };
 
 export default function Skills() {
+  // skill api endpoints
   const { data, error, isError, isLoading } = useGetSkillsQuery();
 
   const [
@@ -84,15 +100,42 @@ export default function Skills() {
     { isError: isCreatingError, isLoading: isCreating, error: creatingError },
   ] = useCreateSkillMutation();
 
-  const [deleteSkill, { isError: isDeletingError, isLoading: isDeleting }] =
-    useDeleteSkillMutation();
+  const [deleteSkill, { isLoading: isDeleting }] = useDeleteSkillMutation();
 
+  const [updateSkill, { isLoading: isUpdating }] = useUpdateSkillMutation();
+
+  // education api endpoints
+  const {
+    data: eduData,
+    error: eduError,
+    isError: isEduError,
+    isLoading: isEduLoading,
+  } = useGetEducationsQuery();
+
+  const [
+    addEducation,
+    {
+      isError: isEduCreatingError,
+      isLoading: isEduCreating,
+      error: creatingEduError,
+    },
+  ] = useAddEducationMutation();
+
+  const [deleteEducation, { isLoading: isEduDeleting }] =
+    useDeleteEducationMutation();
+
+  const [updateEducation, { isLoading: isEduUpdating }] =
+    useUpdateEducationMutation();
+  
   const [skillDialogOpen, setSkillDialogOpen] = useState(false);
-  const [experienceDialogOpen, setExperienceDialogOpen] = useState(false);
-  const [educationDialogOpen, setEducationDialogOpen] = useState(false);
   const [editingSkill, setEditingSkill] = useState(null);
+
+  const [experienceDialogOpen, setExperienceDialogOpen] = useState(false);
   const [editingExperience, setEditingExperience] = useState(null);
+
   const [editingEducation, setEditingEducation] = useState(null);
+  const [educationDialogOpen, setEducationDialogOpen] = useState(false);
+
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   const [confirmAction, setConfirmAction] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
@@ -100,8 +143,6 @@ export default function Skills() {
 
   // Initial data
   const skills = data?.skills || [];
-
-  const dispatch = useDispatch();
 
   const [experience, setExperience] = useState([
     {
@@ -124,21 +165,13 @@ export default function Skills() {
     },
   ]);
 
-  const [education, setEducation] = useState([
-    {
-      id: "1",
-      institution: "University of Technology",
-      degree: "Bachelor of Science in Computer Science",
-      startDate: "2016-09",
-      endDate: "2020-05",
-      description: "Focused on software engineering and algorithms.",
-    },
-  ]);
+  const education = eduData?.education || [];
+  console.log(education);
 
   // Memoized filtered data
   const filteredSkills = useMemo(() => {
     const term = searchTerm.toLowerCase();
-    return skills.filter(
+    return skills?.filter(
       (skill) =>
         skill.name.toLowerCase().includes(term) ||
         skill.description.toLowerCase().includes(term)
@@ -167,7 +200,7 @@ export default function Skills() {
 
   // Group skills by category
   const skillsByCategory = useMemo(() => {
-    return filteredSkills.reduce((acc, skill) => {
+    return filteredSkills?.reduce((acc, skill) => {
       acc[skill.category] = [...(acc[skill.category] || []), skill];
       return acc;
     }, {});
@@ -182,8 +215,6 @@ export default function Skills() {
   // Skill handlers
   const handleAddSkill = useCallback(
     async (skillData) => {
-      console.log(skillData);
-
       try {
         const result = await createSkill({
           ...skillData,
@@ -194,10 +225,11 @@ export default function Skills() {
         }).unwrap();
         console.log("Result:", result);
         if (!result.success) {
-          toast.error(result.message || "Failed to create skill");
+          toast.error(result?.message || "Failed to create skill");
           return;
         }
-        toast.success(result.message || "Skill created successfully!");
+        toast.success(result?.message || "Skill created successfully!");
+        setSkillDialogOpen(false);
       } catch (error) {
         console.error("Error creating skill:", error);
       }
@@ -205,24 +237,37 @@ export default function Skills() {
     [createSkill]
   );
 
-  const handleEditSkill = useCallback(
-    (id, skillData) => {
-      setEditingSkill(id);
-      dispatch(editSkill({ id, data: {} }));
-      setSkillDialogOpen(true);
-      toast.success("Skill updated successfully!");
-    },
-    [dispatch]
-  );
+  const handleEditSkill = useCallback((id, skillData) => {
+    setEditingSkill(skillData);
+    setSkillDialogOpen(true);
+  }, []);
 
   const handleUpdateSkill = useCallback(
-    (id, skillData) => {
-      dispatch(editSkill({ id, data: skillData }));
-      setSkillDialogOpen(false);
-      setEditingSkill(null);
-      toast.success("Skill updated successfully!");
+    async (skillData) => {
+      try {
+        const res = await updateSkill({
+          id: skillData._id,
+          data: {
+            ...skillData,
+            icon: {
+              component: skillData?.icon?.component?.name,
+              color: skillData?.icon?.color,
+            },
+          },
+        }).unwrap();
+        if (res?.success) {
+          toast.success(res?.message || "Skill updated successfully!");
+        } else {
+          toast.error(res?.message || "Failed to update skill");
+        }
+        setEditingSkill(null);
+        setSkillDialogOpen(false);
+      } catch (error) {
+        console.log(error);
+        toast.error(error?.data?.message || "Failed to update skill");
+      }
     },
-    [dispatch]
+    [updateSkill]
   );
 
   const handleDeleteSkillConfirmed = useCallback(
@@ -265,11 +310,6 @@ export default function Skills() {
     toast.success("Experience added successfully!");
   }, []);
 
-  const handleEditEducation = useCallback((edu) => {
-    setEditingEducation(edu);
-    setEducationDialogOpen(true);
-  }, []);
-
   const handleUpdateExperience = useCallback((expData) => {
     setExperience((prev) =>
       prev.map((e) => (e.id === expData.id ? expData : e))
@@ -294,41 +334,79 @@ export default function Skills() {
   );
 
   // Education handlers
-  const handleAddEducation = useCallback((eduData) => {
-    setEducation((prev) => [
-      ...prev,
-      { ...eduData, id: Date.now().toString() },
-    ]);
-    setEducationDialogOpen(false);
-    toast.success("Education added successfully!");
+  const handleAddEducation = useCallback(
+    async (eduData) => {
+      try {
+        const res = await addEducation(eduData).unwrap();
+
+        if (isEduCreatingError) {
+          toast.error(creatingEduError);
+        }
+
+        if (res?.success) {
+          toast.success(res?.message || "Education added successfully!");
+        } else {
+          toast.error(res?.message || "Error while adding education");
+        }
+      } catch (err) {
+        console.log(err);
+        toast.error(err?.data?.message || err?.message);
+      } finally {
+        setEducationDialogOpen(false);
+      }
+    },
+    [addEducation, isEduCreatingError, creatingEduError]
+  );
+
+  const handleEditEducation = useCallback((edu) => {
+    setEditingEducation(edu);
+    setEducationDialogOpen(true);
   }, []);
 
-  const handleUpdateEducation = useCallback((eduData) => {
-    setEducation((prev) =>
-      prev.map((e) => (e.id === eduData.id ? eduData : e))
-    );
-    setEducationDialogOpen(false);
-    setEditingEducation(null);
-    toast.success("Education updated successfully!");
-  }, []);
-
-  const handleEditExperience = useCallback((exp) => {
-    setEditingExperience(exp);
-    setExperienceDialogOpen(true);
-  }, []);
+  const handleUpdateEducation = useCallback(
+    async (eduData) => {
+      try {
+        const res = await updateEducation({
+          id: eduData._id,
+          data: eduData,
+        }).unwrap();
+        if (res?.success) {
+          toast.success(res?.message || "Education updated successfully!");
+        } else {
+          toast.error(res?.message || "Error while updating education");
+        }
+      } catch (err) {
+        console.log(err);
+        toast.error(err?.data?.message || err?.message);
+      } finally {
+        setEducationDialogOpen(false);
+        setEditingEducation(null);
+      }
+    },
+    [updateEducation]
+  );
 
   const handleDeleteEducation = useCallback(
     (edu) => {
       showConfirmation(
         "Delete Education",
         `Delete "${edu.degree}" from ${edu.institution}?`,
-        () => {
-          setEducation((prev) => prev.filter((e) => e.id !== edu.id));
-          toast.success("Education deleted successfully!");
+        async () => {
+          try {
+            const res = await deleteEducation(edu._id).unwrap();
+            if (res?.success) {
+              toast.success(res?.message || "Education added successfully!");
+            } else {
+              toast.error(res?.message || "Error while adding education");
+            }
+          } catch (err) {
+            console.log(err);
+            toast.error(err?.data?.message || err?.message);
+          } 
         }
       );
     },
-    [showConfirmation]
+    [deleteEducation, showConfirmation]
   );
 
   // Dialog handlers
@@ -373,7 +451,7 @@ export default function Skills() {
             <TabsList className="grid w-full grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3">
               <TabsTrigger value="skills" className="gap-2">
                 <Code className="h-4 w-4" />
-                Skills ({filteredSkills.length})
+                Skills ({filteredSkills?.length})
               </TabsTrigger>
               <TabsTrigger value="experience" className="gap-2">
                 <Briefcase className="h-4 w-4" />
@@ -406,7 +484,7 @@ export default function Skills() {
                   <DialogContent>
                     <DialogHeader>
                       <DialogTitle>
-                        {editingSkill ? "Edit Skill" : "Add New Skill"}
+                        {editingSkill ? "Update Skill" : "Add New Skill"}
                       </DialogTitle>
                       <DialogDescription>
                         {editingSkill
@@ -421,7 +499,7 @@ export default function Skills() {
                         editingSkill ? handleUpdateSkill : handleAddSkill
                       }
                       onCancel={() => setSkillDialogOpen(false)}
-                      isLoading={isCreating}
+                      isLoading={isCreating || isUpdating}
                     />
                   </DialogContent>
                 </Dialog>
@@ -435,12 +513,12 @@ export default function Skills() {
 
               {isError && (
                 <div className="flex justify-center items-center">
-                  Error: {error.message}
+                  Error: {error?.message || error?.error}
                 </div>
               )}
 
               <div className="space-y-6">
-                {Object.entries(skillsByCategory).map(
+                {Object.entries(skillsByCategory || {}).map(
                   ([category, categorySkills]) => (
                     <Card key={category}>
                       <CardHeader>
@@ -456,7 +534,7 @@ export default function Skills() {
                             <SkillCard
                               key={skill._id}
                               skill={skill}
-                              onEdit={() => handleEditSkill(skill.id, skill)}
+                              onEdit={() => handleEditSkill(skill._id, skill)}
                               onDelete={handleDeleteSkill}
                             />
                           ))}
@@ -539,7 +617,6 @@ export default function Skills() {
                   <ExperienceCard
                     key={exp.id}
                     experience={exp}
-                    onEdit={handleEditExperience}
                     onDelete={handleDeleteExperience}
                   />
                 ))}
@@ -595,7 +672,8 @@ export default function Skills() {
                       </DialogDescription>
                     </DialogHeader>
                     <EducationForm
-                      education={editingEducation}
+                      initialData={editingEducation}
+                      isLoading={isEduCreating || isEduUpdating}
                       onSubmit={
                         editingEducation
                           ? handleUpdateEducation
@@ -609,11 +687,21 @@ export default function Skills() {
                   </DialogContent>
                 </Dialog>
               </div>
+              {isEduLoading && (
+                <div className="flex justify-center items-center">
+                  Loading...
+                </div>
+              )}
 
+              {isEduError && (
+                <div className="flex justify-center items-center">
+                  Error: {eduError?.message || eduError?.error}
+                </div>
+              )}
               <div className="space-y-4">
-                {filteredEducation.map((edu) => (
+                {filteredEducation?.map((edu) => (
                   <EducationCard
-                    key={edu.id}
+                    key={edu._id}
                     education={edu}
                     onEdit={handleEditEducation}
                     onDelete={handleDeleteEducation}
@@ -645,7 +733,7 @@ export default function Skills() {
         title={confirmAction?.title}
         message={confirmAction?.message}
         onConfirm={confirmAction?.onConfirm}
-        isDeleting={isDeleting}
+        isDeleting={isDeleting || isEduDeleting}
       />
     </>
   );
