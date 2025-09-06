@@ -53,9 +53,9 @@ export const BadgeList = ({ items, removeItem }) => (
   <>
     {console.log(items)}
     <div className="flex flex-wrap gap-2 mt-2">
-      {items?.map((item) => (
+      {items?.map((item,i) => (
         <Badge
-          key={item._id || item}
+          key={`${item?.name || item}-${i}`}
           variant="secondary"
           className="gap-1 flex items-center">
           {item.icon && TechIcon(item.icon || item)}

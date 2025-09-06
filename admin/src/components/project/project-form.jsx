@@ -12,14 +12,17 @@ import { projectSchema } from "../../schemas/projectSchema";
 import {
   TextField,
   TextAreaField,
-  FileField, // you can keep this import if used elsewhere
+  FileField,
   BadgeList,
 } from "../project/project-form-field";
 
 function ProjectForm({ initialData, onSubmit, onCancel, isLoading, project }) {
-  const [selectedTechIcon, setSelectedTechIcon] = useState(null);
+  const [selectedTechIcon, setSelectedTechIcon] = useState({
+    color: "",
+    component: null,
+  });
   const [featureInput, setFeatureInput] = useState("");
-  console.log(project);
+  console.log(selectedTechIcon);
   // Previews
   initialData = project;
   const [thumbnailPreview, setThumbnailPreview] = useState(
@@ -59,14 +62,27 @@ function ProjectForm({ initialData, onSubmit, onCancel, isLoading, project }) {
   const features = watch("features");
 
   const addTechnology = (name, icon) => {
+    // Ensure both component and color are included in the icon object
     if (
       name &&
-      icon &&
+      selectedTechIcon.component &&
       !technologies.some((t) => t.name.toLowerCase() === name.toLowerCase())
     ) {
-      setValue("technologies", [...technologies, { name, icon }]);
-      setSelectedTechIcon(null);
-    } else if (!icon) {
+      setValue("technologies", [
+        ...technologies,
+        {
+          name,
+          icon: {
+            component: selectedTechIcon.component,
+            color: selectedTechIcon.color,
+          },
+        },
+      ]);
+      setSelectedTechIcon({
+        color: "",
+        component: null,
+      });
+    } else if (!selectedTechIcon.component) {
       toast.error("Please select an icon for the technology.");
     }
   };
@@ -176,6 +192,7 @@ function ProjectForm({ initialData, onSubmit, onCancel, isLoading, project }) {
   }, []);
 
   const submitHandler = (data) => {
+    console.log(data);
     toast.success("Project saved successfully!");
     onSubmit(data);
   };
@@ -249,7 +266,7 @@ function ProjectForm({ initialData, onSubmit, onCancel, isLoading, project }) {
           <div className="grid grid-cols-3 gap-3 mt-3">
             {imagePreviews.map((img, idx) => (
               <div
-                key={`${img.public_id}`}
+                key={`${img.public_id}-${idx}`}
                 className="relative group rounded-lg overflow-hidden border">
                 <img
                   src={img.url.url}
@@ -289,13 +306,15 @@ function ProjectForm({ initialData, onSubmit, onCancel, isLoading, project }) {
           <Label>Technologies *</Label>
           <IconPicker
             value={selectedTechIcon}
-            onChange={(icon) => setSelectedTechIcon(icon)}
+            onChange={(icon) => {
+              console.log(icon);
+              return setSelectedTechIcon({
+                color: icon.color,
+                component: icon.component,
+              });
+            }}
             onSelectName={(name) =>
-              addTechnology(
-                name,
-                selectedTechIcon?.component,
-                selectedTechIcon?.color
-              )
+              addTechnology(name, selectedTechIcon.component)
             }
             placeholder="Choose Technology"
           />
@@ -309,7 +328,7 @@ function ProjectForm({ initialData, onSubmit, onCancel, isLoading, project }) {
 
         {/* Features */}
         <div className="space-y-2">
-          <Label htmlFor="features">Features</Label>
+          <Label htmlFor="features">Features *</Label>
           <Input
             id="features"
             value={featureInput}

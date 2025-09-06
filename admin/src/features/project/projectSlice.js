@@ -54,7 +54,6 @@ const projectSlice = createSlice({
 });
 
 
-console.log(projectSlice);
 
 export const { addProject, editProject, deleteProject, setProjects } = projectSlice.actions;
 export default projectSlice.reducer;
