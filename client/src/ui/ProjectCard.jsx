@@ -1,5 +1,5 @@
 import React from "react";
-import { FiLink } from "react-icons/fi";
+import {  FiLink } from "react-icons/fi";
 import { RiCodeSSlashLine } from "react-icons/ri";
 import { motion } from "framer-motion";
 import IconButtonLink from "./IconButtonLink";
@@ -43,10 +43,10 @@ const ProjectCard = ({ project, i }) => {
   return (
     <div>
       <div
-        className={`w-full relative flex flex-col ${
-          i % 2 !== 0 ? "md:flex-row-reverse" : "lg:flex-row"
+        className={`w-full relative sm:flex sm:flex-col ${
+          i % 2 !== 0 ? "md:flex-row-reverse" : "md:flex-row"
         } justify-between gap-12 mt-32`}>
-        <div className="project-card-wrapper sm:max-w-1/2 mx-auto">
+        <div className="project-card-wrapper md:max-w-1/2 mx-auto">
           <ProjectModal
             images={images}
             triggerElement={<img src={thumbnail.url} alt={title} />}
@@ -78,26 +78,27 @@ const ProjectCard = ({ project, i }) => {
         </div>
 
         {/* Description */}
-        <div className="project-desc z-10 mx-auto sm:w-1/2 sm:mr-auto">
-          <div className="project-desc-inner max-w-[1200px] flex flex-col space-y-2 mb-6">
+        <div className="project-desc mx-auto w-full md:w-1/2 sm:mr-auto">
+          <div className="project-desc-inner flex flex-col space-y-2 mb-6">
             <h2 className="text-3xl font-bold text-primary-600">{title}</h2>
             <p className="text-zinc-900 dark:text-zinc-100 font-semibold text-[24px]">
               {description}
             </p>
 
             <motion.div
-              className="flex flex-wrap gap-2"
+              className="grid grid-cols-1 sm:grid-cols-2 gap-2"
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true }}>
               {features.map((feature, index) => (
-                <motion.strong
+                <motion.div
                   key={feature}
                   variants={fadeInUp}
                   custom={index}
-                  className="text-sm text-zinc-700 dark:text-zinc-300">
-                  #{feature}
-                </motion.strong>
+                  className="text-sm flex items-center gap-2 text-zinc-800 dark:text-zinc-200">
+                  <FaIcons.FaCheckSquare className={`text-green-600 dark:text-green-500 font-semibold`} />
+                  <strong>{feature}</strong>
+                </motion.div>
               ))}
             </motion.div>
           </div>
@@ -110,6 +111,7 @@ const ProjectCard = ({ project, i }) => {
             viewport={{ once: true }}>
             {technologies?.map((tech, index) => (
               <motion.span
+                whileHover={{ scale: 1.1 }}
                 key={index}
                 variants={fadeInUp}
                 custom={index}
