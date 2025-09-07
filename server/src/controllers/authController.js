@@ -106,14 +106,20 @@ export async function verifyOtp(req, res) {
 export async function refreshToken(req, res) {
     try {
         const token = req.cookies?.refreshToken;
-        if (!token) return res.status(401).json({ message: 'No refresh token' });
+        if (!token) return res.status(401).json({
+            success: false,
+            message: 'No refresh token'
+        });
 
         const secret = process.env.JWT_REFRESH_SECRET || process.env.JWT_SECRET;
         const payload = jwt.verify(token, secret);
 
         const user = await User.findOne({ email: payload.email });
         if (!user || user.refreshToken !== token) {
-            return res.status(403).json({ message: 'Refresh token revoked or invalid' });
+            return res.status(403).json({
+                success: false,
+                message: 'Refresh token revoked or invalid'
+            });
         }
 
         // Issue new tokens
@@ -125,10 +131,13 @@ export async function refreshToken(req, res) {
         await user.save();
 
         res.cookie('refreshToken', newRefreshToken, getCookieOptions());
-        return res.json({ accessToken });
+        return res.json({ success: true, accessToken });
     } catch (err) {
         console.error(err);
-        return res.status(401).json({ message: 'Invalid or expired refresh token' });
+        return res.status(401).json({
+            success: false,
+            message: 'Invalid or expired refresh token'
+        });
     }
 }
 
@@ -145,9 +154,15 @@ export async function logout(req, res) {
         }
 
         res.clearCookie('refreshToken', getCookieOptions());
-        return res.json({ success: true, message: 'Logged out successfully' });
+        return res.json({
+            success: true,
+            message: 'Logged out successfully'
+        });
     } catch (err) {
         console.error(err);
-        return res.status(500).json({ message: 'Logout failed' });
+        return res.status(500).json({
+            success: false,
+            message: 'Logout failed'
+        });
     }
 }
