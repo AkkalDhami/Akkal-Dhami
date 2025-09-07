@@ -3,7 +3,6 @@ import mongoose from "mongoose";
 const aboutSchema = new mongoose.Schema({
     name: {
         type: String,
-        required: true,
         trim: true
     },
 
@@ -21,12 +20,12 @@ const aboutSchema = new mongoose.Schema({
 
     role: {
         type: String,
-        required: true, trim: true
+        trim: true
     },
 
     email: {
         type: String,
-        required: true, trim: true
+        trim: true
     },
 
     isAvailable: {
@@ -36,25 +35,21 @@ const aboutSchema = new mongoose.Schema({
 
     contact: {
         type: String,
-        required: true,
         trim: true
     },
 
     location: {
         type: String,
-        required: true,
         trim: true
     },
 
     socials: [{
         name: {
             type: String,
-            required: true,
             trim: true
         },
         link: {
             type: String,
-            required: true,
             trim: true
         },
         icon: {
@@ -67,12 +62,10 @@ const aboutSchema = new mongoose.Schema({
     ctaButtons: [{
         name: {
             type: String,
-            required: true,
             trim: true
         },
         link: {
             type: String,
-            required: true,
             trim: true
         },
         icon: {

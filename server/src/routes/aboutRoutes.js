@@ -1,21 +1,22 @@
 import express from "express";
 import {
     createAbout,
-    getAllAbouts,
-    getAboutById,
+    getAbout,
     updateAbout,
-    deleteAbout,
     addSocialOrCta,
-    removeSocialOrCta
+    removeSocialOrCta,
+    addMyContactDetails,
+    updateMyContactDetails,
 } from "../controllers/aboutController.js";
 
 const router = express.Router();
 
 router.post("/", createAbout);
-router.get("/", getAllAbouts);
-router.get("/:id", getAboutById);
+router.get("/", getAbout);
 router.put("/:id", updateAbout);
-router.delete("/:id", deleteAbout);
+
+router.post("/my-contact/add", addMyContactDetails)
+router.put("/my-contact/update/:id", updateMyContactDetails)
 
 router.patch("/:id/items", addSocialOrCta);
 router.delete("/:id/items/:type/:itemId", removeSocialOrCta);
