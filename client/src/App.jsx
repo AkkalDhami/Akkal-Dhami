@@ -48,11 +48,10 @@ function App() {
 
   return (
     <div
-      className={`min-h-screen transition-colors duration-300 dark:bg-bg-900 dark:text-zinc-100 bg-zinc-50 text-zinc-800`}
-    >
+      className={`min-h-screen transition-colors duration-300 font-medium dark:bg-bg-900 dark:text-zinc-100 bg-zinc-50 text-zinc-800`}>
       <Routes>
         <Route path="/admin/login" element={<AdminOtp />} />
-       
+
         <Route
           path="/"
           element={
@@ -69,7 +68,7 @@ function App() {
                   />
                 )}
               </AnimatePresence>
-              <main>
+              <main className={`max-w-7xl mx-auto`}>
                 <Hero />
                 <About />
                 <Skills />
