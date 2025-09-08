@@ -15,7 +15,7 @@ import { useGetProjectsQuery } from "../features/projectApi";
 import { toast } from "react-toastify";
 
 const Projects = () => {
-  const { data, isError, isLoading,  error } = useGetProjectsQuery();
+  const { data, isError, error } = useGetProjectsQuery();
 
   const projects = data?.projects;
 
@@ -37,7 +37,7 @@ const Projects = () => {
 
   return (
     <section id="projects" className="py-20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -56,7 +56,7 @@ const Projects = () => {
 
         <motion.div
           variants={container}
-          initial="hidden"
+          initial="hidden" 
           whileInView="show"
           viewport={{ once: true }}
           className="space-y-3.5">

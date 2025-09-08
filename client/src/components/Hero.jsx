@@ -5,20 +5,15 @@ import { ReactTyped } from "react-typed";
 import VSCodeProfileCard from "./CodeCard";
 import SocialLink from "../ui/AnimateButton";
 import { HiChevronDoubleRight } from "react-icons/hi";
+import { useGetMyContactsQuery } from "../features/aboutApi";
 
 const Hero = () => {
+    const { data, isError, error } = useGetMyContactsQuery();
   return (
     <section
       id="home"
-      className="min-h-screen flex items-center relative overflow-hidden">
-      {/* Background decoration */}
-      <div className="absolute inset-0 z-0">
-        <div className="absolute top-20 right-10 w-72 h-72 bg-indigo-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 dark:opacity-10 animate-blob"></div>
-        <div className="absolute bottom-20 left-10 w-72 h-72 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 dark:opacity-10 animate-blob animation-delay-2000"></div>
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 dark:opacity-10 animate-blob animation-delay-4000"></div>
-      </div>
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 relative z-10">
+      className="min-h-screen flex items-center">
+      <div className="px-4 sm:px-6 lg:px-8 py-16 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
           <motion.div
             initial={{ opacity: 0, y: 50 }}
@@ -27,7 +22,7 @@ const Hero = () => {
             <h1 className="text-4xl flex flex-col md:text-5xl lg:text-6xl font-bold leading-tight">
               <span>👋 Hi I'm</span>
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary-500 to-primary-800">
-                Akkal Dhami
+                {data?.data[0]?.name}
               </span>
             </h1>
 

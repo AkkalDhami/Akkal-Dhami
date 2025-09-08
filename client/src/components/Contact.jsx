@@ -9,12 +9,15 @@ import {
   FiSend,
 } from "react-icons/fi";
 import { RiUserLine } from "react-icons/ri";
-import { toast, ToastContainer, Bounce } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 import SocialLink from "../ui/AnimateButton";
 import { useSendMessageMutation } from "../features/contactApi";
 
+import { useGetMyContactsQuery } from "../features/aboutApi";
+
 const Contact = () => {
+  const { data, isError, error } = useGetMyContactsQuery();
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -22,8 +25,7 @@ const Contact = () => {
     message: "",
   });
 
-  const [sendMessage, { isLoading: isSubmitting, }] =
-    useSendMessageMutation();
+  const [sendMessage, { isLoading: isSubmitting }] = useSendMessageMutation();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -39,12 +41,13 @@ const Contact = () => {
 
       if (res.success) {
         toast.success(res.message || "Message sent successfully!");
-        setFormData({ name: "", email: "", subject: "", message: "" });
       } else {
         toast.error(res?.message || "Failed to send message.");
       }
     } catch (error) {
       toast.error(error?.data?.message || "Something went wrong!");
+    } finally {
+      setFormData({ name: "", email: "", subject: "", message: "" });
     }
   };
 
@@ -52,42 +55,32 @@ const Contact = () => {
     {
       icon: <RiUserLine size={24} />,
       title: "Name",
-      details: "Akkal Dhami",
+      details: data?.data[0]?.name,
     },
     {
       icon: <FiMail size={24} />,
       title: "Email",
-      details: "aakaldhami@gmail.com",
+      details: data?.data[0]?.email,
     },
     {
       icon: <FiPhone size={24} />,
       title: "Contact",
-      details: "+977-9828122071",
+      details: data?.data[0]?.contact,
     },
     {
       icon: <FiMapPin size={24} />,
       title: "Location",
-      details: "Kathmandu, Nepal",
+      details: data?.data[0]?.location,
     },
   ];
 
+  if (isError) toast.error(error);
+
+  if (!data?.success) toast.error(data?.message);
 
   return (
     <section id="contact" className="py-20">
-      <ToastContainer
-        position="top-right"
-        autoClose={4000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        pauseOnHover
-        theme="dark"
-        transition={Bounce}
-      />
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 50 }}
@@ -120,8 +113,9 @@ const Contact = () => {
             <div className="space-y-6">
               {contactInfo.map((info, index) => (
                 <div key={index} className="flex items-start gap-3">
-                  <div className="p-3 rounded-md bg-zinc-100 text-zinc-800 dark:bg-[#0d0d1a] dark:text-zinc-200">
+                  <div className="p-3 relative group rounded-md text-zinc-800 dark:text-zinc-200">
                     {info.icon}
+                    <div className="absolute bottom-[0px] group-hover:via-primary-600 left-1/2 -translate-x-1/2 h-[0.6px] w-[calc(100%-2px)] bg-gradient-to-r from-transparent via-zinc-900 dark:via-zinc-100 to-transparent"></div>
                   </div>
                   <div>
                     <h4 className="text-lg font-medium text-zinc-900 dark:text-white">
@@ -178,10 +172,11 @@ const Contact = () => {
                       placeholder="Akkal Dhami"
                       className="w-full px-4 py-3 rounded-lg border border-transparent text-zinc-900 focus:border-primary-600 placeholder:text-zinc-500 dark:placeholder:text-zinc-400 outline-none transition  dark:text-white"
                     />
-                    <div className="absolute bottom-[-1px] group-hover:via-indigo-600 left-1/2 -translate-x-1/2 h-px w-[calc(100%-24px)] bg-gradient-to-r from-transparent  via-primary-600 to-transparent"></div>
-                    <div className="absolute top-[1px] group-hover:via-indigo-600 left-1/2 -translate-x-1/2 h-px w-[calc(100%-24px)] bg-gradient-to-r from-transparent  via-primary-600 to-transparent"></div>
-                    <div className="absolute top-[1px] group-hover:via-indigo-600 h-[calc(100%-2px)] w-px bg-gradient-to-t from-transparent  via-primary-600 to-transparent"></div>
-                    <div className="absolute top-[1px] right-[-1px] group-hover:via-indigo-600 h-[calc(100%-2px)] w-px bg-gradient-to-t from-transparent  via-primary-600 to-transparent"></div>
+                    <div className="absolute bottom-[0px] group-hover:via-primary-600 left-1/2 -translate-x-1/2 h-px w-[calc(100%-24px)] bg-gradient-to-r from-transparent  via-zinc-900 dark:via-zinc-100 to-transparent"></div>
+                    <div className="absolute top-[0px] group-hover:via-primary-600 left-1/2 -translate-x-1/2 h-px w-[calc(100%-24px)] bg-gradient-to-r from-transparent  via-zinc-900 dark:via-zinc-100 to-transparent"></div>
+
+                    <div className="absolute top-[2px] group-hover:via-primary-600 h-[calc(100%-4px)] w-px bg-gradient-to-t from-transparent via-zinc-900 dark:via-zinc-100 to-transparent"></div>
+                    <div className="absolute top-[2px] right-[0px] group-hover:via-primary-600 h-[calc(100%-4px)] w-px bg-gradient-to-t from-transparent  via-zinc-900 dark:via-zinc-100 to-transparent"></div>
                   </div>
                 </div>
 
@@ -203,10 +198,11 @@ const Contact = () => {
                       placeholder="dhamiakkal21@gmail.com"
                       className="w-full px-4 py-3 rounded-lg border border-transparent text-zinc-900 focus:border-primary-600 placeholder:text-zinc-500 dark:placeholder:text-zinc-400 outline-none transition  dark:text-white"
                     />
-                    <div className="absolute bottom-[-1px] group-hover:via-indigo-600 left-1/2 -translate-x-1/2 h-px w-[calc(100%-24px)] bg-gradient-to-r from-transparent  via-primary-700 to-transparent"></div>
-                    <div className="absolute top-[1px] group-hover:via-indigo-600 left-1/2 -translate-x-1/2 h-px w-[calc(100%-24px)] bg-gradient-to-r from-transparent  via-primary-700 to-transparent"></div>
-                    <div className="absolute top-[1px] group-hover:via-indigo-600 h-[calc(100%-2px)] w-px bg-gradient-to-t from-transparent  via-primary-700 to-transparent"></div>
-                    <div className="absolute top-[1px] right-[-1px] group-hover:via-indigo-600 h-[calc(100%-2px)] w-px bg-gradient-to-t from-transparent  via-primary-700 to-transparent"></div>
+                    <div className="absolute bottom-[0px] group-hover:via-primary-600 left-1/2 -translate-x-1/2 h-px w-[calc(100%-24px)] bg-gradient-to-r from-transparent  via-zinc-900 dark:via-zinc-100 to-transparent"></div>
+                    <div className="absolute top-[0px] group-hover:via-primary-600 left-1/2 -translate-x-1/2 h-px w-[calc(100%-24px)] bg-gradient-to-r from-transparent  via-zinc-900 dark:via-zinc-100 to-transparent"></div>
+
+                    <div className="absolute top-[2px] group-hover:via-primary-600 h-[calc(100%-4px)] w-px bg-gradient-to-t from-transparent via-zinc-900 dark:via-zinc-100 to-transparent"></div>
+                    <div className="absolute top-[2px] right-[0px] group-hover:via-primary-600 h-[calc(100%-4px)] w-px bg-gradient-to-t from-transparent  via-zinc-900 dark:via-zinc-100 to-transparent"></div>
                   </div>
                 </div>
               </div>
@@ -228,10 +224,13 @@ const Contact = () => {
                     rows={5}
                     placeholder="Hello, I'd like to discuss a project..."
                     className="w-full px-4 resize-none overflow-hidden py-3 rounded-lg border border-transparent text-zinc-900 placeholder:text-zinc-500 dark:placeholder:text-zinc-400 focus:border-primary-600 outline-none transition  dark:text-white"></textarea>
-                  <div className="absolute bottom-1.5 group-hover:via-indigo-600 left-1/2 -translate-x-1/2 h-px w-[calc(100%-24px)] bg-gradient-to-r from-transparent  via-primary-700 to-transparent"></div>
-                  <div className="absolute top-[1px] group-hover:via-indigo-600 left-1/2 -translate-x-1/2 h-px w-[calc(100%-24px)] bg-gradient-to-r from-transparent  via-primary-700 to-transparent"></div>
-                  <div className="absolute top-[1px] group-hover:via-indigo-600 h-[calc(100%-2px)] w-px bg-gradient-to-t from-transparent  via-primary-700 to-transparent"></div>
-                  <div className="absolute top-[1px] right-[-1px] group-hover:via-indigo-600 h-[calc(100%-2px)] w-px bg-gradient-to-t from-transparent  via-primary-700 to-transparent"></div>
+                  <div className="absolute bottom-[6px] group-hover:via-primary-600 left-1/2 -translate-x-1/2 h-px w-[calc(100%-24px)] bg-gradient-to-r from-transparent  via-zinc-900 dark:via-zinc-100 to-transparent"></div>
+
+                  <div className="absolute top-[0px] group-hover:via-primary-600 left-1/2 -translate-x-1/2 h-px w-[calc(100%-24px)] bg-gradient-to-r from-transparent  via-zinc-900 dark:via-zinc-100 to-transparent"></div>
+
+                  <div className="absolute top-[1px] group-hover:via-primary-600 h-[calc(100%-24px)] w-px bg-gradient-to-t from-transparent  via-zinc-900 dark:via-zinc-100 to-transparent"></div>
+
+                  <div className="absolute top-[1px] right-[0px] group-hover:via-primary-600 h-[calc(100%-12px)] w-px bg-gradient-to-t from-transparent  via-zinc-900 dark:via-zinc-100 to-transparent"></div>
                 </div>
               </div>
 
@@ -270,10 +269,11 @@ const Contact = () => {
                     </>
                   )}
                 </motion.button>
-                <div className="absolute bottom-[-1px] group-hover:via-indigo-600 left-1/2 -translate-x-1/2 h-px w-[calc(100%-24px)] bg-gradient-to-r from-transparent  via-primary-700 to-transparent"></div>
-                <div className="absolute top-[1px] group-hover:via-indigo-600 left-1/2 -translate-x-1/2 h-px w-[calc(100%-24px)] bg-gradient-to-r from-transparent  via-primary-700 to-transparent"></div>
-                <div className="absolute top-[1px] group-hover:via-indigo-600 h-[calc(100%-2px)] w-px bg-gradient-to-t from-transparent  via-primary-700 to-transparent"></div>
-                <div className="absolute top-[1px] right-[-1px] group-hover:via-indigo-600 h-[calc(100%-2px)] w-px bg-gradient-to-t from-transparent  via-primary-700 to-transparent"></div>
+                <div className="absolute bottom-[0px] via-primary-600 left-1/2 -translate-x-1/2 h-[2px] w-[calc(100%-24px)] bg-gradient-to-r from-transparent  group-hover:via-zinc-900 group-hover:dark:via-zinc-100 to-transparent"></div>
+                <div className="absolute top-[0px] via-primary-600 left-1/2 -translate-x-1/2 h-[3px] w-[calc(100%-24px)] bg-gradient-to-r from-transparent  group-hover:via-zinc-900 group-hover:dark:via-zinc-100 to-transparent"></div>
+
+                <div className="absolute top-[2px] via-primary-600 h-[calc(100%-4px)] w-[3px] bg-gradient-to-t from-transparent group-hover:via-zinc-900 group-hover:dark:via-zinc-100 to-transparent"></div>
+                <div className="absolute top-[1px] right-[0px] via-primary-600 h-[calc(100%-4px)] w-[2px] bg-gradient-to-t from-transparent  group-hover:via-zinc-900 group-hover:dark:via-zinc-100 to-transparent"></div>
               </motion.div>
             </form>
           </motion.div>
