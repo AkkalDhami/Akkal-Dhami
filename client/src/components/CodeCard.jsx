@@ -1,7 +1,22 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { useGetMyContactsQuery } from "../features/aboutApi";
+import { useGetProjectsQuery } from "../features/projectApi";
+import { toast } from "react-toastify";
 
 const VSCodeProfileCard = () => {
+  const { data, isError, error } = useGetMyContactsQuery();
+  const {
+    data: project,
+    isError: isProjectError,
+    error: projectError,
+  } = useGetProjectsQuery();
+
+  const projects = project?.projects;
+  console.log(projects);
+  if (isError) toast.error(error);
+  if (isProjectError) toast.error(projectError);
+
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.95 }}
@@ -35,17 +50,18 @@ const VSCodeProfileCard = () => {
             <div className="ml-8">
               <span className="text-[#ea580c]">name</span>
               <span>: </span>
-              <span className="text-[#09D076]">'Akkal Dhami'</span>,
-            </div>
-            <div className="ml-8">
-              <span className="text-[#ea580c]">role</span>
-              <span>: </span>
-              <span className="text-[#09D076]">'Frontend Developer'</span>,
+              <span className="text-[#09D076]">'{data?.data[0]?.name}'</span>,
             </div>
             <div className="ml-8">
               <span className="text-[#ea580c]">email</span>
               <span>: </span>
-              <span className="text-[#09D076]">'akkaldhami21@gmail.com'</span>,
+              <span className="text-[#09D076]">'{data?.data[0]?.email}'</span>,
+            </div>
+            <div className="ml-8">
+              <span className="text-[#ea580c]">contact</span>
+              <span>: </span>
+              <span className="text-[#09D076]">'{data?.data[0]?.contact}'</span>
+              ,
             </div>
             <div className="ml-8">
               <span className="text-[#ea580c]">isAvailable</span>
@@ -60,8 +76,9 @@ const VSCodeProfileCard = () => {
               <span className="text-[#09D076]">'HTML'</span>,{" "}
               <span className="text-[#09D076]">'CSS'</span>,{" "}
               <span className="text-[#09D076]">'JavaScript'</span>,{" "}
-              <span className="text-[#09D076]">'Tailwind CSS'</span>],
-              <span className="text-[#09D076]">'React.js'</span>],
+              <span className="text-[#09D076]">'Tailwind CSS'</span>,
+              <span className="text-[#09D076]">'React.js'</span>,
+              <span className="text-[#09D076]">'TypeScript'</span>],
             </div>
             <div className="ml-12">
               <span className="text-[#ea580c]">backend</span>: [
@@ -77,18 +94,12 @@ const VSCodeProfileCard = () => {
             <div className="ml-8">
               <span className="text-[#ea580c]">projects</span>: {"{"}
             </div>
-            <div className="ml-12">
-              <span className="text-[#ea580c]">NepKart</span>:{" "}
-              <span className="text-[#09D076]">'E-commerce website'</span>,
-            </div>
-            <div className="ml-12">
-              <span className="text-[#ea580c]">DishhDashh</span>:{" "}
-              <span className="text-[#09D076]">'Food delivery website'</span>,
-            </div>
-            <div className="ml-12">
-              <span className="text-[#ea580c]">NepTask</span>:{" "}
-              <span className="text-[#09D076]">'Task Management System'</span>
-            </div>
+            {projects?.slice(0, 3)?.map((proj) => (
+              <div key={proj?._id} className="ml-12">
+                <span className="text-[#ea580c]">{proj?.title}</span>:{" "}
+                <span className="text-[#09D076]">'{proj?.description}'</span>,
+              </div>
+            ))}
             <div className="ml-8">{"}"}</div>
             <div className="ml-4">{"}"}</div>
             <div>];</div>
