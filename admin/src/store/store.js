@@ -9,6 +9,8 @@ import authReducer from "../features/auth/authSlice"
 import authApi from "../features/auth/authApi"
 import projectApi from "../features/project/projectApi"
 import skillApi from "../features/skill/skillApi"
+import eduApi from "../features/education/eduApi"
+import messageApi from "../features/messages/messageApi"
 
 export const store = configureStore({
     reducer: {
@@ -19,14 +21,18 @@ export const store = configureStore({
         auth: authReducer,
         [authApi.reducerPath]: authApi.reducer,
         [projectApi.reducerPath]: projectApi.reducer,
-        [skillApi.reducerPath]: skillApi.reducer
+        [skillApi.reducerPath]: skillApi.reducer,
+        [eduApi.reducerPath]: eduApi.reducer,
+        [messageApi.reducerPath]: messageApi.reducer,
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware({
         serializableCheck: false
     }).concat(
         authApi.middleware,
         skillApi.middleware,
-        projectApi.middleware
+        eduApi.middleware,
+        projectApi.middleware,
+        messageApi.middleware
     ),
 })
 console.log(store.getState());

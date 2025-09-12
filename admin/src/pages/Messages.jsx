@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
 import {
+  useDeleteMessageMutation,
   useGetMessagesQuery,
   useMarkMessageAsReadMutation,
 } from "../features/messages/messageApi";
-import { toast } from "sonner";
+import { toast } from "react-hot-toast";
+import { MessageSquareMore, Trash } from "lucide-react";
 
 export default function Messages() {
   const [page, setPage] = useState(1);
@@ -11,6 +13,9 @@ export default function Messages() {
     page,
     limit: 2,
   });
+  console.log(data);
+  const [deleteMessage, { isLoading: isDeleting, error: deleteError }] =
+    useDeleteMessageMutation();
   const [markMessageAsRead] = useMarkMessageAsReadMutation();
 
   const [messages, setMessages] = useState([]);
@@ -53,17 +58,32 @@ export default function Messages() {
   };
 
   const loadMore = () => {
-    if (!isFetching && page < data.totalPages) {
+    if (!isFetching && page < data.pages) {
       setPage((prev) => prev + 1);
     }
   };
 
-  const deleteMessage = (id) => {
-    setMessages(messages.filter((msg) => msg._id !== id));
-    if (selectedMessage && selectedMessage._id === id) {
-      setSelectedMessage(null);
+  const deleteMessageHandler = async (id) => {
+    if (isDeleting) return;
+    if (!confirm("Are you sure you want to delete this message?")) return;
+    try {
+      const res = await deleteMessage(id).unwrap();
+      console.log(res);
+      setMessages((prev) => prev.filter((m) => m._id !== id));
+      if (selectedMessage?._id === id) {
+        setSelectedMessage(null);
+      }
+      toast.success(res?.message || "Message deleted successfully");
+    } catch (err) {
+      toast.error(err?.data?.message || "Failed to delete message");
     }
   };
+
+  useEffect(() => {
+    if (deleteError) {
+      toast.error(deleteError?.data?.message || "Failed to delete message");
+    }
+  }, [deleteError]);
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -114,7 +134,7 @@ export default function Messages() {
           <div className="w-full md:w-1/3 rounded-lg shadow overflow-hidden">
             <div className="border-b border-zinc-500/30 px-4 py-3 bg-zinc-500/10">
               <h2 className="text-lg font-medium ">
-                All Messages ({messages.length})
+                All Messages ({data?.total})
               </h2>
             </div>
             <div className="divide-y divide-zinc-500/30 max-h-[calc(100vh-12rem)] overflow-y-auto">
@@ -135,15 +155,15 @@ export default function Messages() {
                             {message.name.charAt(0)}
                           </div>
                           <div className="ml-3">
-                            <p className="text-sm font-medium text-zinc-900 truncate">
+                            <p className="text-sm font-medium  truncate">
                               {message.name}
                             </p>
-                            <p className="text-sm text-zinc-600 truncate">
+                            <p className="text-sm text-zinc-600 dark:text-zinc-300 truncate">
                               {message.email}
                             </p>
                           </div>
                         </div>
-                        <p className="mt-2 text-sm text-zinc-600 line-clamp-2">
+                        <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-300 line-clamp-2">
                           {message.message}
                         </p>
                       </div>
@@ -151,7 +171,7 @@ export default function Messages() {
                         <span className="ml-2 flex-shrink-0 inline-block h-2 w-2 rounded-full bg-orange-500"></span>
                       )}
                     </div>
-                    <p className="mt-2 text-xs text-zinc-700">
+                    <p className="mt-2 text-xs text-zinc-600 dark:text-zinc-300">
                       {formatDate(message.createdAt)}
                     </p>
                   </div>
@@ -159,7 +179,7 @@ export default function Messages() {
               ) : (
                 <div className="p-4 text-center">No messages found</div>
               )}
-              {page < data?.totalPages && (
+              {page < data?.pages && (
                 <button
                   className="w-full py-2 text-center text-orange-600 hover:underline"
                   onClick={loadMore}>
@@ -176,9 +196,9 @@ export default function Messages() {
                 <div className="flex justify-between items-center mb-4">
                   <h2 className="text-lg font-medium">Message Details</h2>
                   <button
-                    onClick={() => deleteMessage(selectedMessage._id)}
+                    onClick={() => deleteMessageHandler(selectedMessage._id)}
                     className="text-red-600 hover:text-red-800 p-1 rounded-full hover:bg-red-500/10">
-                    Delete
+                    <Trash />
                   </button>
                 </div>
 
@@ -190,11 +210,11 @@ export default function Messages() {
                     <h3 className="text-lg font-medium">
                       {selectedMessage.name}
                     </h3>
-                    <p className="text-sm text-zinc-500">
+                    <p className="text-sm text-zinc-600 dark:text-zinc-300">
                       {selectedMessage.email}
                     </p>
                   </div>
-                  <div className="ml-auto text-sm text-zinc-700">
+                  <div className="ml-auto text-sm text-zinc-600 dark:text-zinc-300">
                     {formatDate(selectedMessage.createdAt)}
                   </div>
                 </div>
@@ -235,8 +255,9 @@ export default function Messages() {
                 </div>
               </div>
             ) : (
-              <div className="h-full flex items-center justify-center p-12 text-center text-zinc-500">
-                Select a message from the list to view details.
+              <div className="h-full flex font-semibold flex-col gap-2 items-center justify-center p-12 text-center text-zinc-500">
+                <p> Select a message from the list to view details.</p>
+                <MessageSquareMore />
               </div>
             )}
           </div>

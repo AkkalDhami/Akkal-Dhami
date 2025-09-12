@@ -36,8 +36,6 @@ import { EducationCard } from "@/components/skill/education-card";
 import * as Icons from "react-icons/si";
 
 import toast from "react-hot-toast";
-import { useDispatch } from "react-redux";
-import { editSkill } from "../features/skill/skillSlice";
 import {
   useCreateSkillMutation,
   useDeleteSkillMutation,

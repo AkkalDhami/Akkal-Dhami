@@ -11,7 +11,8 @@ export default function AdminLayout() {
   const closeSidebar = () => setSidebarOpen(false);
 
   return (
-    <div className="min-h-svh flex flex-col sm:grid sm:grid-cols-[250px_1fr] sm:grid-rows-[60px_1fr]">
+    <div className="min-h-svh flex relative flex-col sm:grid sm:grid-cols-[250px_1fr] sm:grid-rows-[60px_1fr]">
+
       <Header toggleSidebar={toggleSidebar} />
       <Sidebar isOpen={sidebarOpen} closeSidebar={closeSidebar} />
 

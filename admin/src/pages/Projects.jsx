@@ -18,25 +18,18 @@ import {
   CodeXml,
 } from "lucide-react";
 import { useMemo, useState } from "react";
-import ProjectForm from "../components/project/project-form";
-import { ProjectFilters } from "../components/project/project-filters";
-import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import {
-  DropdownMenu,
-  DropdownMenuTrigger,
-  DropdownMenuContent,
-  DropdownMenuItem,
-} from "@/components/ui/dropdown-menu";
+import ProjectForm from "@/components/project/project-form";
+import { ProjectFilters } from "@/components/project/project-filters";
+import ProjectCard from "@/components/project/project-card";
+
 import toast from "react-hot-toast";
 import {
   useCreateProjectMutation,
   useDeleteProjectMutation,
-  useGetProjectQuery,
   useGetProjectsQuery,
   useUpdateProjectMutation,
 } from "../features/project/projectApi";
-import { Link } from "react-router-dom";
+
 import * as SiIcons from "react-icons/si";
 import * as FaIcons from "react-icons/fa";
 import ProjectCardPlaceholder from "../components/project/project-card-placeholder";
@@ -111,6 +104,7 @@ export default function Projects() {
 
   // Add or Update Project
   const handleProjectSubmit = async (data) => {
+    console.log(data);
     try {
       const formData = new FormData();
       formData.append("title", data.title);
@@ -123,7 +117,10 @@ export default function Projects() {
         JSON.stringify(
           data.technologies.map((tech) => ({
             name: tech.name,
-            icon: { component: tech.icon.name, color: tech.icon?.color },
+            icon: {
+              component: tech.icon?.component?.name,
+              color: tech.icon?.color,
+            },
           }))
         )
       );
@@ -139,7 +136,7 @@ export default function Projects() {
       if (editingProject) {
         const result = await updateProject({
           id: editingProject._id,
-          formData,
+          data,
         }).unwrap();
         if (!result.success) {
           return toast.error(result.message || "Failed to update project");
@@ -197,7 +194,7 @@ export default function Projects() {
 
   if (isLoading) {
     return (
-      <div className="flex flex-wrap gap-6 p-6 justify-center">
+      <div className="flex flex-wrap gap-6 p-6 justify-center sm:justify-start">
         {Array.from({ length: 8 }).map((_, idx) => (
           <ProjectCardPlaceholder key={idx} />
         ))}
@@ -218,7 +215,12 @@ export default function Projects() {
         </div>
         <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
           <DialogTrigger asChild>
-            <Button className="gap-2">
+            <Button
+              className="gap-2"
+              onClick={() => {
+                setEditingProject(null);
+                setIsDialogOpen(true);
+              }}>
               <Plus className="h-4 w-4" /> Add Project
             </Button>
           </DialogTrigger>
@@ -260,101 +262,25 @@ export default function Projects() {
         projects={projects}
       />
 
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 mt-4">
-        {filteredAndSortedProjects.map((project) => (
-          <Card
-            key={project._id}
-            className="group border-0 py-0 shadow-sm hover:shadow-xl transition-all">
-            <div className="aspect-video relative overflow-hidden rounded-t-lg bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900">
-              <img
-                src={project.thumbnail?.url || project.images[0]?.url}
-                alt={project.title}
-                className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-            </div>
-            <div className="p-4 space-y-3">
-              <div className="flex items-start justify-between">
-                <h3 className="font-semibold text-lg leading-tight group-hover:text-primary transition-colors">
-                  {project.title}
-                </h3>
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className="h-8 w-8 p-0 opacity-0 group-hover:opacity-100 transition-opacity">
-                      <MoreHorizontal className="h-4 w-4" />
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end">
-                    <DropdownMenuItem
-                      onClick={() => handleEditProject(project)}>
-                      <Edit className="mr-2 h-4 w-4" /> Edit
-                    </DropdownMenuItem>
-                    <DropdownMenuItem
-                      onClick={() => handleDeleteProject(project)}
-                      className="text-red-600">
-                      <Trash2 className="mr-2 h-4 w-4" /> Delete
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </div>
+      {isLoading ? (
+        <div className="flex flex-wrap gap-6 p-6 justify-center sm:justify-start">
+          {Array.from({ length: 8 }).map((_, idx) => (
+            <ProjectCardPlaceholder key={idx} />
+          ))}
+        </div>
+      ) : (
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 mt-4">
+          {filteredAndSortedProjects?.map((project) => (
+            <ProjectCard
+              project={project}
+              key={project._id}
+              handleDeleteProject={handleDeleteProject}
+              handleEditProject={handleEditProject}
+            />
+          ))}
+        </div>
+      )}
 
-              <p className="text-sm text-muted-foreground line-clamp-2 leading-relaxed">
-                {project.description}
-              </p>
-
-              <div className="flex flex-wrap gap-1.5">
-                {project.technologies.map((tech) => (
-                  <Badge
-                    key={tech._id}
-                    variant="outline"
-                    className="text-xs px-2 py-1 bg-secondary/5 border-secondary/20 hover:bg-secondary/10 transition-colors">
-                    {TechIcon(tech.icon)}
-                    <span className="ml-1">{tech.name}</span>
-                  </Badge>
-                ))}
-              </div>
-
-              <div className="flex items-center justify-between pt-2 border-t border-border/50">
-                <div className="flex items-center gap-2">
-                  {project.liveUrl && (
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      asChild
-                      className="h-8 px-3 text-xs">
-                      <Link
-                        to={project.liveUrl}
-                        target="_blank"
-                        className="flex items-center gap-1">
-                        <ExternalLink className="h-3 w-3 mr-1" /> Live Preview
-                      </Link>
-                    </Button>
-                  )}
-                  {project.githubUrl && (
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      asChild
-                      className="h-8 px-3 text-xs">
-                      <Link
-                        to={project.githubUrl}
-                        target="_blank"
-                        className="flex items-center gap-1">
-                        <Github className="h-3 w-3 mr-1" /> Code
-                      </Link>
-                    </Button>
-                  )}
-                </div>
-              </div>
-            </div>
-          </Card>
-        ))}
-      </div>
-
-      {/* Delete Confirmation */}
       <Dialog open={showConfirmDialog} onOpenChange={setShowConfirmDialog}>
         <DialogContent className="max-w-md">
           <DialogHeader>
