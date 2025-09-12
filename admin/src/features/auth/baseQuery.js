@@ -1,9 +1,9 @@
 // redux/baseQuery.js
 import { fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { setCredentials, logout } from './authSlice';
-
+const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 const baseQuery = fetchBaseQuery({
-    baseUrl: 'http://localhost:4000/api/auth',
+    baseUrl: `${BASE_URL}/api/auth`,
     credentials: 'include',
     prepareHeaders: (headers, { getState }) => {
         const token = getState().auth.accessToken;

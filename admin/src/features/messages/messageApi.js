@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-const BASE_URL = 'http://localhost:4000';
+const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 const messageApi = createApi({
     reducerPath: 'messageApi',
@@ -16,7 +16,7 @@ const messageApi = createApi({
         }),
         markMessageAsRead: builder.mutation({
             query: ({ id, read }) => ({
-                url: `/messages/${id}/read`,
+                url: `/${id}/read`,
                 method: "PATCH",
                 body: { read },
             }),

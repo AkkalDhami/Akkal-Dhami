@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-const BASE_URL = 'http://localhost:4000';
+const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 const skillApi = createApi({
     reducerPath: 'skillApi',
@@ -11,7 +11,10 @@ const skillApi = createApi({
             query: () => '/',
             providesTags: (result) =>
                 result && Array.isArray(result)
-                    ? [...result.map(({ id }) => ({ type: 'Skill', id })), { type: 'Skill', id: 'LIST' }]
+                    ? [...result.map(({ id }) => (
+                        { type: 'Skill', id })
+                    ),
+                    { type: 'Skill', id: 'LIST' }]
                     : [{ type: 'Skill', id: 'LIST' }],
         }),
         getSkill: builder.query({
@@ -27,11 +30,14 @@ const skillApi = createApi({
             invalidatesTags: [{ type: 'Skill', id: 'LIST' }],
         }),
         updateSkill: builder.mutation({
-            query: ({ id, data }) => ({
-                url: `/update/${id}`,
-                method: 'PUT',
-                body: data,
-            }),
+            query: ({ id, data }) => {
+                console.log(id, data);
+                return ({
+                    url: `/update/${id}`,
+                    method: 'PUT',
+                    body: data,
+                })
+            },
             invalidatesTags: (result, error, { id }) => [
                 { type: 'Skill', id },
                 { type: 'Skill', id: 'LIST' },

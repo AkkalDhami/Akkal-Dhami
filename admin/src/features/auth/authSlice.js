@@ -1,4 +1,3 @@
-// redux/authSlice.js
 import { createSlice } from '@reduxjs/toolkit';
 import  authApi  from './authApi';
 
