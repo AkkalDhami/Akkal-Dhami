@@ -14,7 +14,6 @@ import { CardContent } from "../ui/card";
 import { Badge } from "../ui/badge";
 
 
-
 export const ExperienceCard = ({ experience, onEdit, onDelete }) => {
   return (
     <Card>

@@ -15,12 +15,7 @@ import { useSelector } from "react-redux";
 import { Loader2 } from "lucide-react";
 
 export function SkillForm({ initialData, onSubmit, onCancel, isLoading }) {
-  const { skills } = useSelector((state) => state.skills);
-
-  const [formData, setFormData] = useState(
-    skills.find((s) => s._id === initialData) || {}
-  );
-  console.log(formData);
+  const [formData, setFormData] = useState(initialData || {});
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -45,6 +40,7 @@ export function SkillForm({ initialData, onSubmit, onCancel, isLoading }) {
       return;
     }
 
+    console.log(formData);
     onSubmit(formData);
   };
 
@@ -90,7 +86,7 @@ export function SkillForm({ initialData, onSubmit, onCancel, isLoading }) {
               <SelectItem value="Database">Database</SelectItem>
               <SelectItem value="Mobile">Mobile</SelectItem>
               <SelectItem value="Design">Design</SelectItem>
-              <SelectItem value="Other">Other</SelectItem>
+              <SelectItem value="Tools & Other">Tools & Other</SelectItem>
             </SelectContent>
           </Select>
         </div>
@@ -98,9 +94,12 @@ export function SkillForm({ initialData, onSubmit, onCancel, isLoading }) {
         <div className="space-y-2">
           <Label htmlFor="icon">Icon *</Label>
           <IconPicker
-            value={formData.icon}
-            onChange={(icon) => setFormData({ ...formData, icon })}
-            placeholder="Choose an icon for this skill"
+            value={formData?.icon || formData?.icon?.component?.name}
+            onChange={(icon) => {
+              console.log(icon);
+              return setFormData({ ...formData, icon });
+            }}
+            placeholder="Choose an icon"
           />
         </div>
       </div>

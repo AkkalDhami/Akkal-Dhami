@@ -27,7 +27,7 @@ const Header = ({ toggleSidebar }) => {
             size="icon"
             onClick={toggleSidebar}
             aria-label="Toggle menu">
-            <LuMenu className="h-5 w-5" />
+            <LuMenu size={22} className="h-5 w-5" />
           </Button>
         </div>
 

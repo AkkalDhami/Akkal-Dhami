@@ -56,8 +56,9 @@ export default function OtpLogin() {
           <>
             <h2 className="text-xl font-bold mb-4">Admin Login</h2>
             <Button
-              className="w-full"
+              className="w-full font-semibold"
               onClick={handleRequestOtp}
+              size={"lg"}
               disabled={sendingOtp}>
               {sendingOtp ? (
                 <>
@@ -86,7 +87,8 @@ export default function OtpLogin() {
             <Button
               onClick={handleVerifyOtp}
               className="w-full"
-              disabled={verifying}>
+              size={"lg"}
+              disabled={verifying || sendingOtp }>
               {verifying ? (
                 <>
                   <Loader2Icon className="animate-spin" /> Verifying..{" "}

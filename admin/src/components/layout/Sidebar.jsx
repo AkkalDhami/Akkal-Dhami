@@ -9,14 +9,15 @@ import {
   LuUsers,
   LuSettings2,
   LuX,
+  LuLogOut,
 } from "react-icons/lu";
-import { MdOutlineHome } from "react-icons/md";
+import { MdOutlineDashboard } from "react-icons/md";
 
 const navItems = [
   {
     to: "/dashboard",
     label: "Dashboard",
-    icon: MdOutlineHome,
+    icon: MdOutlineDashboard,
   },
   { to: "/projects", label: "Projects", icon: LuFolderOpen },
   { to: "/skills", label: "Skills & Experience", icon: LuGraduationCap },
@@ -69,8 +70,14 @@ export default function Sidebar({ isOpen, closeSidebar }) {
         ))}
       </nav>
 
-      <div className="mt-auto border-t px-4 py-4 text-xs text-muted-foreground">
-        Portfolio Admin
+      <div className="mt-auto fixed w-full bottom-0 border-t px-4 py-4 text-xs">
+        <NavLink
+          to={"/logout"}
+          onClick={closeSidebar}
+          className={`flex items-center gap-3 font-medium rounded px-3 py-2 text-sm text-destructive transition-colors hover:bg-muted `}>
+          <LuLogOut className="size-4" />
+          <span>Logout</span>
+        </NavLink>
       </div>
     </aside>
   );

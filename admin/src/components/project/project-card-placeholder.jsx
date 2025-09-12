@@ -3,7 +3,7 @@ import React from "react";
 export default function ProjectCardPlaceholder() {
   return (
     <div className="border rounded-lg shadow-sm animate-pulse">
-      <div className="aspect-video bg-zinc-300 dark:bg-zinc-700 rounded-t-lg" />
+      <div className="w-[300px] h-[200px] bg-zinc-300 dark:bg-zinc-700 rounded-t-lg" />
       <div className="p-4 space-y-4">
         <div className="h-6 bg-zinc-300 dark:bg-zinc-700 rounded w-3/4"></div>
         <div className="h-4 bg-zinc-300 dark:bg-zinc-700 rounded w-full"></div>

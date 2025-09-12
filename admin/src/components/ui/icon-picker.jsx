@@ -12,17 +12,14 @@ import {
   Code2,
   Database,
   Cloud,
-  Smartphone,
   Palette,
-  BarChart3,
-  Shield,
-  Zap,
-  Bug,
   Settings,
 } from "lucide-react";
-import * as Icons from "react-icons/si";
+import * as SiIcons from "react-icons/si";
+import * as FaIcons from "react-icons/fa";
 
-// Helper to safely get icon
+const Icons = { ...SiIcons, ...FaIcons };
+
 const getIcon = (iconPath, fallback) => {
   const icon = iconPath;
   return icon && typeof icon === "function" ? icon : fallback;
@@ -40,6 +37,7 @@ const popularIcons = {
   Sass: { icon: getIcon(Icons.SiSass, Code2), color: "#CC6699" },
   Tailwind: { icon: getIcon(Icons.SiTailwindcss, Code2), color: "#06B6D4" },
   Bootstrap: { icon: getIcon(Icons.SiBootstrap, Code2), color: "#7952B3" },
+  Redux: { icon: getIcon(Icons.SiRedux, Code2), color: "#764ABC" },
 
   Node: { icon: getIcon(Icons.SiNodedotjs, Settings), color: "#339933" },
   Python: { icon: getIcon(Icons.SiPython, Code2), color: "#3776AB" },
@@ -48,29 +46,34 @@ const popularIcons = {
   Ruby: { icon: getIcon(Icons.SiRuby, Code2), color: "#CC342D" },
   Go: { icon: getIcon(Icons.SiGo, Code2), color: "#00ADD8" },
   Rust: { icon: getIcon(Icons.SiRust, Code2), color: "#000000" },
-  Express: { icon: getIcon(Icons.SiExpress, Settings), color: "#000000" },
+  Express: { icon: getIcon(Icons.SiExpress, Settings), color: "" },
   Django: { icon: getIcon(Icons.SiDjango, Settings), color: "#092E20" },
   Flask: { icon: getIcon(Icons.SiFlask, Settings), color: "#000000" },
 
   MongoDB: { icon: getIcon(Icons.SiMongodb, Database), color: "#47A248" },
   PostgreSQL: { icon: getIcon(Icons.SiPostgresql, Database), color: "#336791" },
   MySQL: { icon: getIcon(Icons.SiMysql, Database), color: "#4479A1" },
+  Drizzle: { icon: getIcon(Icons.SiDrizzle, Database), color: "#c5f74f" },
   Redis: { icon: getIcon(Icons.SiRedis, Database), color: "#DC382D" },
   Firebase: { icon: getIcon(Icons.SiFirebase, Database), color: "#FFCA28" },
   Supabase: { icon: getIcon(Icons.SiSupabase, Database), color: "#3ECF8E" },
 
+  VSCODE: { icon: getIcon(Icons.SiVscodium, Settings), color: "#007acc" },
+  Postman: { icon: getIcon(Icons.SiPostman, Settings), color: "#ff6c37" },
   AWS: { icon: getIcon(Icons.SiAmazonaws, Cloud), color: "#FF9900" },
   Docker: { icon: getIcon(Icons.SiDocker, Settings), color: "#2496ED" },
   Kubernetes: { icon: getIcon(Icons.SiKubernetes, Settings), color: "#326CE5" },
   Git: { icon: getIcon(Icons.SiGit, Code2), color: "#F05032" },
-  GitHub: { icon: getIcon(Icons.SiGithub, Code2), color: "#181717" },
+  GitHub: { icon: getIcon(Icons.SiGithub, Code2), color: "" },
   GitLab: { icon: getIcon(Icons.SiGitlab, Code2), color: "#FC6D26" },
-  Vercel: { icon: getIcon(Icons.SiVercel, Cloud), color: "#000000" },
+  Vercel: { icon: getIcon(Icons.SiVercel, Cloud), color: "" },
   Netlify: { icon: getIcon(Icons.SiNetlify, Cloud), color: "#00C7B7" },
 
   Figma: { icon: getIcon(Icons.SiFigma, Palette), color: "#F24E1E" },
   Adobe: { icon: getIcon(Icons.SiAdobe, Palette), color: "#FF0000" },
   Sketch: { icon: getIcon(Icons.SiSketch, Palette), color: "#F7B500" },
+
+  LinkedIn: { icon: getIcon(Icons.SiLinkedin, Palette), color: "" },
 };
 
 export function IconPicker({
