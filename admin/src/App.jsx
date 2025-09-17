@@ -11,7 +11,8 @@ import Skills from "./pages/Skills";
 import Messages from "./pages/Messages";
 import Analytics from "./pages/Analytics";
 import Settings from "./pages/Settings";
-import OtpLogin from './components/auth/otpLogin';
+import OtpLogin from "./components/auth/otpLogin";
+import ProtectedRoutes from "./components/auth/ProtectedRoutes";
 
 function App() {
   const router = createBrowserRouter([
@@ -26,12 +27,54 @@ function App() {
     {
       element: <AdminLayout />,
       children: [
-        { path: "/dashboard", element: <Dashboard /> },
-        { path: "/projects", element: <Projects /> },
-        { path: "/skills", element: <Skills /> },
-        { path: "/messages", element: <Messages /> },
-        { path: "/analytics", element: <Analytics /> },
-        { path: "/settings", element: <Settings /> },
+        {
+          path: "/dashboard",
+          element: (
+            <ProtectedRoutes>
+              <Dashboard />
+            </ProtectedRoutes>
+          ),
+        },
+        {
+          path: "/projects",
+          element: (
+            <ProtectedRoutes>
+              <Projects />
+            </ProtectedRoutes>
+          ),
+        },
+        {
+          path: "/skills",
+          element: (
+            <ProtectedRoutes>
+              <Skills />
+            </ProtectedRoutes>
+          ),
+        },
+        {
+          path: "/messages",
+          element: (
+            <ProtectedRoutes>
+              <Messages />
+            </ProtectedRoutes>
+          ),
+        },
+        {
+          path: "/analytics",
+          element: (
+            <ProtectedRoutes>
+              <Analytics />
+            </ProtectedRoutes>
+          ),
+        },
+        {
+          path: "/settings",
+          element: (
+            <ProtectedRoutes>
+              <Settings />
+            </ProtectedRoutes>
+          ),
+        },
       ],
     },
   ]);
