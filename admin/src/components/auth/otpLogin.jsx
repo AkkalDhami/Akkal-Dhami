@@ -11,9 +11,10 @@ import {
   useVerifyOtpMutation,
 } from "../../features/auth/authApi";
 import { useDispatch } from "react-redux";
-import { setCredentials } from "../../features/auth/authSlice";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import OtpInput from "./input-otp";
+import { setCredentials } from "../../features/auth/authSlice";
 
 export default function OtpLogin() {
   const dispatch = useDispatch();
@@ -21,7 +22,6 @@ export default function OtpLogin() {
   const navigate = useNavigate();
 
   const [step, setStep] = useState(1);
-  const [code, setCode] = useState("");
 
   const [requestOtp, { isLoading: sendingOtp }] = useRequestOtpMutation();
   const [verifyOtp, { isLoading: verifying }] = useVerifyOtpMutation();
@@ -31,15 +31,15 @@ export default function OtpLogin() {
       const res = await requestOtp().unwrap();
       toast.success(res.message);
       setStep(2);
-      setCode("");
     } catch (err) {
       toast.error(err.data?.message || "Failed to send OTP");
     }
   };
 
-  const handleVerifyOtp = async () => {
+  const handleVerifyOtp = async (code) => {
     try {
       const res = await verifyOtp(code).unwrap();
+      console.log(res)
       dispatch(setCredentials({ accessToken: res.accessToken }));
       toast.success("Login successful!");
       setStep(3);
@@ -51,7 +51,7 @@ export default function OtpLogin() {
 
   return (
     <section className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 items-center justify-center flex">
-      <div className="max-w-[380px] bg-background w-full mt-20 p-6 border rounded-lg shadow-lg">
+      <div className="max-w-[500px] bg-background w-full mt-20 p-6 border rounded-lg shadow-lg">
         {step === 1 && (
           <>
             <h2 className="text-xl font-bold mb-4">Admin Login</h2>
@@ -59,7 +59,8 @@ export default function OtpLogin() {
               className="w-full font-semibold"
               onClick={handleRequestOtp}
               size={"lg"}
-              disabled={sendingOtp}>
+              disabled={sendingOtp}
+            >
               {sendingOtp ? (
                 <>
                   <Loader2Icon className="animate-spin" /> Sending OTP..{" "}
@@ -73,42 +74,7 @@ export default function OtpLogin() {
 
         {step === 2 && (
           <>
-            <h2 className="text-xl font-bold mb-4">Enter OTP</h2>
-            <Label htmlFor="otp" className="mb-2">
-              OTP CODE:
-            </Label>
-            <Input
-              id="otp"
-              placeholder="6-digit code"
-              value={code}
-              onChange={(e) => setCode(e.target.value)}
-              className="mb-4 tracking-widest px-3.5 py-5 text-xl font-medium"
-            />
-            <Button
-              onClick={handleVerifyOtp}
-              className="w-full"
-              size={"lg"}
-              disabled={verifying || sendingOtp }>
-              {verifying ? (
-                <>
-                  <Loader2Icon className="animate-spin" /> Verifying..{" "}
-                </>
-              ) : (
-                "Verify OTP"
-              )}
-            </Button>
-            <Button
-              variant="outline"
-              onClick={handleRequestOtp}
-              className="mt-2">
-              {sendingOtp ? (
-                <>
-                  <Loader2Icon className="animate-spin" /> Sending OTP..{" "}
-                </>
-              ) : (
-                "Resend OTP"
-              )}
-            </Button>
+            <OtpInput onsubmit={handleVerifyOtp} isLoading={verifying} handleRequestOtp={handleRequestOtp} sendingOtp={sendingOtp}/>
           </>
         )}
 
