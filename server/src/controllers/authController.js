@@ -27,7 +27,7 @@ export async function requestOtp(req, res) {
         const { code, codeHash, expiresAt } = generateOtp();
         await saveOtp(ADMIN_EMAIL, codeHash, expiresAt);
         await sendOtpEmail({ to: ADMIN_EMAIL, code });
-
+        console.log(code)
         return res.json({ success: true, message: 'OTP sent to admin email' });
     } catch (err) {
         console.error(err);
@@ -41,7 +41,7 @@ export async function verifyOtp(req, res) {
         if (!code || !/^[0-9]{6}$/.test(code)) {
             return res.status(400).json({
                 success: false,
-                message: 'Invalid OTP code'
+                message: 'Invalid OTP!'
             });
         }
 
