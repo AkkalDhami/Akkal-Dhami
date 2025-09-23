@@ -11,7 +11,6 @@ import {
 } from "@/components/ui/select";
 import { IconPicker } from "@/components/ui/icon-picker";
 import toast from "react-hot-toast";
-import { useSelector } from "react-redux";
 import { Loader2 } from "lucide-react";
 
 export function SkillForm({ initialData, onSubmit, onCancel, isLoading }) {

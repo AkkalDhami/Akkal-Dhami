@@ -29,7 +29,6 @@ const eduApi = createApi({
 
         updateEducation: builder.mutation({
             query: ({ id, data }) => {
-                console.log(id, data);
                 return ({
                     url: `/update/${id}`,
                     method: 'PUT',

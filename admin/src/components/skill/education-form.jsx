@@ -17,7 +17,11 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
 import { Calendar as CalendarIcon, Loader2 } from "lucide-react";
 
@@ -34,9 +38,12 @@ export function EducationForm({ initialData, onSubmit, onCancel, isLoading }) {
   const form = useForm({
     resolver: zodResolver(educationSchema),
     defaultValues: {
+      _id: initialData?._id || "",
       institution: initialData?.institution || "",
       degree: initialData?.degree || "",
-      startDate: initialData?.startDate ? new Date(initialData.startDate) : undefined,
+      startDate: initialData?.startDate
+        ? new Date(initialData.startDate)
+        : undefined,
       endDate: initialData?.endDate ? new Date(initialData.endDate) : null,
       description: initialData?.description || "",
     },
@@ -45,6 +52,7 @@ export function EducationForm({ initialData, onSubmit, onCancel, isLoading }) {
   const handleSubmit = (values) => {
     onSubmit({
       ...values,
+      _id: initialData._id || "",
       startDate: values.startDate ? values.startDate.toISOString() : null,
       endDate: values.endDate ? values.endDate.toISOString() : null,
     });
@@ -76,7 +84,10 @@ export function EducationForm({ initialData, onSubmit, onCancel, isLoading }) {
             <FormItem>
               <FormLabel>Degree *</FormLabel>
               <FormControl>
-                <Input placeholder="Bachelor of Science in Computer Science" {...field} />
+                <Input
+                  placeholder="Bachelor of Science in Computer Science"
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -101,9 +112,10 @@ export function EducationForm({ initialData, onSubmit, onCancel, isLoading }) {
                         className={cn(
                           "w-full pl-3 text-left font-normal",
                           !field.value && "text-muted-foreground"
-                        )}
-                      >
-                        {field.value ? format(field.value, "PPP") : "Pick a date"}
+                        )}>
+                        {field.value
+                          ? format(field.value, "PPP")
+                          : "Pick a date"}
                         <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                       </Button>
                     </FormControl>
@@ -138,9 +150,10 @@ export function EducationForm({ initialData, onSubmit, onCancel, isLoading }) {
                         className={cn(
                           "w-full pl-3 text-left font-normal",
                           !field.value && "text-muted-foreground"
-                        )}
-                      >
-                        {field.value ? format(field.value, "PPP") : "Pick a date"}
+                        )}>
+                        {field.value
+                          ? format(field.value, "PPP")
+                          : "Pick a date"}
                         <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                       </Button>
                     </FormControl>
@@ -187,7 +200,7 @@ export function EducationForm({ initialData, onSubmit, onCancel, isLoading }) {
           <Button type="submit" disabled={isLoading}>
             {isLoading ? (
               <>
-                <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                <Loader2 className="h-4 w-4 animate-spin" />
                 {initialData ? "Updating..." : "Adding..."}
               </>
             ) : initialData ? (

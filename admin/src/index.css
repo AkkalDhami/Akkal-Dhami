@@ -1,12 +1,11 @@
-@import url("https://fonts.googleapis.com/css2?family=Cascadia+Code:ital,wght@0,200..700;1,200..700&display=swap");
-
+@import url("https://fonts.googleapis.com/css2?family=Cascadia+Code:ital,wght@0,200..700;1,200..700&family=Geist+Mono:wght@100..900&display=swap");
 @import "tailwindcss";
 @import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
 
 body {
-  font-family: "Cascadia Code", sans-serif;
+  font-family: "Geist Mono", monospace;
 }
 button {
   cursor: pointer;

@@ -10,6 +10,7 @@ import { X, Plus } from "lucide-react";
 
 export function ExperienceForm({ initialData, onSubmit, onCancel }) {
   const [formData, setFormData] = useState({
+    _id: initialData?._id || "",
     company: initialData?.company || "",
     position: initialData?.position || "",
     startDate: initialData?.startDate || "",
