@@ -13,6 +13,7 @@ import Analytics from "./pages/Analytics";
 import Settings from "./pages/Settings";
 import OtpLogin from "./components/auth/otpLogin";
 import ProtectedRoutes from "./components/auth/ProtectedRoutes";
+import Resume from "./pages/Resume";
 
 function App() {
   const router = createBrowserRouter([
@@ -64,6 +65,14 @@ function App() {
           element: (
             <ProtectedRoutes>
               <Analytics />
+            </ProtectedRoutes>
+          ),
+        },
+        {
+          path: "/resume",
+          element: (
+            <ProtectedRoutes>
+              <Resume />
             </ProtectedRoutes>
           ),
         },
