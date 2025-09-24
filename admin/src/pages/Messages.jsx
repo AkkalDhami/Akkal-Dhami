@@ -5,29 +5,61 @@ import {
   useMarkMessageAsReadMutation,
 } from "../features/messages/messageApi";
 import { toast } from "react-hot-toast";
-import { MessageSquareMore, Trash } from "lucide-react";
+import {
+  MessageSquareMore,
+  Trash2,
+  Reply,
+  Archive,
+  Mail,
+  Search,
+  Filter,
+  MoreVertical,
+  Clock,
+  User,
+  MailOpen,
+} from "lucide-react";
+
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 
 export default function Messages() {
   const [page, setPage] = useState(1);
   const { data, isError, error, isLoading, isFetching } = useGetMessagesQuery({
     page,
-    limit: 2,
+    limit: 10,
   });
-  console.log(data);
-  const [deleteMessage, { isLoading: isDeleting, error: deleteError }] =
-    useDeleteMessageMutation();
+
+  const [deleteMessage, { isLoading: isDeleting }] = useDeleteMessageMutation();
   const [markMessageAsRead] = useMarkMessageAsReadMutation();
 
   const [messages, setMessages] = useState([]);
   const [selectedMessage, setSelectedMessage] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [messageToDelete, setMessageToDelete] = useState(null);
 
   // Merge new pages
   useEffect(() => {
     if (data?.messages) {
-      setMessages((prev) => [...prev, ...data.messages]);
+      if (page === 1) {
+        setMessages(data.messages);
+      } else {
+        setMessages((prev) => [...prev, ...data.messages]);
+      }
     }
-  }, [data]);
+  }, [data, page]);
 
   // Error toast
   useEffect(() => {
@@ -42,6 +74,8 @@ export default function Messages() {
       message.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
       message.message.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  const unreadCount = messages.filter((message) => !message.read).length;
 
   const handleSelectMessage = async (message) => {
     setSelectedMessage(message);
@@ -63,206 +97,352 @@ export default function Messages() {
     }
   };
 
-  const deleteMessageHandler = async (id) => {
-    if (isDeleting) return;
-    if (!confirm("Are you sure you want to delete this message?")) return;
+  const openDeleteDialog = (message) => {
+    setMessageToDelete(message);
+    setDeleteDialogOpen(true);
+  };
+
+  const deleteMessageHandler = async () => {
+    if (!messageToDelete) return;
+
     try {
-      const res = await deleteMessage(id).unwrap();
-      console.log(res);
-      setMessages((prev) => prev.filter((m) => m._id !== id));
-      if (selectedMessage?._id === id) {
+      const res = await deleteMessage(messageToDelete._id).unwrap();
+      setMessages((prev) => prev.filter((m) => m._id !== messageToDelete._id));
+      if (selectedMessage?._id === messageToDelete._id) {
         setSelectedMessage(null);
       }
       toast.success(res?.message || "Message deleted successfully");
     } catch (err) {
       toast.error(err?.data?.message || "Failed to delete message");
+    } finally {
+      setDeleteDialogOpen(false);
+      setMessageToDelete(null);
     }
   };
 
-  useEffect(() => {
-    if (deleteError) {
-      toast.error(deleteError?.data?.message || "Failed to delete message");
-    }
-  }, [deleteError]);
-
   const formatDate = (dateString) => {
     const date = new Date(dateString);
-    return date.toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "short",
-      day: "numeric",
+    const now = new Date();
+    const diffTime = Math.abs(now - date);
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+    if (diffDays === 1) {
+      return "Yesterday";
+    } else if (diffDays < 7) {
+      return `${diffDays} days ago`;
+    } else {
+      return date.toLocaleDateString("en-US", {
+        month: "short",
+        day: "numeric",
+      });
+    }
+  };
+
+  const formatTime = (dateString) => {
+    return new Date(dateString).toLocaleTimeString("en-US", {
       hour: "2-digit",
       minute: "2-digit",
     });
   };
 
-  if (isLoading) return <div className="p-6">Loading messages...</div>;
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-500 mx-auto"></div>
+          <p className="mt-4 text-lg">Loading messages...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen">
       {/* Header */}
-      <header className="shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
-          <h1 className="text-3xl font-bold tracking-tight">Messages</h1>
-          <div className="relative w-64">
-            <input
-              type="text"
-              placeholder="Search messages..."
-              className="w-full pl-10 pr-4 py-2 rounded-lg border border-zinc-300 focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
-            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <svg
-                className="h-5 w-5 text-zinc-400"
-                fill="currentColor"
-                viewBox="0 0 20 20">
-                <path
-                  fillRule="evenodd"
-                  d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-                  clipRule="evenodd"
+      <div className="border-b">
+        <div className=" px-6 py-4">
+          <div className="flex items-center flex-wrap gap-3 justify-between">
+            <div className="flex items-center space-x-4">
+              <div className="p-2 rounded-lg bg-orange-500/10">
+                <Mail className="h-12 w-12 text-orange-500" />
+              </div>
+              <div>
+                <h1 className="text-2xl font-bold">Messages</h1>
+                <p className="text-sm text-muted-foreground">
+                  {data?.total} messages • {unreadCount} unread
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-center space-x-3">
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+                <Input
+                  type="text"
+                  placeholder="Search messages..."
+                  value={searchTerm}
+                  className="pl-10 w-80"
+                  onChange={(e) => setSearchTerm(e.target.value)}
                 />
-              </svg>
+              </div>
             </div>
           </div>
         </div>
-      </header>
+      </div>
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col md:flex-row gap-6">
-          {/* Message List */}
-          <div className="w-full md:w-1/3 rounded-lg shadow overflow-hidden">
-            <div className="border-b border-zinc-500/30 px-4 py-3 bg-zinc-500/10">
-              <h2 className="text-lg font-medium ">
-                All Messages ({data?.total})
-              </h2>
-            </div>
-            <div className="divide-y divide-zinc-500/30 max-h-[calc(100vh-12rem)] overflow-y-auto">
-              {filteredMessages.length > 0 ? (
-                filteredMessages.map((message) => (
-                  <div
-                    key={message._id}
-                    className={`p-4 cursor-pointer transition-colors ${
-                      selectedMessage?._id === message._id
-                        ? "bg-orange-500/10"
-                        : "hover:bg-zinc-500/10"
-                    }`}
-                    onClick={() => handleSelectMessage(message)}>
-                    <div className="flex justify-between items-start">
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center">
-                          <div className="flex-shrink-0 w-10 h-10 bg-orange-500 rounded-full flex items-center justify-center font-medium">
-                            {message.name.charAt(0)}
-                          </div>
-                          <div className="ml-3">
-                            <p className="text-sm font-medium  truncate">
+      <div className="px-6 py-6">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+          {/* Message List Sidebar */}
+          <Card className="lg:col-span-1 border-zinc-500/40 bg-transparent">
+            <CardHeader className="pb-3 border-b border-gray-500/30">
+              <CardTitle className="text-lg">Inbox</CardTitle>
+            </CardHeader>
+            <CardContent className="p-0">
+              <div className="divide-y divide-gray-500/30 max-h-[calc(100vh-12rem)] overflow-y-auto">
+                {filteredMessages.length > 0 ? (
+                  filteredMessages.map((message) => (
+                    <div
+                      key={message._id}
+                      className={`p-4 cursor-pointer transition-all duration-200 ${
+                        selectedMessage?._id === message._id
+                          ? "bg-orange-50 text-white dark:bg-orange-500/10 border-b-zinc-500/30 border-r-2 border-orange-500"
+                          : ""
+                      }`}
+                      onClick={() => handleSelectMessage(message)}>
+                      <div className="flex items-start space-x-3">
+                        <div
+                          className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center font-medium text-sm ${
+                            !message.read
+                              ? "bg-orange-500 text-white"
+                              : "bg-gray-200 dark:bg-gray-600 text-muted-foreground"
+                          }`}>
+                          {message.name.charAt(0).toUpperCase()}
+                        </div>
+
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center justify-between mb-1">
+                            <span
+                              className={`font-medium text-sm truncate ${
+                                !message.read
+                                  ? "text-gray-900 dark:text-white font-semibold"
+                                  : "text-gray-700 dark:text-gray-300"
+                              }`}>
                               {message.name}
-                            </p>
-                            <p className="text-sm text-zinc-600 dark:text-zinc-300 truncate">
-                              {message.email}
-                            </p>
+                            </span>
+                            <span className="text-xs text-gray-500 whitespace-nowrap">
+                              {formatTime(message.createdAt)}
+                            </span>
+                          </div>
+
+                          <p className="text-xs text-gray-600 dark:text-gray-400 truncate mb-1">
+                            {message.email}
+                          </p>
+
+                          <p
+                            className={`text-sm truncate ${
+                              !message.read
+                                ? "text-gray-900 dark:text-white font-medium"
+                                : "text-gray-600 dark:text-gray-400"
+                            }`}>
+                            {message.message}
+                          </p>
+
+                          <div className="flex items-center justify-between mt-2">
+                            <span className="text-xs text-gray-500">
+                              {formatDate(message.createdAt)}
+                            </span>
+                            {!message.read && (
+                              <Badge
+                                variant="secondary"
+                                className="bg-orange-500 text-white text-xs">
+                                New
+                              </Badge>
+                            )}
                           </div>
                         </div>
-                        <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-300 line-clamp-2">
-                          {message.message}
-                        </p>
                       </div>
-                      {!message.read && (
-                        <span className="ml-2 flex-shrink-0 inline-block h-2 w-2 rounded-full bg-orange-500"></span>
+                    </div>
+                  ))
+                ) : (
+                  <div className="p-8 text-center text-gray-500">
+                    <MailOpen className="h-12 w-12 mx-auto mb-3 text-gray-300" />
+                    <p>No messages found</p>
+                  </div>
+                )}
+
+                {page < data?.pages && (
+                  <div className="p-4 border-t">
+                    <Button
+                      variant="outline"
+                      className="w-full"
+                      onClick={loadMore}
+                      disabled={isFetching}>
+                      {isFetching ? "Loading..." : "Load More Messages"}
+                    </Button>
+                  </div>
+                )}
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Message Detail Panel */}
+          <Card className="lg:col-span-3  border-zinc-500/40 bg-transparent">
+            <CardContent className="p-0">
+              {selectedMessage ? (
+                <div className="h-full flex flex-col">
+                  {/* Message Header */}
+                  <div className="border-b border-zinc-500/30 p-6">
+                    <div className="flex flex-wrap gap-2 items-center justify-between mb-4">
+                      <div className="flex flex-wrap items-center gap-3">
+                        <div className="w-12 h-12 bg-orange-500 rounded-full flex items-center justify-center text-white font-semibold text-lg">
+                          {selectedMessage.name.charAt(0).toUpperCase()}
+                        </div>
+                        <div>
+                          <h2 className="text-xl font-semibold">
+                            {selectedMessage.name}
+                          </h2>
+                          <p className="text-muted-foreground">
+                            {selectedMessage.email}
+                          </p>
+                        </div>
+                      </div>
+
+                      <div className="flex flex-wrap  items-center gap-2">
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={async () => {
+                            await markMessageAsRead({
+                              id: selectedMessage._id,
+                              read: !selectedMessage.read,
+                            });
+                            setMessages((prev) =>
+                              prev.map((m) =>
+                                m._id === selectedMessage._id
+                                  ? { ...m, read: !m.read }
+                                  : m
+                              )
+                            );
+                            setSelectedMessage({
+                              ...selectedMessage,
+                              read: !selectedMessage.read,
+                            });
+                          }}>
+                          {selectedMessage.read ? (
+                            <Mail className="h-4 w-4 mr-2" />
+                          ) : (
+                            <MailOpen className="h-4 w-4 mr-2" />
+                          )}
+                          {selectedMessage.read ? "Mark Unread" : "Mark Read"}
+                        </Button>
+
+                        <a
+                          href={`mailto:${selectedMessage.email}?subject=Re: Message from your portfolio`}>
+                          <Button variant="outline" size="sm">
+                            <Reply className="h-4 w-4 mr-2" />
+                            Reply
+                          </Button>
+                        </a>
+
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => openDeleteDialog(selectedMessage)}
+                          className="text-red-600 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-500/10">
+                          <Trash2 className="h-4 w-4" />
+                        </Button>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center space-x-4 text-sm text-muted-foreground">
+                      <div className="flex items-center">
+                        <Clock className="h-4 w-4 mr-2" />
+                        {new Date(selectedMessage.createdAt).toLocaleString(
+                          "en-US",
+                          {
+                            year: "numeric",
+                            month: "short",
+                            day: "numeric",
+                            hour: "2-digit",
+                            minute: "2-digit",
+                          }
+                        )}
+                      </div>
+                      {!selectedMessage.read && (
+                        <Badge variant="default" className="bg-orange-500">
+                          Unread
+                        </Badge>
                       )}
                     </div>
-                    <p className="mt-2 text-xs text-zinc-600 dark:text-zinc-300">
-                      {formatDate(message.createdAt)}
-                    </p>
                   </div>
-                ))
+
+                  {/* Message Body */}
+                  <div className="flex-1 p-6 overflow-y-auto">
+                    <div className="prose border-l-4 pl-4 border-orange-500 dark:prose-invert max-w-none">
+                      <p className="text-foreground dark:text-gray-300 whitespace-pre-wrap leading-relaxed">
+                        {selectedMessage.message}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="border-t border-zinc-500/30 p-4">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center space-x-2 text-sm text-muted-foreground">
+                        <User className="h-4 w-4" />
+                        <span>Received via portfolio contact form</span>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <a
+                          href={`mailto:${selectedMessage.email}?subject=Re: Message from your portfolio`}>
+                          <Button>
+                            <Reply className="h-4 w-4 mr-2" />
+                            Reply
+                          </Button>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               ) : (
-                <div className="p-4 text-center">No messages found</div>
-              )}
-              {page < data?.pages && (
-                <button
-                  className="w-full py-2 text-center text-orange-600 hover:underline"
-                  onClick={loadMore}>
-                  Load more
-                </button>
-              )}
-            </div>
-          </div>
-
-          {/* Message Detail */}
-          <div className="w-full md:w-2/3 rounded-lg shadow overflow-hidden">
-            {selectedMessage ? (
-              <div className="px-6 py-4">
-                <div className="flex justify-between items-center mb-4">
-                  <h2 className="text-lg font-medium">Message Details</h2>
-                  <button
-                    onClick={() => deleteMessageHandler(selectedMessage._id)}
-                    className="text-red-600 hover:text-red-800 p-1 rounded-full hover:bg-red-500/10">
-                    <Trash />
-                  </button>
-                </div>
-
-                <div className="flex items-center mb-4">
-                  <div className="flex-shrink-0 w-12 h-12 bg-orange-500 rounded-full flex items-center justify-center text-white font-medium text-xl">
-                    {selectedMessage.name.charAt(0)}
-                  </div>
-                  <div className="ml-4">
-                    <h3 className="text-lg font-medium">
-                      {selectedMessage.name}
-                    </h3>
-                    <p className="text-sm text-zinc-600 dark:text-zinc-300">
-                      {selectedMessage.email}
-                    </p>
-                  </div>
-                  <div className="ml-auto text-sm text-zinc-600 dark:text-zinc-300">
-                    {formatDate(selectedMessage.createdAt)}
-                  </div>
-                </div>
-
-                <div className="bg-zinc-500/10 border-l-4 border-orange-600 p-4 rounded-lg">
-                  <p className="whitespace-pre-wrap">
-                    {selectedMessage.message}
+                <div className="h-96 flex flex-col items-center justify-center text-center p-8">
+                  <MessageSquareMore className="h-16 w-16 text-gray-300 mb-4" />
+                  <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
+                    No message selected
+                  </h3>
+                  <p className="text-gray-500 dark:text-gray-400 max-w-md">
+                    Select a message from the list to view its contents. You can
+                    read, reply to, or manage messages from your portfolio
+                    visitors.
                   </p>
                 </div>
-
-                <div className="mt-6 flex space-x-3">
-                  <a
-                    href={`mailto:${selectedMessage.email}`}
-                    className="inline-flex items-center px-4 py-2 border text-sm font-medium rounded-md shadow-sm border-orange-600 hover:text-orange-600">
-                    Reply
-                  </a>
-                  <button
-                    onClick={async () => {
-                      await markMessageAsRead({
-                        id: selectedMessage._id,
-                        read: !selectedMessage.read,
-                      });
-                      setMessages((prev) =>
-                        prev.map((m) =>
-                          m._id === selectedMessage._id
-                            ? { ...m, read: !m.read }
-                            : m
-                        )
-                      );
-                      setSelectedMessage({
-                        ...selectedMessage,
-                        read: !selectedMessage.read,
-                      });
-                    }}
-                    className="inline-flex items-center px-4 py-2 border border-zinc-500/10 text-sm font-medium rounded-md text-zinc-700 bg-white hover:bg-zinc-50">
-                    {selectedMessage.read ? "Mark as Unread" : "Mark as Read"}
-                  </button>
-                </div>
-              </div>
-            ) : (
-              <div className="h-full flex font-semibold flex-col gap-2 items-center justify-center p-12 text-center text-zinc-500">
-                <p> Select a message from the list to view details.</p>
-                <MessageSquareMore />
-              </div>
-            )}
-          </div>
+              )}
+            </CardContent>
+          </Card>
         </div>
-      </main>
+      </div>
+
+      {/* Delete Confirmation Dialog */}
+      <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Delete Message</AlertDialogTitle>
+            <AlertDialogDescription>
+              Are you sure you want to delete this message? This action cannot
+              be undone and the message will be permanently removed from your
+              records.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={deleteMessageHandler}
+              className="bg-red-600 hover:bg-red-700"
+              disabled={isDeleting}>
+              {isDeleting ? "Deleting..." : "Delete Message"}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }
