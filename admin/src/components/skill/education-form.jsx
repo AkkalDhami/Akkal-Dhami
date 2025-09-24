@@ -2,11 +2,15 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import * as z from "zod";
 import { format } from "date-fns";
 
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import {
   Form,
   FormControl,
@@ -17,22 +21,9 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
 import { Calendar as CalendarIcon, Loader2 } from "lucide-react";
-
-// ✅ Zod Schema
-const educationSchema = z.object({
-  institution: z.string().min(2, "Institution name is required"),
-  degree: z.string().min(2, "Degree is required"),
-  startDate: z.date({ required_error: "Start date is required" }),
-  endDate: z.date().nullable().optional(),
-  description: z.string().optional(),
-});
+import { educationSchema } from "../../schemas/education";
 
 export function EducationForm({ initialData, onSubmit, onCancel, isLoading }) {
   const form = useForm({
@@ -46,13 +37,15 @@ export function EducationForm({ initialData, onSubmit, onCancel, isLoading }) {
         : undefined,
       endDate: initialData?.endDate ? new Date(initialData.endDate) : null,
       description: initialData?.description || "",
+      gpa: initialData?.gpa || "",
+      location: initialData?.location || "",
     },
   });
 
   const handleSubmit = (values) => {
     onSubmit({
       ...values,
-      _id: initialData._id || "",
+      _id: initialData?._id || "",
       startDate: values.startDate ? values.startDate.toISOString() : null,
       endDate: values.endDate ? values.endDate.toISOString() : null,
     });
@@ -93,6 +86,37 @@ export function EducationForm({ initialData, onSubmit, onCancel, isLoading }) {
             </FormItem>
           )}
         />
+
+        <div className="grid gap-4 md:grid-cols-2">
+          {/* GPA */}
+          <FormField
+            control={form.control}
+            name="gpa"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>GPA</FormLabel>
+                <FormControl>
+                  <Input placeholder="4.0" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          {/* Location */}
+          <FormField
+            control={form.control}
+            name="location"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Location</FormLabel>
+                <FormControl>
+                  <Input placeholder="City, Country" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
 
         {/* Dates */}
         <div className="grid gap-4 md:grid-cols-2">

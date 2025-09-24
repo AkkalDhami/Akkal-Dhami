@@ -19,14 +19,15 @@ export const getEducation = async (req, res) => {
 //* ADD EDUCATION
 export const addEducation = async (req, res) => {
     try {
-        console.log(req.body);
-        const { institution, degree, startDate, endDate, description } = req.body;
+        const { institution, degree, startDate, endDate, description, gpa, location } = req.body;
         await Education.create({
             institution,
             degree,
             startDate,
             endDate,
-            description
+            description,
+            gpa,
+            location
         });
         res.status(201).json({
             success: true,

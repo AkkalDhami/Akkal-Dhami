@@ -20,7 +20,10 @@ import { ConfirmationDialog } from "../others/AlertDailog";
 import { EducationCard } from "./education-card";
 import { EducationForm } from "./education-form";
 
-const EducationTabContent = ({ filteredEducation }) => {
+const EducationTabContent = ({
+  filteredEducation = [],
+  fromResume = false,
+}) => {
   const {
     error: eduError,
     isError: isEduError,
@@ -135,44 +138,46 @@ const EducationTabContent = ({ filteredEducation }) => {
             Manage your educational background
           </p>
         </div>
-        <Dialog
-          open={educationDialogOpen}
-          onOpenChange={(open) => {
-            setEducationDialogOpen(open);
-            if (!open) setEditingEducation(null);
-          }}>
-          <DialogTrigger asChild>
-            <Button
-              className="gap-2"
-              onClick={() => setEducationDialogOpen(true)}>
-              <CirclePlus className="h-4 w-4" />
-              Add Education
-            </Button>
-          </DialogTrigger>
-          <DialogContent className="max-w-2xl">
-            <DialogHeader>
-              <DialogTitle>
-                {editingEducation ? "Edit Education" : "Add Education"}
-              </DialogTitle>
-              <DialogDescription>
-                {editingEducation
-                  ? "Update the education information."
-                  : "Add educational background to your portfolio."}
-              </DialogDescription>
-            </DialogHeader>
-            <EducationForm
-              initialData={editingEducation}
-              isLoading={isEduCreating || isEduUpdating}
-              onSubmit={
-                editingEducation ? handleUpdateEducation : handleAddEducation
-              }
-              onCancel={() => {
-                setEducationDialogOpen(false);
-                setEditingEducation(null);
-              }}
-            />
-          </DialogContent>
-        </Dialog>
+        {!fromResume && (
+          <Dialog
+            open={educationDialogOpen}
+            onOpenChange={(open) => {
+              setEducationDialogOpen(open);
+              if (!open) setEditingEducation(null);
+            }}>
+            <DialogTrigger asChild>
+              <Button
+                className="gap-2"
+                onClick={() => setEducationDialogOpen(true)}>
+                <CirclePlus className="h-4 w-4" />
+                Add Education
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="max-w-2xl">
+              <DialogHeader>
+                <DialogTitle>
+                  {editingEducation ? "Edit Education" : "Add Education"}
+                </DialogTitle>
+                <DialogDescription>
+                  {editingEducation
+                    ? "Update the education information."
+                    : "Add educational background to your portfolio."}
+                </DialogDescription>
+              </DialogHeader>
+              <EducationForm
+                initialData={editingEducation}
+                isLoading={isEduCreating || isEduUpdating}
+                onSubmit={
+                  editingEducation ? handleUpdateEducation : handleAddEducation
+                }
+                onCancel={() => {
+                  setEducationDialogOpen(false);
+                  setEditingEducation(null);
+                }}
+              />
+            </DialogContent>
+          </Dialog>
+        )}
       </div>
       {isEduLoading && (
         <div className="flex justify-center items-center">Loading...</div>
@@ -185,6 +190,7 @@ const EducationTabContent = ({ filteredEducation }) => {
       <div className="space-y-4">
         {filteredEducation?.map((edu) => (
           <EducationCard
+            fromResume={fromResume}
             key={edu._id}
             education={edu}
             onEdit={handleEditEducation}
@@ -192,7 +198,7 @@ const EducationTabContent = ({ filteredEducation }) => {
           />
         ))}
       </div>
-      {filteredEducation.length === 0 && (
+      {filteredEducation?.length === 0 && (
         <div className="text-center py-12">
           <div className="text-muted-foreground">
             No education found matching your criteria.
