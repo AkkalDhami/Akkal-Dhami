@@ -3,23 +3,15 @@ import { useState, useMemo } from "react";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-import {
-  Plus,
-  Code,
-  Briefcase,
-  GraduationCap,
-  Search,
-} from "lucide-react";
+import { Plus, Code, Briefcase, GraduationCap, Search } from "lucide-react";
 
-
-import {
-  useGetSkillsQuery,
-} from "../features/skill/skillApi";
+import { useGetSkillsQuery } from "../features/skill/skillApi";
 
 import { useGetEducationsQuery } from "../features/education/eduApi";
 import EducationTabContent from "../components/skill/education-tab";
 import ExperienceTabContent from "../components/skill/experience-tab";
 import SkillTabContent from "../components/skill/skill-tab";
+import { useGetExperiencesQuery } from "../features/experience/experienceApi";
 
 export default function Skills() {
   const { data } = useGetSkillsQuery();
@@ -28,22 +20,12 @@ export default function Skills() {
   const [searchTerm, setSearchTerm] = useState("");
   const [activeTab, setActiveTab] = useState("skills");
 
-  // Initial data
   const skills = data?.skills || [];
 
-  const [experience] = useState([
-    {
-      id: "1",
-      company: "Tech Solutions Inc.",
-      position: "Senior Frontend Developer",
-      startDate: "2022-01",
-      endDate: "Present",
-      description: "Led development of React-based web applications.",
-      technologies: ["React", "TypeScript", "Next.js", "Tailwind CSS"],
-    },
-  ]);
+  const { data: experiences } = useGetExperiencesQuery();
 
   const education = eduData?.education || [];
+  const experience = experiences?.experiences || [];
 
   // Memoized filtered data
   const filteredSkills = useMemo(() => {
@@ -79,7 +61,7 @@ export default function Skills() {
     <>
       <div className="p-4 sm:p-8">
         <div className="max-w-7xl mx-auto space-y-6">
-          {/* Header */}
+         
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div>
               <h1 className="text-2xl md:text-3xl font-bold tracking-tight">
@@ -106,7 +88,7 @@ export default function Skills() {
             onValueChange={setActiveTab}
             className="space-y-6">
             <TabsList className="grid w-full grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3">
-              <TabsTrigger value="skills" className="gap-2">
+              <TabsTrigger value="skills" className="gap-2 bg-transparent">
                 <Code className="h-4 w-4" />
                 Skills ({filteredSkills?.length})
               </TabsTrigger>

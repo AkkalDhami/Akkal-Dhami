@@ -27,7 +27,7 @@ import {
 import { SkillForm } from "./skill-form";
 import { SkillCard } from "./skill-card";
 
-const SkillTabContent = ({ filteredSkills }) => {
+const SkillTabContent = ({ filteredSkills = [], fromResume = false }) => {
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   const [confirmAction, setConfirmAction] = useState(null);
   const [skillDialogOpen, setSkillDialogOpen] = useState(false);
@@ -157,33 +157,35 @@ const SkillTabContent = ({ filteredSkills }) => {
             Manage your technical skills with visual icons
           </p>
         </div>
-        <Dialog open={skillDialogOpen} onOpenChange={setSkillDialogOpen}>
-          <DialogTrigger asChild>
-            <Button className="gap-2" onClick={handleOpenSkillDialog}>
-              <CirclePlus className="h-4 w-4" />
-              Add Skill
-            </Button>
-          </DialogTrigger>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>
-                {editingSkill ? "Update Skill" : "Add New Skill"}
-              </DialogTitle>
-              <DialogDescription>
-                {editingSkill
-                  ? "Update the skill information."
-                  : "Add a new skill to your portfolio."}
-              </DialogDescription>
-            </DialogHeader>
-            <SkillForm
-              initialData={editingSkill}
-              skill={editingSkill}
-              onSubmit={editingSkill ? handleUpdateSkill : handleAddSkill}
-              onCancel={() => setSkillDialogOpen(false)}
-              isLoading={isCreating || isUpdating}
-            />
-          </DialogContent>
-        </Dialog>
+        {!fromResume && (
+          <Dialog open={skillDialogOpen} onOpenChange={setSkillDialogOpen}>
+            <DialogTrigger asChild>
+              <Button className="gap-2" onClick={handleOpenSkillDialog}>
+                <CirclePlus className="h-4 w-4" />
+                Add Skill
+              </Button>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>
+                  {editingSkill ? "Update Skill" : "Add New Skill"}
+                </DialogTitle>
+                <DialogDescription>
+                  {editingSkill
+                    ? "Update the skill information."
+                    : "Add a new skill to your portfolio."}
+                </DialogDescription>
+              </DialogHeader>
+              <SkillForm
+                initialData={editingSkill}
+                skill={editingSkill}
+                onSubmit={editingSkill ? handleUpdateSkill : handleAddSkill}
+                onCancel={() => setSkillDialogOpen(false)}
+                isLoading={isCreating || isUpdating}
+              />
+            </DialogContent>
+          </Dialog>
+        )}
       </div>
       {isLoading && (
         <div className="flex justify-center items-center">Loading...</div>
@@ -196,7 +198,9 @@ const SkillTabContent = ({ filteredSkills }) => {
       <div className="space-y-6">
         {Object.entries(skillsByCategory || {}).map(
           ([category, categorySkills]) => (
-            <Card key={category}>
+            <Card
+              key={category}
+              className="bg-background/50 border-zinc-500/30">
               <CardHeader>
                 <CardTitle className="text-lg">{category}</CardTitle>
                 <CardDescription>
@@ -208,6 +212,7 @@ const SkillTabContent = ({ filteredSkills }) => {
                 <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
                   {categorySkills.map((skill) => (
                     <SkillCard
+                      fromResume={fromResume}
                       key={skill._id}
                       skill={skill}
                       onEdit={() => handleEditSkill(skill._id, skill)}

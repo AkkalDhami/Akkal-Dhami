@@ -1,4 +1,8 @@
-import { useState } from "react";
+"use client";
+
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -10,115 +14,135 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { IconPicker } from "@/components/ui/icon-picker";
-import toast from "react-hot-toast";
 import { Loader2 } from "lucide-react";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+
+// Validation schema
+const skillSchema = z.object({
+  name: z.string().min(1, "Skill name is required"),
+  description: z.string().min(1, "Description is required"),
+  category: z.string().min(1, "Category is required"),
+  icon: z.any().refine((val) => val, { message: "Icon is required" }),
+});
 
 export function SkillForm({ initialData, onSubmit, onCancel, isLoading }) {
-  const [formData, setFormData] = useState(initialData || {});
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    if (!formData.name.trim()) {
-      toast.error("Please enter a skill name.");
-      return;
-    }
-
-    if (!formData.category) {
-      toast.error("Please select a category.");
-      return;
-    }
-
-    if (!formData.icon) {
-      toast.error("Please select an icon.");
-      return;
-    }
-
-    if (!formData.description.trim()) {
-      toast.error("Please enter a short description.");
-      return;
-    }
-
-    console.log(formData);
-    onSubmit(formData);
-  };
+  const form = useForm({
+    resolver: zodResolver(skillSchema),
+    defaultValues: {
+      name: initialData?.name || "",
+      description: initialData?.description || "",
+      category: initialData?.category || "",
+      icon: initialData?.icon || null,
+    },
+  });
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
-      <div className="space-y-2">
-        <Label htmlFor="name">Skill Name *</Label>
-        <Input
-          id="name"
-          value={formData.name}
-          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-          placeholder="e.g., React, Python, AWS"
-          required
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+        {/* Skill Name */}
+        <FormField
+          control={form.control}
+          name="name"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Skill Name *</FormLabel>
+              <FormControl>
+                <Input placeholder="e.g., React, Python, AWS" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
         />
-      </div>
-      <div className="space-y-2">
-        <Label htmlFor="shortDescription">Short Description *</Label>
-        <Input
-          id="shortDescription"
-          value={formData.description}
-          onChange={(e) =>
-            setFormData({ ...formData, description: e.target.value })
-          }
-          placeholder="short description"
-          required
-        />
-      </div>
-      <div className="grid sm:grid-cols-2 gap-4">
-        <div className="space-y-2">
-          <Label htmlFor="category">Category *</Label>
-          <Select
-            value={formData.category}
-            onValueChange={(value) =>
-              setFormData({ ...formData, category: value })
-            }>
-            <SelectTrigger>
-              <SelectValue placeholder="Select category" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="Frontend">Frontend</SelectItem>
-              <SelectItem value="Backend">Backend</SelectItem>
-              <SelectItem value="DevOps">DevOps</SelectItem>
-              <SelectItem value="Database">Database</SelectItem>
-              <SelectItem value="Mobile">Mobile</SelectItem>
-              <SelectItem value="Design">Design</SelectItem>
-              <SelectItem value="Tools & Other">Tools & Other</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
 
-        <div className="space-y-2">
-          <Label htmlFor="icon">Icon *</Label>
-          <IconPicker
-            value={formData?.icon || formData?.icon?.component?.name}
-            onChange={(icon) => {
-              console.log(icon);
-              return setFormData({ ...formData, icon });
-            }}
-            placeholder="Choose an icon"
+        {/* Description */}
+        <FormField
+          control={form.control}
+          name="description"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Short Description *</FormLabel>
+              <FormControl>
+                <Input placeholder="Short description" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <div className="grid sm:grid-cols-2 gap-4">
+          {/* Category */}
+          <FormField
+            control={form.control}
+            name="category"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Category *</FormLabel>
+                <Select value={field.value} onValueChange={field.onChange}>
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select category" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    <SelectItem value="Frontend">Frontend</SelectItem>
+                    <SelectItem value="Backend">Backend</SelectItem>
+                    <SelectItem value="DevOps">DevOps</SelectItem>
+                    <SelectItem value="Database">Database</SelectItem>
+                    <SelectItem value="Mobile">Mobile</SelectItem>
+                    <SelectItem value="Design">Design</SelectItem>
+                    <SelectItem value="Tools & Other">Tools & Other</SelectItem>
+                  </SelectContent>
+                </Select>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          {/* Icon Picker */}
+          <FormField
+            control={form.control}
+            name="icon"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Icon *</FormLabel>
+                <FormControl>
+                  <IconPicker
+                    value={field.value}
+                    onChange={field.onChange}
+                    placeholder="Choose an icon"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
           />
         </div>
-      </div>
 
-      <div className="flex justify-end gap-3 pt-4">
-        <Button type="button" variant="outline" onClick={onCancel}>
-          Cancel
-        </Button>
-        <Button type="submit">
-          {isLoading ? (
-            <div className="flex items-center gap-2">
-              <Loader2 className="w-4 h-4 animate-spin" /> Saving...
-            </div>
-          ) : initialData ? (
-            "Update Skill"
-          ) : (
-            "Save Skill"
-          )}
-        </Button>
-      </div>
-    </form>
+        {/* Actions */}
+        <div className="flex justify-end gap-3 pt-4">
+          <Button type="button" variant="outline" onClick={onCancel}>
+            Cancel
+          </Button>
+          <Button type="submit" disabled={isLoading}>
+            {isLoading ? (
+              <div className="flex items-center gap-2">
+                <Loader2 className="w-4 h-4 animate-spin" /> Saving...
+              </div>
+            ) : initialData ? (
+              "Update Skill"
+            ) : (
+              "Save Skill"
+            )}
+          </Button>
+        </div>
+      </form>
+    </Form>
   );
 }
