@@ -32,7 +32,7 @@ const VSCodeProfileCard = () => {
         <div className="text-sm font-mono">portfolio.js</div>
       </div>
 
-      <div className="p-4 rounded-b-lg font-mono text-[16px] text-zinc-800 dark:text-zinc-300">
+      <div className="p-4 rounded-b-lg giest-mono text-[16px] text-zinc-800 dark:text-zinc-300">
         {/* Line numbers */}
         <div className="flex">
           <div className="pr-4 text-right select-none w-10 text-zinc-500 dark:text-zinc-600">

@@ -1,4 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit"
+
 import themeReducer from "../features/theme/themeSlice"
 import uiReducer from "../features/ui/uiSlice"
 
@@ -7,10 +8,13 @@ import skillReducer from "../features/skill/skillSlice"
 
 import authReducer from "../features/auth/authSlice"
 import authApi from "../features/auth/authApi"
+
 import projectApi from "../features/project/projectApi"
+import messageApi from "../features/messages/messageApi"
+
 import skillApi from "../features/skill/skillApi"
 import eduApi from "../features/education/eduApi"
-import messageApi from "../features/messages/messageApi"
+import experienceApi from "../features/experience/experienceApi"
 
 export const store = configureStore({
     reducer: {
@@ -23,6 +27,7 @@ export const store = configureStore({
         [projectApi.reducerPath]: projectApi.reducer,
         [skillApi.reducerPath]: skillApi.reducer,
         [eduApi.reducerPath]: eduApi.reducer,
+        [experienceApi.reducerPath]: experienceApi.reducer,
         [messageApi.reducerPath]: messageApi.reducer,
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware({
@@ -31,9 +36,10 @@ export const store = configureStore({
         authApi.middleware,
         skillApi.middleware,
         eduApi.middleware,
+        experienceApi.middleware,
         projectApi.middleware,
         messageApi.middleware
     ),
 })
-console.log(store.getState());
+
 export default store
