@@ -9,16 +9,6 @@ import { CodeXml, X } from "lucide-react";
 import * as SiIcons from "react-icons/si";
 import * as FaIcons from "react-icons/fa";
 import { TechIcon } from "../../pages/Projects";
-const iconMap = { ...SiIcons, ...FaIcons };
-
-// const TechIcon = (icon) => {
-//   const Icon = iconMap[icon?.component];
-//   return Icon ? (
-//     <Icon className="w-4 h-4" style={{ color: icon?.color }} />
-//   ) : (
-//     <CodeXml className="w-4 h-4" />
-//   );
-// };
 
 export const TextField = ({ id, label, placeholder, error, ...props }) => (
   <div className="space-y-2">
@@ -51,7 +41,6 @@ export const FileField = ({ id, label, error, ...props }) => (
 
 export const BadgeList = ({ items, removeItem }) => (
   <>
-    {console.log(items)}
     <div className="flex flex-wrap gap-2 mt-2">
       {items?.map((item,i) => (
         <Badge

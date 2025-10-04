@@ -17,13 +17,13 @@ import {
 } from "../ui/card";
 
 import { Badge } from "../ui/badge";
-
+import { GlowingEffect } from "@/components/ui/glowing-effect";
 import { dateFormater } from "../../utils/dateFormater";
 import { FaRegBuilding } from "react-icons/fa";
 
 export const EducationCard = ({ education, onEdit, onDelete, fromResume }) => {
   return (
-    <Card className="bg-background/50 border-zinc-500/30 border rounded-lg hover:shadow-md transition-all hover:border-orange-500 duration-200">
+    <Card className="bg-background/50 border-zinc-500/30 border rounded-lg hover:shadow-md transition-all relative duration-200">
       <CardHeader>
         <div className="flex items-start justify-between">
           <div>
@@ -78,6 +78,13 @@ export const EducationCard = ({ education, onEdit, onDelete, fromResume }) => {
       <CardContent>
         <p className="text-sm text-muted-foreground">{education.description}</p>
       </CardContent>
+      <GlowingEffect
+        spread={40}
+        glow={true}
+        disabled={false}
+        proximity={64}
+        inactiveZone={0.01}
+      />
     </Card>
   );
 };

@@ -15,7 +15,7 @@ import {
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
 import { Edit, Trash2 } from "lucide-react";
-
+import { GlowingEffect } from "@/components/ui/glowing-effect";
 import { Card, CardContent } from "../ui/card";
 import { Badge } from "../ui/badge";
 import { format } from "date-fns";
@@ -35,7 +35,7 @@ export const ExperienceCard = ({
     }));
   };
   return (
-    <Card className="bg-background/50 gap-4 border-zinc-500/30 border rounded-lg hover:shadow-md transition-all hover:border-orange-500 duration-200">
+    <Card className="bg-background/50 gap-4 border-zinc-500/30 border rounded-lg hover:shadow-md transition-all relative duration-200">
       <CardContent>
         <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between mb-4">
           <div className="flex-1">
@@ -48,13 +48,13 @@ export const ExperienceCard = ({
 
             <div className="flex font-semibold items-center justify-between space-x-4 text-sm text-muted-foreground">
               <div className="flex items-center gap-2">
-                <Calendar className="h-4 w-4 mb-1" />
+                <Calendar className="h-4 w-4 mb-0.5" />
                 {format(experience.startDate, "MMMM yyyy")} -{" "}
                 {format(experience.endDate, "MMMM yyyy") || "Present"}
               </div>
               {experience.location && (
                 <div className="flex items-center gap-2">
-                  <MapPin className="h-4 w-4 mb-1" />
+                  <MapPin className="h-4 w-4 mb-0.5" />
                   {experience.location}
                 </div>
               )}
@@ -139,6 +139,13 @@ export const ExperienceCard = ({
           </div>
         )}
       </CardContent>
+      <GlowingEffect
+        spread={40}
+        glow={true}
+        disabled={false}
+        proximity={64}
+        inactiveZone={0.01}
+      />
     </Card>
   );
 };

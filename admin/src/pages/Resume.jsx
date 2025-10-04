@@ -32,12 +32,17 @@ import SkillTabContent from "../components/skill/skill-tab";
 import { useGetSkillsQuery } from "../features/skill/skillApi";
 import { useGetEducationsQuery } from "../features/education/eduApi";
 import EducationTabContent from "../components/skill/education-tab";
+import { GlowingEffect } from "@/components/ui/glowing-effect";
+import { useGetProjectsQuery } from "../features/project/projectApi";
+import ProjectCardPlaceholder from "../components/project/project-card-placeholder";
+import ProjectCard from "../components/project/project-card";
 
 const Resume = () => {
   const { data: experiences, isLoading: isExperienceLoading } =
     useGetExperiencesQuery();
   const { data: skills, isLoading: isSkillLoading } = useGetSkillsQuery();
   const { data: eduData, isLoading: isEduLoading } = useGetEducationsQuery();
+  const { data: projects, isLoading: isProjectLoading } = useGetProjectsQuery();
   const [activeTab, setActiveTab] = useState("experience");
 
   // Sample resume data
@@ -264,20 +269,20 @@ const Resume = () => {
   );
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-white to-orange-50 dark:from-zinc-950 dark:to-orange-900/10 py-8">
+    <div className="min-h-screen b py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <Card className="mb-8 shadow-xl border-0 bg-gradient-to-r from-blue-600 to-purple-700 dark:from-blue-800 dark:to-purple-900 text-white">
+        <Card className="mb-8 relative bg-transparent shadow-xl border">
           <CardContent className="p-8">
             <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between">
               <div className="flex-1">
                 <h1 className="text-4xl font-bold mb-2">
                   {resumeData.personal.name}
                 </h1>
-                <p className="text-xl text-blue-100 dark:text-blue-200 mb-4">
+                <p className="text-xl text-muted-foreground mb-4">
                   {resumeData.personal.title}
                 </p>
-                <p className="text-blue-100 dark:text-blue-200 max-w-2xl">
+                <p className="text-muted-foreground max-w-2xl">
                   {resumeData.personal.summary}
                 </p>
               </div>
@@ -311,6 +316,15 @@ const Resume = () => {
               </a>
             </div>
           </CardContent>
+          <GlowingEffect
+            blur={0}
+            borderWidth={3}
+            spread={80}
+            glow={true}
+            disabled={false}
+            proximity={64}
+            inactiveZone={0.01}
+          />
         </Card>
 
         <ContactInfo />
@@ -323,25 +337,25 @@ const Resume = () => {
           <TabsList className="grid w-full grid-cols-4 border border-zinc-500/50 backdrop-blur-sm bg-transparent dark:backdrop-blur-sm">
             <TabsTrigger
               value="experience"
-              className="flex items-center space-x-2 data-[state=active]:bg-blue-500 data-[state=active]:text-white dark:data-[state=active]:bg-blue-600 dark:data-[state=active]:text-white">
+              className="flex items-center space-x-2 ">
               <Briefcase className="h-4 w-4" />
               <span>Experience</span>
             </TabsTrigger>
             <TabsTrigger
               value="skills"
-              className="flex items-center space-x-2 data-[state=active]:bg-green-500 data-[state=active]:text-white dark:data-[state=active]:bg-green-600 dark:data-[state=active]:text-white">
+              className="flex items-center space-x-2 ">
               <Code className="h-4 w-4" />
               <span>Skills</span>
             </TabsTrigger>
             <TabsTrigger
               value="education"
-              className="flex items-center space-x-2 data-[state=active]:bg-purple-500 data-[state=active]:text-white dark:data-[state=active]:bg-purple-600 dark:data-[state=active]:text-white">
+              className="flex items-center space-x-2 ">
               <GraduationCap className="h-4 w-4" />
               <span>Education</span>
             </TabsTrigger>
             <TabsTrigger
               value="projects"
-              className="flex items-center space-x-2 data-[state=active]:bg-orange-500 data-[state=active]:text-white dark:data-[state=active]:bg-orange-600 dark:data-[state=active]:text-white">
+              className="flex items-center space-x-2">
               <Award className="h-4 w-4" />
               <span>Projects</span>
             </TabsTrigger>
@@ -401,51 +415,17 @@ const Resume = () => {
           {/* Projects Tab */}
           <TabsContent value="projects" className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {resumeData.projects.map((project) => (
-                <Card
-                  key={project.id}
-                  className="hover:shadow-lg transition-all duration-300 hover:translate-y-[-2px] bg-transparent dark:hover:shadow-xl dark:hover:shadow-gray-900/50">
-                  <CardContent className="p-6">
-                    {project.featured && (
-                      <Badge className="mb-3 bg-gradient-to-r from-orange-500 to-red-500 dark:from-orange-600 dark:to-red-600">
-                        Featured
-                      </Badge>
-                    )}
-                    <h3 className="font-bold text-lg mb-2 text-gray-900 dark:text-gray-100">
-                      {project.name}
-                    </h3>
-                    <p className="text-gray-600 dark:text-gray-400 text-sm mb-4">
-                      {project.description}
-                    </p>
-                    <div className="flex flex-wrap gap-1 mb-4">
-                      {project.technologies.map((tech, index) => (
-                        <Badge
-                          key={index}
-                          variant="outline"
-                          className="text-xs dark:border-gray-600 dark:text-gray-300">
-                          {tech}
-                        </Badge>
-                      ))}
-                    </div>
-                    <div className="flex space-x-2">
-                      <Button
-                        size="sm"
-                        variant="outline"
-                        className="flex-1 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-700">
-                        <Globe className="h-3 w-3 mr-1" />
-                        Live Demo
-                      </Button>
-                      <Button
-                        size="sm"
-                        variant="outline"
-                        className="flex-1 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-700">
-                        <Github className="h-3 w-3 mr-1" />
-                        Code
-                      </Button>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
+              {!isProjectLoading
+                ? projects?.projects.map((project) => (
+                    <ProjectCard
+                      key={project.id}
+                      project={project}
+                      fromResume={true}
+                    />
+                  ))
+                : Array.from({ length: 6 }).map((_, idx) => (
+                    <ProjectCardPlaceholder key={idx} />
+                  ))}
             </div>
           </TabsContent>
         </Tabs>

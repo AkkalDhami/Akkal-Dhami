@@ -9,14 +9,14 @@ import {
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
 import { Edit, Trash2 } from "lucide-react";
-
+import { GlowingEffect } from "@/components/ui/glowing-effect";
 import * as Icons from "react-icons/si";
 
 export const SkillCard = ({ skill, onEdit, onDelete, fromResume = false }) => {
   const IconComponent = Icons[skill.icon?.component];
 
   return (
-    <div className="group relative p-4 bg-background/50 border-zinc-500/30 border rounded-lg hover:shadow-md transition-all hover:border-orange-500 duration-200">
+    <div className="group relative p-4 bg-background/50 border-zinc-500/30 border rounded-lg hover:shadow-md transition-all  duration-200">
       <div className="flex items-start justify-between">
         <div className="flex items-center gap-3">
           <div
@@ -59,6 +59,13 @@ export const SkillCard = ({ skill, onEdit, onDelete, fromResume = false }) => {
           </DropdownMenu>
         )}
       </div>
+      <GlowingEffect
+        spread={40}
+        glow={true}
+        disabled={false}
+        proximity={64}
+        inactiveZone={0.01}
+      />
     </div>
   );
 };
