@@ -23,7 +23,6 @@ const navItems = [
   { to: "/projects", label: "Projects", icon: LuFolderOpen },
   { to: "/skills", label: "Skills & Experience", icon: LuGraduationCap },
   { to: "/messages", label: "Messages", icon: LuMail },
-  { to: "/analytics", label: "Analytics", icon: LuChartColumnIncreasing },
   { to: "/resume", label: "Resume", icon: LuFile },
   { to: "/settings", label: "Settings", icon: LuSettings2 },
 ];

@@ -73,7 +73,7 @@ const popularIcons = {
   Adobe: { icon: getIcon(Icons.SiAdobe, Palette), color: "#FF0000" },
   Sketch: { icon: getIcon(Icons.SiSketch, Palette), color: "#F7B500" },
 
-  LinkedIn: { icon: getIcon(Icons.SiLinkedin, Palette), color: "" },
+  LinkedIn: { icon: getIcon(Icons.SiLinkedin, Palette), color: "#0a66c2" },
 };
 
 export function IconPicker({
@@ -132,7 +132,7 @@ export function IconPicker({
               />
             </div>
           </div>
-          <ScrollArea className="h-64">
+          <ScrollArea className="h-[260px]">
             <div className="grid grid-cols-4 gap-2 p-3">
               {filteredIcons.map(([name, { icon: IconComponent, color }]) => (
                 <Button

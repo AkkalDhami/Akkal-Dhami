@@ -9,7 +9,6 @@ import Dashboard from "./pages/Dashboard";
 import Projects from "./pages/Projects";
 import Skills from "./pages/Skills";
 import Messages from "./pages/Messages";
-import Analytics from "./pages/Analytics";
 import Settings from "./pages/Settings";
 import OtpLogin from "./components/auth/otpLogin";
 import ProtectedRoutes from "./components/auth/ProtectedRoutes";
@@ -60,14 +59,7 @@ function App() {
             </ProtectedRoutes>
           ),
         },
-        {
-          path: "/analytics",
-          element: (
-            <ProtectedRoutes>
-              <Analytics />
-            </ProtectedRoutes>
-          ),
-        },
+        
         {
           path: "/resume",
           element: (

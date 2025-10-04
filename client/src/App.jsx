@@ -9,14 +9,12 @@ import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 import Sidebar from "./components/Sidebar";
 import { motion, AnimatePresence } from "motion/react";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import AdminOtp from "./pages/AdminOtp.jsx";
-import { FiMoon, FiSun } from "react-icons/fi";
 
 function App() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
-
   useEffect(() => {
     const handleScroll = () => {
       const sections = ["home", "about", "skills", "projects", "contact"];
@@ -48,7 +46,9 @@ function App() {
 
   return (
     <div
-      className={`min-h-screen transition-colors duration-300 font-medium dark:bg-bg-900 dark:text-zinc-100 bg-zinc-50 text-zinc-800`}>
+      className={`min-h-screen transition-colors duration-300 font-medium dark:bg-slate-950 dark:text-zinc-100 bg-zinc-50 text-zinc-800`}>
+     
+      
       <Routes>
         <Route path="/admin/login" element={<AdminOtp />} />
 
@@ -70,7 +70,7 @@ function App() {
               </AnimatePresence>
               <main className={`max-w-7xl mx-auto`}>
                 <Hero />
-                <About />
+                {/* <About /> */}
                 <Skills />
                 <Projects />
                 <Contact />
