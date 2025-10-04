@@ -2,21 +2,17 @@ import React, { useState, useEffect } from "react";
 import { FiMenu, FiMoon, FiSun } from "react-icons/fi";
 import { motion } from "motion/react";
 import { useDispatch, useSelector } from "react-redux";
-import { toggleTheme } from "../features/themeSlice";
+import { cycleMode } from "../features/themeSlice";
+import { LuSunMoon } from "react-icons/lu";
 
 const Navbar = ({ activeSection, toggleSidebar }) => {
   const [scrolled, setScrolled] = useState(false);
-  const theme = useSelector((state) => state.theme);
+  const { mode } = useSelector((state) => state.theme);
   const dispatch = useDispatch();
-  const darkMode = theme.mode === "dark";
-
   useEffect(() => {
-    if (darkMode) {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-  }, [darkMode]);
+    document.documentElement.classList.remove("light", "dark");
+    document.documentElement.classList.add(mode);
+  }, [mode]);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
@@ -26,7 +22,6 @@ const Navbar = ({ activeSection, toggleSidebar }) => {
 
   const navLinks = [
     { id: "home", label: "Home" },
-    { id: "about", label: "About" },
     { id: "skills", label: "Skills" },
     { id: "projects", label: "Projects" },
     { id: "contact", label: "Contact" },
@@ -62,11 +57,10 @@ const Navbar = ({ activeSection, toggleSidebar }) => {
                   <motion.button
                     key={link.id}
                     onClick={() => scrollToSection(link.id)}
-                    whileHover={{ y: -2 }}
-                    className={`px-3 py-1.5 font-medium rounded-full text-[16px] transition-colors duration-300 ${
+                    className={`px-3 py-1 font-medium rounded-lg text-sm transition-colors duration-300 ${
                       activeSection === link.id
-                        ? "text-primary-700 bg-primary-500/10"
-                        : "dark:text-zinc-300 dark:hover:text-primary-600 text-zinc-700 hover:text-primary-600"
+                        ? "text-primary bg-zinc-100 dark:bg-slate-800"
+                        : "hover:bg-slate-100 dark:hover:bg-slate-800"
                     }`}>
                     {link.label}
                   </motion.button>
@@ -78,10 +72,10 @@ const Navbar = ({ activeSection, toggleSidebar }) => {
             <motion.button
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
-              onClick={() => dispatch(toggleTheme())}
+              onClick={() => dispatch(cycleMode())}
               className="cursor-pointer p-2"
               aria-label="Toggle dark mode">
-              {darkMode ? <FiSun size={20} /> : <FiMoon size={20} />}
+              {mode === "dark" ? <FiSun size={24} /> : <FiMoon size={24} />}
             </motion.button>
           </div>
 

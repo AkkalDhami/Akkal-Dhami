@@ -17,4 +17,3 @@ export const store = configureStore({
     },
     middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(projectApi.middleware, skillApi.middleware, contactApi.middleware, aboutApi.middleware)
 })
-console.log(store.getState());

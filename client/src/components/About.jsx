@@ -55,7 +55,7 @@ const About = () => {
 
   const SkillCategory = ({ title, skills, icon, colorClass }) => (
     <div
-      className={`bg-white dark:bg-gray-800 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:translate-y-[-4px] border border-gray-100 dark:border-gray-700 p-6`}>
+      className={` rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:translate-y-[-4px] border border-gray-100 dark:border-gray-700 p-6`}>
       <div className="flex items-center space-x-3 mb-4">
         <div className={`p-3 rounded-xl ${colorClass}`}>{icon}</div>
         <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
@@ -66,7 +66,7 @@ const About = () => {
         {skills.map((skill, index) => (
           <span
             key={index}
-            className="px-3 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-full text-sm font-medium border border-gray-200 dark:border-gray-600">
+            className="px-3 py-1  text-gray-700 dark:text-gray-300 rounded-full text-sm font-medium border border-gray-200 dark:border-gray-600">
             {skill}
           </span>
         ))}
@@ -75,7 +75,7 @@ const About = () => {
   );
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-indigo-50 dark:from-gray-900 dark:via-blue-900/10 dark:to-indigo-900/10 py-12">
+    <div className="min-h-screen py-12">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header Section */}
         <div className="text-center mb-16">
@@ -95,7 +95,7 @@ const About = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
           {/* Left Column - Introduction */}
           <div className="lg:col-span-2">
-            <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-3xl shadow-2xl border border-white/20 dark:border-gray-700/50 p-8">
+            <div className=" backdrop-blur-sm rounded-3xl shadow-2xl border border-white/20 dark:border-gray-700/50 p-8">
               <div className="flex items-center space-x-4 mb-6">
                 <div className="relative">
                   <div className="w-20 h-20 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white text-2xl font-bold shadow-lg">
@@ -270,12 +270,7 @@ const About = () => {
           </div>
         </div>
 
-        {/* Floating Elements */}
-        <div className="fixed bottom-8 right-8">
-          <button className="w-14 h-14 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full shadow-2xl flex items-center justify-center text-white hover:scale-110 transition-transform duration-300">
-            <MessageCircle className="h-6 w-6" />
-          </button>
-        </div>
+       
       </div>
     </div>
   );

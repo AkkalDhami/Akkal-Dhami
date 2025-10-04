@@ -1,8 +1,9 @@
 import React from "react";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { useGetMyContactsQuery } from "../features/aboutApi";
 import { useGetProjectsQuery } from "../features/projectApi";
 import { toast } from "react-toastify";
+import { GlowingEffect } from "./ui/glowing-effect";
 
 const VSCodeProfileCard = () => {
   const { data, isError, error } = useGetMyContactsQuery();
@@ -13,7 +14,7 @@ const VSCodeProfileCard = () => {
   } = useGetProjectsQuery();
 
   const projects = project?.projects;
-  console.log(projects);
+  
   if (isError) toast.error(error);
   if (isProjectError) toast.error(projectError);
 
@@ -22,7 +23,7 @@ const VSCodeProfileCard = () => {
       initial={{ opacity: 0, scale: 0.95 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.4 }}
-      className="animatedBorder border border-zinc-500/30 max-w-2xl rounded-2xl mx-auto">
+      className="animatedBorder relative border border-zinc-500/30 max-w-2xl rounded-2xl mx-auto">
       <div className="flex items-center border-b border-zinc-500/30 justify-between px-4 py-2 text-zinc-600 dark:text-zinc-300">
         <div className="flex space-x-2 mr-3">
           <div className="w-3 h-3 rounded-full bg-primary-500"></div>
@@ -32,7 +33,7 @@ const VSCodeProfileCard = () => {
         <div className="text-sm font-mono">portfolio.js</div>
       </div>
 
-      <div className="p-4 rounded-b-lg giest-mono text-[16px] text-zinc-800 dark:text-zinc-300">
+      <div className="p-4 rounded-b-lg font-mono text-[16px] text-zinc-800 dark:text-zinc-300">
         {/* Line numbers */}
         <div className="flex">
           <div className="pr-4 text-right select-none w-10 text-zinc-500 dark:text-zinc-600">
@@ -106,6 +107,13 @@ const VSCodeProfileCard = () => {
           </div>
         </div>
       </div>
+      <GlowingEffect
+        spread={40}
+        glow={true}
+        disabled={false}
+        proximity={64}
+        inactiveZone={0.01}
+      />
     </motion.div>
   );
 };

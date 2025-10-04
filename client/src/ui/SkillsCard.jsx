@@ -3,7 +3,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import * as SiIcons from "react-icons/si";
 import * as FaIcons from "react-icons/fa";
-
+import { GlowingEffect } from "../components/ui/glowing-effect";
 const iconMap = { ...SiIcons, ...FaIcons };
 
 export const TechIcon = (icon) => {
@@ -53,12 +53,11 @@ const SkillsCard = ({ categorySkills, category, index }) => {
         {categorySkills?.map((skill) => (
           <motion.div
             key={skill._id}
-            whileHover={{ scale: 1.1 }}
             variants={item}
-            className="p-4 relative group rounded-3xl flex items-center gap-3 transition-colors">
+            className="px-2 py-3 border relative group rounded-md flex items-center gap-3 transition-colors">
             {/* <div className="p-2 rounded-md">{TechIcon(skill.icon)}</div> */}
             <div
-              className="p-2 ml-3 rounded-md"
+              className="p-2 ml-2 rounded-lg"
               style={{ backgroundColor: `${skill.icon?.color}20` }}>
               {TechIcon(skill.icon)}
             </div>
@@ -70,12 +69,16 @@ const SkillsCard = ({ categorySkills, category, index }) => {
                 {skill.description}
               </p>
             </div>
-           
+            <GlowingEffect
+              spread={40}
+              glow={true}
+              disabled={false}
+              proximity={64}
+              inactiveZone={0.01}
+            />
 
-            <div className="absolute bottom-[-1px] group-hover:via-primary-600 left-1/2 -translate-x-1/2 h-px w-[calc(100%-24px)] bg-gradient-to-r from-transparent  via-zinc-900 dark:via-zinc-100 to-transparent"></div>
-            <div className="absolute top-[1px] group-hover:via-primary-600 left-1/2 -translate-x-1/2 h-px w-[calc(100%-24px)] bg-gradient-to-r from-transparent  via-zinc-900 dark:via-zinc-100 to-transparent"></div>
-            <div className="absolute top-[1px] group-hover:via-primary-600 h-[calc(100%-2px)] w-px bg-gradient-to-t from-transparent  via-zinc-900 dark:via-zinc-100 to-transparent"></div>
-            <div className="absolute top-[1px] right-[-1px] group-hover:via-primary-600 h-[calc(100%-2px)] w-px bg-gradient-to-t from-transparent  via-zinc-900 dark:via-zinc-100 to-transparent"></div>
+            <div className="absolute bottom-[-1px]  left-1/2 -translate-x-1/2 h-px w-[calc(100%-24px)] bg-gradient-to-r from-transparent  via-zinc-900 dark:via-zinc-100 to-transparent"></div>
+         
           </motion.div>
         ))}
       </motion.div>

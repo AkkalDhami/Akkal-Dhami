@@ -49,7 +49,7 @@ const ProjectCard = ({ project, i }) => {
         <div className="project-card-wrapper md:max-w-1/2 mx-auto">
           <ProjectModal
             images={images}
-            triggerElement={<img src={thumbnail.url} alt={title} />}
+            triggerElement={<img src={thumbnail?.url} alt={title} />}
             imageAnimation={{
               hover: { scale: 1.05, rotate: 0.5 },
               tap: { scale: 0.95 },

@@ -270,10 +270,10 @@ const Contact = () => {
                   )}
                 </motion.button>
                 <div className="absolute bottom-[0px] via-primary-600 left-1/2 -translate-x-1/2 h-[2px] w-[calc(100%-24px)] bg-gradient-to-r from-transparent  group-hover:via-zinc-900 group-hover:dark:via-zinc-100 to-transparent"></div>
-                <div className="absolute top-[0px] via-primary-600 left-1/2 -translate-x-1/2 h-[3px] w-[calc(100%-24px)] bg-gradient-to-r from-transparent  group-hover:via-zinc-900 group-hover:dark:via-zinc-100 to-transparent"></div>
+                <div className="absolute top-[0px] via-primary-600 left-1/2 -translate-x-1/2 h-[1.5px] w-[calc(100%-24px)] bg-gradient-to-r from-transparent  group-hover:via-zinc-900 group-hover:dark:via-zinc-100 to-transparent"></div>
 
-                <div className="absolute top-[2px] via-primary-600 h-[calc(100%-4px)] w-[3px] bg-gradient-to-t from-transparent group-hover:via-zinc-900 group-hover:dark:via-zinc-100 to-transparent"></div>
-                <div className="absolute top-[1px] right-[0px] via-primary-600 h-[calc(100%-4px)] w-[2px] bg-gradient-to-t from-transparent  group-hover:via-zinc-900 group-hover:dark:via-zinc-100 to-transparent"></div>
+                <div className="absolute top-[2px] via-primary-600 h-[calc(100%-4px)] w-[2px] bg-gradient-to-t from-transparent group-hover:via-zinc-900 group-hover:dark:via-zinc-100 to-transparent"></div>
+                <div className="absolute top-[1px] right-[0px] via-primary-600 h-[calc(100%-4px)] w-[1.5px] bg-gradient-to-t from-transparent  group-hover:via-zinc-900 group-hover:dark:via-zinc-100 to-transparent"></div>
               </motion.div>
             </form>
           </motion.div>

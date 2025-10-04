@@ -14,6 +14,7 @@ const IconButtonLink = ({ icon: Icon, text, href, isWide = false }) => {
         } cursor-pointer border border-zinc-500/30 items-center justify-center sm:gap-2 gap-1 px-2 sm:px-4 text-sm sm:text-lg py-2.5 text-black dark:text-white  hover:opacity-90 rounded-md transition-colors duration-200 font-medium`}>
         <Icon />
         <span>{text}</span>
+        <div className="absolute -top-px group-hover:via-primary-600 left-1/2 -translate-x-1/2 h-px w-[calc(100%-24px)] bg-gradient-to-r from-transparent  via-transparent to-transparent"></div>
         <div className="absolute -bottom-px via-primary-600 left-1/2 -translate-x-1/2 h-px w-[calc(100%-24px)] bg-gradient-to-r from-transparent group-hover:via-zinc-900 group-hover:dark:via-zinc-100 to-transparent"></div>
       </button>
     </a>
