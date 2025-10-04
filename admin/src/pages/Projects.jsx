@@ -104,7 +104,6 @@ export default function Projects() {
 
   // Add or Update Project
   const handleProjectSubmit = async (data) => {
-    console.log(data);
     try {
       const formData = new FormData();
       formData.append("title", data.title);
@@ -118,7 +117,7 @@ export default function Projects() {
           data.technologies.map((tech) => ({
             name: tech.name,
             icon: {
-              component: tech.icon?.component?.name,
+              component: tech.icon?.component,
               color: tech.icon?.color,
             },
           }))

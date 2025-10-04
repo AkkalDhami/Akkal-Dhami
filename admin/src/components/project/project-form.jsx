@@ -22,7 +22,6 @@ function ProjectForm({ initialData, onSubmit, onCancel, isLoading, project }) {
     component: null,
   });
   const [featureInput, setFeatureInput] = useState("");
-  console.log(selectedTechIcon);
   // Previews
   initialData = project;
   const [thumbnailPreview, setThumbnailPreview] = useState(
@@ -61,8 +60,7 @@ function ProjectForm({ initialData, onSubmit, onCancel, isLoading, project }) {
   const technologies = watch("technologies");
   const features = watch("features");
 
-  const addTechnology = (name, icon) => {
-    // Ensure both component and color are included in the icon object
+  const addTechnology = (name) => {
     if (
       name &&
       selectedTechIcon.component &&
@@ -73,7 +71,7 @@ function ProjectForm({ initialData, onSubmit, onCancel, isLoading, project }) {
         {
           name,
           icon: {
-            component: selectedTechIcon.component,
+            component: selectedTechIcon.component?.name,
             color: selectedTechIcon.color,
           },
         },
@@ -229,11 +227,11 @@ function ProjectForm({ initialData, onSubmit, onCancel, isLoading, project }) {
           {errors.thumbnail && (
             <p className="text-red-500 text-sm">{errors.thumbnail.message}</p>
           )}
-          {console.log(thumbnailPreview)}
+          {/* {console.log(thumbnailPreview)} */}
           {thumbnailPreview && (
             <div className="relative group w-40 h-28 mt-3 rounded-lg overflow-hidden border">
               <img
-                src={thumbnailPreview.url.url}
+                src={thumbnailPreview.url.url || thumbnailPreview.url}
                 alt="thumbnail"
                 className="w-full h-full object-cover"
               />
@@ -269,7 +267,7 @@ function ProjectForm({ initialData, onSubmit, onCancel, isLoading, project }) {
                 key={`${img.public_id}-${idx}`}
                 className="relative group rounded-lg overflow-hidden border">
                 <img
-                  src={img.url.url}
+                  src={img.url.url || img.url}
                   alt={img.url.public_id}
                   className="w-full h-32 object-cover"
                 />
@@ -313,9 +311,7 @@ function ProjectForm({ initialData, onSubmit, onCancel, isLoading, project }) {
                 component: icon.component,
               });
             }}
-            onSelectName={(name) =>
-              addTechnology(name, selectedTechIcon.component)
-            }
+            onSelectName={(name) => addTechnology(name)}
             placeholder="Choose Technology"
           />
           {errors.technologies && (

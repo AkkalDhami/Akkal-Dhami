@@ -17,12 +17,18 @@ import {
   ExternalLink,
   Github,
 } from "lucide-react";
+import { GlowingEffect } from "@/components/ui/glowing-effect";
 
-const ProjectCard = ({ project, handleEditProject, handleDeleteProject }) => {
+const ProjectCard = ({
+  project = {},
+  handleEditProject = () => {},
+  handleDeleteProject = () => {},
+  fromResume = false,
+}) => {
   return (
     <>
-      <Card className="group border-0 py-0 shadow-sm hover:shadow-xl transition-all">
-        <div className="aspect-video relative overflow-hidden rounded-t-lg bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900">
+      <Card className="group relative border bg-transparent py-0 shadow-sm hover:shadow-xl transition-all">
+        <div className="aspect-video relative overflow-hidden rounded-t-lg">
           <img
             src={project.thumbnail?.url || project.images[0]?.url}
             alt={project.title}
@@ -35,26 +41,28 @@ const ProjectCard = ({ project, handleEditProject, handleDeleteProject }) => {
             <h3 className="font-semibold text-lg leading-tight group-hover:text-primary transition-colors">
               {project.title}
             </h3>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="h-8 w-8 p-0 opacity-0 group-hover:opacity-100 transition-opacity">
-                  <MoreHorizontal className="h-4 w-4" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                <DropdownMenuItem onClick={() => handleEditProject(project)}>
-                  <Edit className="mr-2 h-4 w-4" /> Edit
-                </DropdownMenuItem>
-                <DropdownMenuItem
-                  onClick={() => handleDeleteProject(project)}
-                  className="text-red-600">
-                  <Trash2 className="mr-2 h-4 w-4" /> Delete
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+            {!fromResume && (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className="h-8 w-8 p-0 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <MoreHorizontal className="h-4 w-4" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  <DropdownMenuItem onClick={() => handleEditProject(project)}>
+                    <Edit className="mr-2 h-4 w-4" /> Edit
+                  </DropdownMenuItem>
+                  <DropdownMenuItem
+                    onClick={() => handleDeleteProject(project)}
+                    className="text-red-600">
+                    <Trash2 className="mr-2 h-4 w-4" /> Delete
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            )}
           </div>
 
           <p className="text-sm text-muted-foreground line-clamp-2 leading-relaxed">
@@ -107,10 +115,18 @@ const ProjectCard = ({ project, handleEditProject, handleDeleteProject }) => {
                   </Link>
                 </Button>
               )}
-
             </div>
           </div>
         </div>
+        <GlowingEffect
+          blur={0}
+          borderWidth={2}
+          spread={80}
+          glow={true}
+          disabled={false}
+          proximity={64}
+          inactiveZone={0.01}
+        />
       </Card>
     </>
   );
