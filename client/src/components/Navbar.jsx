@@ -3,7 +3,6 @@ import { FiMenu, FiMoon, FiSun } from "react-icons/fi";
 import { motion } from "motion/react";
 import { useDispatch, useSelector } from "react-redux";
 import { cycleMode } from "../features/themeSlice";
-import { LuSunMoon } from "react-icons/lu";
 
 const Navbar = ({ activeSection, toggleSidebar }) => {
   const [scrolled, setScrolled] = useState(false);
@@ -70,12 +69,11 @@ const Navbar = ({ activeSection, toggleSidebar }) => {
 
             {/* Dark mode toggle */}
             <motion.button
-              whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
               onClick={() => dispatch(cycleMode())}
-              className="cursor-pointer p-2"
+              className="cursor-pointer p-2 rounded-md hover:bg-accent"
               aria-label="Toggle dark mode">
-              {mode === "dark" ? <FiSun size={24} /> : <FiMoon size={24} />}
+              {mode === "dark" ? <FiSun size={20} /> : <FiMoon size={20} />}
             </motion.button>
           </div>
 

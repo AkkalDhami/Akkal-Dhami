@@ -12,12 +12,11 @@ import { FaCss3Alt, FaNodeJs } from "react-icons/fa";
 import ProjectCard from "../ui/ProjectCard";
 import SocialLink from "../ui/AnimateButton";
 import { useGetProjectsQuery } from "../features/projectApi";
-import { toast } from "react-toastify";
 
 const Projects = () => {
-  const { data, isError, error } = useGetProjectsQuery();
+  const { data } = useGetProjectsQuery();
 
-  const projects = data?.projects;
+  const projects = data?.projects || [];
 
   const container = {
     hidden: { opacity: 0 },
@@ -28,12 +27,6 @@ const Projects = () => {
       },
     },
   };
-
-  if (isError) {
-    toast.error(error?.data?.message || "Error Fetching Projects", {
-      toastId: "errorProjects",
-    });
-  }
 
   return (
     <section id="projects" className="py-20">
@@ -56,7 +49,7 @@ const Projects = () => {
 
         <motion.div
           variants={container}
-          initial="hidden" 
+          initial="hidden"
           whileInView="show"
           viewport={{ once: true }}
           className="space-y-3.5">
