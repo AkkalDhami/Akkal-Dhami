@@ -54,8 +54,7 @@ export const getProject = async (req, res) => {
 export const createProject = async (req, res) => {
     try {
         const { title, description, liveUrl, githubUrl, technologies, features } = req.body;
-        console.log(req.files);
-        console.log(req.body);
+       
         let thumbnail = null;
         if (req.files && req.files.thumbnail) {
             thumbnail = {
@@ -116,6 +115,8 @@ export const updateProject = async (req, res) => {
             });
         }
 
+        console.log(req.files);
+
         // Handle thumbnail update
         if (req.files?.thumbnail) {
             if (project.thumbnail?.public_id) {
@@ -161,7 +162,6 @@ export const updateProject = async (req, res) => {
             req.body.images = newImages;
         }
 
-        console.log(req.body);
 
         const updatedProject = await Project.findByIdAndUpdate(id, req.body, {
             new: true,
